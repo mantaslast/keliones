@@ -1,12 +1,20 @@
 // Fonts
 @import 'fonts.scss';
-
 // Variables
 @import 'variables';
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap'; // bootstrapas
 
+@import '~@fortawesome/fontawesome-free/css/all.css'; // font awesome
+
+@import 'header/style.scss'; // Header failas
+
+@import 'main/style.scss'; // Main scss failas contentui
+
+@import 'other/discount-badge.scss'; // Discount zenkliukas
+
+@import 'other/other.scss'; // Kitas scss bele
 body{
     font-family: "Barlow";
+    height: 1000000px;
 }
