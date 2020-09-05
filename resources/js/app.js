@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Login from './components/LoginComponent'
+import UserProfile from './components/user/ProfileComponent' // User profile component
 
 
 new Vue({
-    components : { Login }
+    components : { UserProfile }
 }).$mount('#app')

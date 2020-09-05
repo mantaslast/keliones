@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -72,7 +69,7 @@
                             @else
                             <div class="menu_item">
                                 <a class="menu_action" href="/profile">
-                                    <i class="fas fa-sign-out-alt"></i>
+                                    <i class="fas fa-user-alt"></i>
                                 </a>
                             </div>
 
@@ -92,7 +89,6 @@
                 </div>
             </div>
         </nav>
-        <login></login>
         <main>
             @yield('content')
         </main>
