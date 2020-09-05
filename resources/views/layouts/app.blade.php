@@ -92,7 +92,7 @@
                 </div>
             </div>
         </nav>
-
+        <login></login>
         <main>
             @yield('content')
         </main>
