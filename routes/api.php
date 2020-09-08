@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login', 'Auth\LoginController@login');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('/testas',function(){
-    return json_encode(['testas'=>'sucess']);
+Route::middleware(['auth:api'])->group(function () {
+    //Profile routes
+    Route::post('/profile', 'User\ProfileController@update')->name('update');
+    Route::get('/profile', 'User\ProfileController@get')->name('getProfile');
 });

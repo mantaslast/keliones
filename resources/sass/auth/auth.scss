@@ -1,0 +1,30 @@
+#loginPopup{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    z-index: 10;
+    border:none;
+    .btn{
+        background-color: #03396c;
+    }
+    .card-header{
+        background-color: #03396c;
+        display: flex;
+        justify-content: space-between;
+        color: #fff;
+        i{
+            cursor: pointer;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.login{
+    &_submit{
+        display: inline-block;
+        width: 100%;
+    }
+}

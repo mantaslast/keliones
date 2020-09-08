@@ -16,6 +16,8 @@
 @import 'other/other.scss'; // Kitas scss bele
 
 @import 'user/profile.scss'; //visam userio profile page'ui
+
+@import 'auth/auth.scss'; // login, register popup
 body{
     font-family: "Barlow";
     height: 1000000px;

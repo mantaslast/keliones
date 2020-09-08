@@ -8,11 +8,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="preload" href="/fonts/Barlow-ExtraBold.ttf" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/Barlow-Medium.ttf" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/Barlow-Bold.ttf" as="font" crossorigin="anonymous">
 
+    <script src="/js/common/common.js"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<div class="body_overlay" style="display:none;"></div>
     <div id="app">
         <nav>
             <div class="container">
@@ -63,7 +68,7 @@
                                 @endif
                                 @if (Route::has('login'))
                                 <div class="menu_item">
-                                    <a class="menu_action" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i></a>
+                                    <a onClick="loginPopupShow(event); return false;" class="menu_action" href="javascript:void(0);"><i class="fas fa-sign-in-alt"></i></a>
                                 </div>
                                 @endif
                             @else
@@ -89,6 +94,7 @@
                 </div>
             </div>
         </nav>
+        <app-login id="loginPopup" style="display:none;"></app-login>
         <main>
             @yield('content')
         </main>

@@ -22,4 +22,15 @@ class ProfileController extends Controller
         // //dd($profile);
         return view('user.profile');
     }
+
+    public function get()
+    {
+        $user = Auth::user();
+        return json_encode(['wow' => $user]);
+    }
+
+    public function update(Request $req)
+    {
+        return json_encode(['wow' => $req]);
+    }
 }
