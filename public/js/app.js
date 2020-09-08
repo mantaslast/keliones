@@ -229,6 +229,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['userid', 'profileid'],
   data: function data() {
     return {
       address: '',
@@ -239,7 +240,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitForm: function submitForm(event) {
       event.preventDefault();
-      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["post"])('/profile', {
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["put"])('/profile/' + this.profileid, {
         address: this.address,
         phone: this.phone,
         country: this.country
@@ -247,7 +248,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["get"])('/profile').then();
+    var _this = this;
+
+    Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["get"])('/profile').then(function (response) {
+      if (response.data) {
+        _this.address = response.data.profile.address;
+        _this.phone = response.data.profile.phone;
+        _this.country = response.data.profile.country;
+        _this.userId = response.data.id;
+      }
+    });
   }
 });
 
@@ -13388,13 +13398,14 @@ function getCookie(cname) {
 /*!******************************************!*\
   !*** ./resources/js/helpers/requests.js ***!
   \******************************************/
-/*! exports provided: post, get */
+/*! exports provided: post, get, put */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "post", function() { return post; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "put", function() { return put; });
 /* harmony import */ var _cookies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookies */ "./resources/js/helpers/cookies.js");
 
 
@@ -13426,6 +13437,23 @@ var get = function get(url) {
       'Authorization': 'Bearer ' + token
     },
     method: 'GET'
+  }).then(function (response) {
+    return response.json();
+  });
+};
+
+var put = function put(url) {
+  var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Object(_cookies__WEBPACK_IMPORTED_MODULE_0__["getCookie"])('api_token');
+  if (!token) token = '';
+  return fetch('/api' + url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    method: 'PUT',
+    body: JSON.stringify(params)
   }).then(function (response) {
     return response.json();
   });

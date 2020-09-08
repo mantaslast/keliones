@@ -15520,6 +15520,10 @@ a.text-dark:focus {
   }
 }
 
+.btn {
+  background-color: #03396c;
+}
+
 nav {
   background-color: #03396c;
 }
@@ -15887,10 +15891,6 @@ nav {
   left: 50%;
   z-index: 10;
   border: none;
-}
-
-#loginPopup .btn {
-  background-color: #03396c;
 }
 
 #loginPopup .card-header {

@@ -22,6 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:api'])->group(function () {
     //Profile routes
-    Route::post('/profile', 'User\ProfileController@update')->name('update');
-    Route::get('/profile', 'User\ProfileController@get')->name('getProfile');
+    Route::apiResource('profile', 'API\ProfileController');
+
 });

@@ -5,6 +5,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap'; // bootstrapas
 
+@import 'global.scss'; // Bendras css formoms ir t.t.
+
 @import '~@fortawesome/fontawesome-free/css/all.css'; // font awesome
 
 @import 'header/style.scss'; // Header failas

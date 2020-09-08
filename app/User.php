@@ -50,4 +50,13 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function createProfile()
+    {
+        $profile = new Profile;
+        $profile->phone = '';
+        $profile->address = '';
+        $profile->country = '';
+        $this->profile()->save($profile);
+    }
 }

@@ -23,17 +23,18 @@
 </template>
 
 <script>
-    import {post, get} from '../../helpers/requests'
+    import {post, get, put} from '../../helpers/requests'
     export default {
+        props: ['userid','profileid'],
         data : ()=>({
             address : '',
             phone : '',
-            country : ''
+            country : '',
         }),
         methods: {
             submitForm(event){
                 event.preventDefault()
-                post('/profile',{
+                put('/profile/'+this.profileid,{
                     address : this.address,
                     phone : this.phone,
                     country : this.country
@@ -41,7 +42,14 @@
             }
         },
         mounted: function() {
-            get('/profile').then()
+            get('/profile').then(response => {
+                if (response.data) {
+                    this.address = response.data.profile.address
+                    this.phone = response.data.profile.phone
+                    this.country = response.data.profile.country
+                    this.userId = response.data.id
+                }
+            })
         }
     }
 </script>
