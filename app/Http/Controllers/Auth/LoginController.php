@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,35 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if ($this->attemptLogin($request)) {
+            $user = $this->guard()->user();
+            $user->generateToken();
+            $request->session()->regenerate();
+
+            return response()->json([
+                'data' => $user->toArray(),
+            ]);
+        }
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        if ($user) {
+            $user->api_token = null;
+            $user->save();
+        }
+        $this->guard()->logout();
+        $request->session()->invalidate();
+
+        return redirect('/');        
     }
 }
