@@ -3,6 +3,7 @@
 namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
 
 class EditProfile extends FormRequest
 {
@@ -13,7 +14,8 @@ class EditProfile extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        //dd(Auth::user());
+        return true;
     }
 
     /**
@@ -24,7 +26,9 @@ class EditProfile extends FormRequest
     public function rules()
     {
         return [
-            //
+            'phone' => ['string','regex:/(86|\+3706)\d{7,7}$/'],
+            'address' => 'string',
+            'country' => 'string'
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Resources\User as UserResource;
 use App\User;
 use Auth;
 use App\Profile;
+use App\Http\Requests\profile\EditProfile as EditProfileRequest;
 
 
 class ProfileController extends Controller
@@ -30,7 +31,7 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditProfileRequest $request, $id)
     {
         $profile = Profile::find($id);
         $profile->phone = $request->phone;

@@ -203,6 +203,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/requests */ "./resources/js/helpers/requests.js");
+/* harmony import */ var _helpers_validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/validation */ "./resources/js/helpers/validation.js");
 //
 //
 //
@@ -228,6 +229,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['userid', 'profileid'],
   data: function data() {
@@ -240,10 +242,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitForm: function submitForm(event) {
       event.preventDefault();
+      Object(_helpers_validation__WEBPACK_IMPORTED_MODULE_1__["hideAllErrors"])('#profileForm');
       Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["put"])('/profile/' + this.profileid, {
         address: this.address,
         phone: this.phone,
         country: this.country
+      }).then(function (resp) {
+        if (resp.errors) {
+          Object(_helpers_validation__WEBPACK_IMPORTED_MODULE_1__["showErrors"])(resp.errors);
+        } else {}
       });
     }
   },
@@ -903,7 +910,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("form", [
+        _c("form", { attrs: { id: "profileForm" } }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "inputAddress" } }, [
               _vm._v("Adresas")
@@ -914,19 +921,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.phone,
-                  expression: "phone"
+                  value: _vm.address,
+                  expression: "address"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.phone },
+              attrs: { name: "address", type: "text" },
+              domProps: { value: _vm.address },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.phone = $event.target.value
+                  _vm.address = $event.target.value
                 }
               }
             })
@@ -942,19 +949,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.address,
-                  expression: "address"
+                  value: _vm.phone,
+                  expression: "phone"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.address },
+              attrs: { name: "phone", type: "text" },
+              domProps: { value: _vm.phone },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.address = $event.target.value
+                  _vm.phone = $event.target.value
                 }
               }
             })
@@ -973,7 +980,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { name: "country", type: "text" },
               domProps: { value: _vm.country },
               on: {
                 input: function($event) {
@@ -997,7 +1004,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Sign in")]
+            [_vm._v("Išsaugoti")]
           )
         ])
       ])
