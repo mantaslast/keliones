@@ -2,6 +2,7 @@ import Vue from 'vue'
 import UserProfile from './components/user/ProfileComponent' // User profile component
 import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
+
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
     el.clickOutsideEvent = function (event) {

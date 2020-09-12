@@ -1,3 +1,25 @@
-.btn{
+.btn-primary{
     background-color: #03396c;
+}
+.title{
+    font-size: $font-size-big;
+}
+
+.errors{
+    border-radius: 5px;
+    border: 1px solid red;
+    padding:  20px;
+    .error{
+        color: red;
+        font-size: $font-size-base;
+    }
+}
+.success{
+    border-radius: 5px;
+    border: 1px solid green;
+    padding: 20px;
+    .successMsg{
+        color: green;
+        font-size: $font-size-base;
+    }
 }

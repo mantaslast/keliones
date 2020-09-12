@@ -15520,8 +15520,34 @@ a.text-dark:focus {
   }
 }
 
-.btn {
+.btn-primary {
   background-color: #03396c;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.errors {
+  border-radius: 5px;
+  border: 1px solid red;
+  padding: 20px;
+}
+
+.errors .error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.success {
+  border-radius: 5px;
+  border: 1px solid green;
+  padding: 20px;
+}
+
+.success .successMsg {
+  color: green;
+  font-size: 0.9rem;
 }
 
 nav {
@@ -15610,6 +15636,15 @@ nav {
   .menu_logo_wrapper {
     height: 100%;
   }
+}
+
+.testinis {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: red;
+  text-align: center;
+  cursor: pointer;
 }
 
 .image_wrapper.big {
@@ -15875,15 +15910,6 @@ nav {
   margin: 25px 0px;
 }
 
-.testinis {
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-  background-color: red;
-  text-align: center;
-  cursor: pointer;
-}
-
 #loginPopup {
   position: absolute;
   top: 50%;
@@ -15915,6 +15941,177 @@ nav {
 
 body {
   font-family: "Barlow";
-  height: 1000000px;
+  font-size: 100%;
+  overflow-y: scroll;
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background-color: #fefefe;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.6s ease;
+}
+
+a:hover {
+  transition: all 0.6s ease;
+}
+
+.app {
+  height: 100vh;
+}
+
+/* -------------
+Sidebar
+----------------*/
+
+.sidebar {
+  position: fixed;
+  width: 17em;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: #19222a;
+  -webkit-transform: translateZ(0);
+  visibility: visible;
+  -webkit-backface-visibility: hidden;
+  transition: all 0.5s ease;
+  z-index: 999;
+}
+
+.sidebar header {
+  background-color: #09f;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.75em 1em;
+}
+
+.sidebar header i {
+  margin-left: auto;
+}
+
+.sidebar header i:hover {
+  cursor: pointer;
+  color: #03396c;
+}
+
+/* -------------
+Sidebar Nav
+----------------*/
+
+.sidebar-nav {
+  position: fixed;
+  background-color: #19222a;
+  height: 100%;
+  font-weight: 400;
+  font-size: 1.2em;
+  overflow: auto;
+  padding-bottom: 6em;
+  z-index: 9;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* -------------
+  Chev elements
+  ----------------*/
+  /* -------------
+  Nav-Flyout
+  ----------------*/
+  /* -------------
+  Hover
+  ----------------*/
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav ul li {
+  margin-left: 0;
+  padding-left: 0;
+  display: inline-block;
+  width: 100%;
+  /* -------------
+  Sidebar: icons
+  ----------------*/
+}
+
+.sidebar-nav ul li a {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75em;
+  padding: 1.05em 1em;
+  position: relative;
+  display: block;
+}
+
+.sidebar-nav ul li a:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: all 0.6s ease;
+}
+
+.sidebar-nav ul li i {
+  font-size: 1.8em;
+  padding-right: 0.5em;
+  width: 9em;
+  display: inline;
+  vertical-align: middle;
+}
+
+.sidebar-nav > ul > li > a:after {
+  content: "\F125";
+  font-family: ionicons;
+  font-size: 0.5em;
+  width: 10px;
+  color: #fff;
+  position: absolute;
+  right: 0.75em;
+  top: 45%;
+}
+
+.sidebar-nav .nav-flyout {
+  position: absolute;
+  background-color: #080D11;
+  z-index: 9;
+  left: 2.5em;
+  top: 0;
+  height: 100vh;
+  transform: translateX(100%);
+  transition: all 0.5s ease;
+}
+
+.sidebar-nav .nav-flyout a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-nav ul > li:hover .nav-flyout {
+  transform: translateX(0);
+  transition: all 0.5s ease;
+}
+
+#openSidebar {
+  position: fixed;
+  top: 20px;
+  left: 2%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#openSidebar * {
+  pointer-events: none;
+}
+
+body {
+  font-family: "Barlow";
+  height: 10000px;
 }
 
