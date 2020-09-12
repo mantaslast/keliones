@@ -21,39 +21,13 @@
           </ul>
         </li>
         <li>
-          <a href="#"><i class="ion-ios-settings"></i> <span class="">Controls</span></a>
+          <a href="#"><i class="ion-ios-settings"></i> <span class="">Kategorijos</span></a>
           <ul class="nav-flyout">
             <li>
-              <a href="#"><i class="ion-ios-alarm-outline"></i>Watch</a>
+              <a href="#"><i class="ion-ios-alarm-outline"></i>Visos</a>
             </li>
             <li>
-              <a href="#"><i class="ion-ios-camera-outline"></i>Creeper</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-ios-chatboxes-outline"></i>Hate</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-ios-cog-outline"></i>Grinder</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Folio</span></a>
-          <ul class="nav-flyout">
-            <li>
-              <a href="#"><i class="ion-ios-flame-outline"></i>Burn</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-ios-lightbulb-outline"></i>Bulbs</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-ios-location-outline"></i>Where You</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-ios-locked-outline"></i>On Lock</a>
-            </li>
-             <li>
-              <a href="#"><i class="ion-ios-navigate-outline"></i>Ghostface</a>
+              <a href="#"><i class="ion-ios-camera-outline"></i>Kurti naują kategoriją</a>
             </li>
           </ul>
         </li>
@@ -62,12 +36,17 @@
             <a href="{{ route('superAdminUsers') }}"><i class="ion-ios-briefcase-outline"></i> <span class="">Vartotojai</span></a>
             <ul class="nav-flyout">
               <li>
-                <a href="#"><i class="ion-ios-flame-outline"></i>Administratoriai</a>
+                <a href="{{ route('superAdminUsers', 2) }}"><i class="ion-ios-flame-outline"></i>Administratoriai</a>
               </li>
               <li>
-                <a href="#"><i class="ion-ios-lightbulb-outline"></i>Klientai</a>
+                <a href="{{ route('superAdminUsers', 1) }}"><i class="ion-ios-lightbulb-outline"></i>Klientai</a>
               </li>
             </ul>
+          </li>
+        @endif
+        @if (Auth::user()->isSuperAdmin())
+          <li>
+            <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Analitika</span></a>
           </li>
         @endif
       </ul>

@@ -18,9 +18,13 @@ class UserController extends Controller
         $this->userRepository = new UserRepository();
     }
     
-    public function index()
+    public function index($role = null)
     {
-        $users = $this->userRepository->all();
+        if ($role) {
+            $users = $this->userRepository->allByRole($role);
+        } else {
+            $users = $this->userRepository->all();
+        }
 
         return view('admin.users.users',['users' => $users]);
     }
