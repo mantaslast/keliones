@@ -81,35 +81,68 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/blade/common.js":
-/*!**************************************!*\
-  !*** ./resources/js/blade/common.js ***!
-  \**************************************/
+/***/ "./resources/js/blade/admin.js":
+/*!*************************************!*\
+  !*** ./resources/js/blade/admin.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-loginPopupShow = function loginPopupShow(event) {
-  event.preventDefault;
-  document.getElementById('loginPopup').style.display = 'block';
-  document.querySelector('.body_overlay').style.display = 'block';
-  return false;
-};
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById('closeSidebar').addEventListener('click', closeSidebar);
+  document.getElementById('openSidebar').addEventListener('click', openSidebar);
+  document.querySelectorAll('.deleteUser').forEach(function (el) {
+    el.addEventListener('click', deleteUserConfirm);
+  });
+  document.addEventListener('click', closeSidebarOnOutsideClick);
+});
+
+function closeSidebar(e) {
+  var sidebar = document.querySelector('.sidebar');
+  sidebar.style.left = "-17em";
+}
+
+function openSidebar(e) {
+  var sidebar = document.querySelector('.sidebar');
+  sidebar.style.left = '0';
+}
+
+function deleteUserConfirm(e) {
+  e.preventDefault();
+  var c = confirm(' Ar tikrai norite ištrinti vartotoją? ');
+
+  if (c === true) {
+    e.target.closest('form').submit();
+  } else {
+    return false;
+  }
+}
+
+function closeSidebarOnOutsideClick(e) {
+  e.stopPropagation();
+  var sidebar = document.querySelector('.sidebar');
+  var sidebarOpenButton = document.getElementById('openSidebar');
+
+  if (e.target !== sidebar && !sidebar.contains(e.target) && e.target !== sidebarOpenButton) {
+    closeSidebar();
+  }
+}
 
 /***/ }),
 
-/***/ 1:
-/*!********************************************!*\
-  !*** multi ./resources/js/blade/common.js ***!
-  \********************************************/
+/***/ 2:
+/*!*******************************************!*\
+  !*** multi ./resources/js/blade/admin.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\keliones\keliones\resources\js\blade\common.js */"./resources/js/blade/common.js");
+module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\keliones\keliones\resources\js\blade\admin.js */"./resources/js/blade/admin.js");
 
 
 /***/ })

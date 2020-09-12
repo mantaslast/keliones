@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +59,15 @@ class User extends Authenticatable
         $profile->address = '';
         $profile->country = '';
         $this->profile()->save($profile);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 2;
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->role === 3;
     }
 }

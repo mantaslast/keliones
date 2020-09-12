@@ -9,18 +9,16 @@
 
 @import '~@fortawesome/fontawesome-free/css/all.css'; // font awesome
 
-@import 'header/style.scss'; // Header failas
-
 @import 'main/style.scss'; // Main scss failas contentuim main page
 
 @import 'other/discount-badge.scss'; // Discount zenkliukas
 
 @import 'other/other.scss'; // Kitas scss bele
 
-@import 'user/profile.scss'; //visam userio profile page'ui
-
 @import 'auth/auth.scss'; // login, register popup
+
+@import 'admin/style.scss'; // Admin dashboardui
 body{
     font-family: "Barlow";
-    height: 1000000px;
+    height: 10000px;
 }

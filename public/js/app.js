@@ -13496,7 +13496,6 @@ function showErrors(errors) {
 function hideAllErrors(wrapper) {
   var parent = isElement(wrapper) ? wrapper : document.querySelector(wrapper);
   var errorElements = parent.querySelectorAll('.is-invalid');
-  console.log(errorElements);
 
   var _iterator = _createForOfIteratorHelper(errorElements),
       _step;
@@ -13515,7 +13514,6 @@ function hideAllErrors(wrapper) {
 
 function manageClassOfElement(el, className, action) {
   var element = isElement(el) ? el : document.querySelector(el);
-  console.log(element);
 
   if (action === 'add') {
     element.classList.add(className);

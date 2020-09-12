@@ -8,7 +8,6 @@ export function showErrors(errors) {
 export function hideAllErrors(wrapper) {
     let parent = isElement(wrapper) ? wrapper : document.querySelector(wrapper)
     let errorElements = parent.querySelectorAll('.is-invalid')
-    console.log(errorElements)
     for (let element of errorElements) {
         manageClassOfElement(element, 'is-invalid', 'remove')
       }
@@ -16,7 +15,6 @@ export function hideAllErrors(wrapper) {
 
 function manageClassOfElement (el, className, action) {
     let element = isElement(el) ? el : document.querySelector(el)
-    console.log(element)
     if (action === 'add') {
         element.classList.add(className)
     } else {

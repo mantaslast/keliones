@@ -14,4 +14,5 @@ mix.copyDirectory('resources/assets/fonts', 'public/fonts');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .js('resources/js/blade/common.js', 'public/js/common');
+    .js('resources/js/blade/common.js', 'public/js/common')
+    .js('resources/js/blade/admin.js', 'public/js/admin');
