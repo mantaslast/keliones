@@ -43,9 +43,4 @@ class EditUser extends FormRequest
             'name.string' => 'Neteisingas vardo formatas'
         ];
     }
-
-    public function passedValidation()
-    {
-        return $this->request->all();
-    }
 }

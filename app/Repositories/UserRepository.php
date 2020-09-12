@@ -18,4 +18,9 @@ class UserRepository
         return $this->users->all();
     }
 
+    public function allByRole($role)
+    {
+        return $this->users->where('role',$role)->get();
+    }
+
 }

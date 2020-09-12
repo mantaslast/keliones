@@ -18,7 +18,7 @@
             <tr>
                 <td><a href="{{route('superAdminUser', $user->id)}}">{{ $user->name }}</a></td>
                 <td>{{ $user->email }}</td>
-                <td>@if ($user->role == 2) Admin @elseif ($user->role == 3)SuperAdmin @else Client @endif</td>
+                <td>@if ($user->role == 2) Admin @elseif ($user->role == 3)SuperAdmin @else Klientas @endif</td>
                 <td>
                     <a href="{{route('superAdminUserEditForm', $user->id)}}" type="button" class="btn btn-warning">Keisti</a>
                     <form class="d-inline-block" method="POST" action="{{ action('WEB\superAdmin\users\UserController@destroy', ['user' => $user->id]) }}">
