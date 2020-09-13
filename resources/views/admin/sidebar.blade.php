@@ -21,13 +21,13 @@
           </ul>
         </li>
         <li>
-          <a href="#"><i class="ion-ios-settings"></i> <span class="">Kategorijos</span></a>
+          <a href="{{ route('categories.index') }}"><i class="ion-ios-settings"></i> <span class="">Kategorijos</span></a>
           <ul class="nav-flyout">
             <li>
-              <a href="#"><i class="ion-ios-alarm-outline"></i>Visos</a>
+              <a href="{{ route('categories.create') }}"><i class="ion-ios-camera-outline"></i>Kurti naują kategoriją</a>
             </li>
             <li>
-              <a href="#"><i class="ion-ios-camera-outline"></i>Kurti naują kategoriją</a>
+              <a href="{{ route('categories.create') }}"><i class="ion-ios-camera-outline"></i>Gal dar kas bus</a>
             </li>
           </ul>
         </li>

@@ -31,30 +31,11 @@
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="menu_items_wrapper">
-                            <div class="menu_item">
-                                <a href="#">asd</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">www</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">eee</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">rrr</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">asdas</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">rrr</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">rrr</a>
-                            </div>
-                            <div class="menu_item">
-                                <a href="#">rrr</a>
-                            </div>
+                            @foreach($categories as $category)
+                                <div class="menu_item">
+                                <a href="{{$category->name}}">{{ $category->name }}</a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 

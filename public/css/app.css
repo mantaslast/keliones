@@ -16096,6 +16096,7 @@ Sidebar Nav
 .sidebar-nav ul > li:hover .nav-flyout {
   transform: translateX(0);
   transition: all 0.5s ease;
+  width: 100%;
 }
 
 #openSidebar {
