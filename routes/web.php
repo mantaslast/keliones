@@ -19,8 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', 'WEB\user\ProfileController@index')->name('profile');
 });
@@ -28,13 +26,14 @@ Route::middleware(['auth'])->group(function () {
 //Admino routai su prefixu /admin
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
+    Route::resource('categories', 'WEB\admin\categories\CategoriesController');
 
 });
 
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
-    Route::get('/users/{role?}', 'WEB\superAdmin\users\UserController@index')->name('superAdminUsers');
+    Route::get('/users/r/{role?}', 'WEB\superAdmin\users\UserController@index')->name('superAdminUsers');
     Route::get('/users/{user}', 'WEB\superAdmin\users\UserController@show')->name('superAdminUser');
     Route::get('/users/{user}/edit', 'WEB\superAdmin\users\UserController@edit')->name('superAdminUserEditForm');
     Route::delete('/users/{user}', 'WEB\superAdmin\users\UserController@destroy')->name('superAdminUser');

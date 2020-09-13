@@ -96,7 +96,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('closeSidebar').addEventListener('click', closeSidebar);
   document.getElementById('openSidebar').addEventListener('click', openSidebar);
-  document.querySelectorAll('.deleteUser').forEach(function (el) {
+  document.querySelectorAll('.deleteBtn').forEach(function (el) {
     el.addEventListener('click', deleteUserConfirm);
   });
   document.addEventListener('click', closeSidebarOnOutsideClick);
@@ -114,7 +114,7 @@ function openSidebar(e) {
 
 function deleteUserConfirm(e) {
   e.preventDefault();
-  var c = confirm(' Ar tikrai norite ištrinti vartotoją? ');
+  var c = confirm(' Ar tikrai norite ištrinti įrašą? ');
 
   if (c === true) {
     e.target.closest('form').submit();

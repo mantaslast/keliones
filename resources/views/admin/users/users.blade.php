@@ -24,7 +24,7 @@
                     <form class="d-inline-block" method="POST" action="{{ action('WEB\superAdmin\users\UserController@destroy', ['user' => $user->id]) }}">
                         {{ method_field('DELETE') }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input  class="btn btn-danger deleteUser" type="button" value="Ištrinti">
+                        <input  class="btn btn-danger deleteBtn" type="button" value="Ištrinti">
                     </form>
                 </td>
             </tr>
