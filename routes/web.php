@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
-    Route::get('/users/{role?}', 'WEB\superAdmin\users\UserController@index')->name('superAdminUsers');
+    Route::get('/users/role/{role?}', 'WEB\superAdmin\users\UserController@index')->name('superAdminUsers');
     Route::get('/users/{user}', 'WEB\superAdmin\users\UserController@show')->name('superAdminUser');
     Route::get('/users/{user}/edit', 'WEB\superAdmin\users\UserController@edit')->name('superAdminUserEditForm');
     Route::delete('/users/{user}', 'WEB\superAdmin\users\UserController@destroy')->name('superAdminUser');
