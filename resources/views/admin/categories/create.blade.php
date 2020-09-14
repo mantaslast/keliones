@@ -8,8 +8,8 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="email">Pavadinimas</label>
-                        <input name="name" class="form-control" id="email">
+                        <label for="name">Pavadinimas</label>
+                        <input name="name" class="form-control" id="name">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Išsaugoti</button>

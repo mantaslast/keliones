@@ -17,6 +17,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @if(isset($api_token))
+    <input type="hidden" value="{{ $api_token }}" id="api_token">
+    @endif
 <div class="body_overlay" style="display:none;"></div>
     <div id="app">
         <nav>

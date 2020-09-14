@@ -13413,12 +13413,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "post", function() { return post; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "put", function() { return put; });
-/* harmony import */ var _cookies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cookies */ "./resources/js/helpers/cookies.js");
-
+function getApiTokenFromDom() {
+  return document.getElementById('api_token').value;
+}
 
 var post = function post(url) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Object(_cookies__WEBPACK_IMPORTED_MODULE_0__["getCookie"])('api_token');
+  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : getApiTokenFromDom();
   if (!token) token = '';
   return fetch('/api' + url, {
     headers: {
@@ -13435,7 +13436,7 @@ var post = function post(url) {
 
 var get = function get(url) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Object(_cookies__WEBPACK_IMPORTED_MODULE_0__["getCookie"])('api_token');
+  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : getApiTokenFromDom();
   if (!token) token = '';
   return fetch('/api' + url, {
     headers: {
@@ -13451,7 +13452,7 @@ var get = function get(url) {
 
 var put = function put(url) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Object(_cookies__WEBPACK_IMPORTED_MODULE_0__["getCookie"])('api_token');
+  var token = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : getApiTokenFromDom();
   if (!token) token = '';
   return fetch('/api' + url, {
     headers: {

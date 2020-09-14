@@ -11,6 +11,7 @@
     <link rel="preload" href="/fonts/Barlow-ExtraBold.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Medium.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Bold.ttf" as="font" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
