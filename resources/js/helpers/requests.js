@@ -1,6 +1,8 @@
- import {getCookie} from './cookies'
+ function getApiTokenFromDom() {
+      return document.getElementById('api_token').value
+ }
  
- let post = (url, params = {}, token = getCookie('api_token')) => {
+ let post = (url, params = {}, token = getApiTokenFromDom()) => {
    if (!token) token = '' 
    return fetch('/api'+url,{
         headers: {
@@ -13,7 +15,7 @@
    }).then(response=>response.json())
 }
 
-let get = (url, params = {}, token = getCookie('api_token')) => {
+let get = (url, params = {}, token = getApiTokenFromDom()) => {
      if (!token) token = ''
      return fetch('/api' + url, {
           headers: {
@@ -25,7 +27,7 @@ let get = (url, params = {}, token = getCookie('api_token')) => {
      }).then(response => response.json())
 }
 
-let put = (url, params = {}, token = getCookie('api_token')) => {
+let put = (url, params = {}, token = getApiTokenFromDom()) => {
      if (!token) token = ''
      return fetch('/api' + url, {
           headers: {

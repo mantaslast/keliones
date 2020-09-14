@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Auth::routes();
 
@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
     Route::resource('categories', 'WEB\admin\categories\CategoriesController');
+    Route::resource('offers', 'WEB\admin\offers\OffersController');
 
 });
 

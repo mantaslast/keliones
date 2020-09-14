@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRoleColumnToUserTable extends Migration
+class ChangeSortColumnOfOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRoleColumnToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('role')->default(1);
+        Schema::table('offers', function (Blueprint $table) {
+            $table->integer('sort')->nullable()->change();
         });
     }
 
@@ -25,7 +25,7 @@ class AddRoleColumnToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('offers', function (Blueprint $table) {
             //
         });
     }

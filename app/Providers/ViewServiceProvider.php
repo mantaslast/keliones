@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Category;
+use Auth;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,14 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.shop.app', function($view) {
-            $view->with('categories', Category::all());
+            $data = [
+                'categories' => Category::all(),
+            ];
+            if (Auth::user()) {
+                $data['api_token'] = Auth::user()->api_token;
+            }
+            
+            $view->with($data);
         });
     }
 }

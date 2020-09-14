@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -53,8 +53,8 @@ class LoginController extends Controller
                     'data' => $user->toArray(),
                 ]);
             }
-            
-            return redirect()->back(); 
+
+            return redirect()->route('home'); 
         }
 
         return $this->sendFailedLoginResponse($request);
@@ -72,4 +72,10 @@ class LoginController extends Controller
 
         return redirect('/');        
     }
+
+
+    protected function authenticated(Request $request, $user)
+        {
+            return redirect()->route('/');;
+        }
 }

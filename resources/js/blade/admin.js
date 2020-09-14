@@ -1,6 +1,12 @@
+let FroalaEditor = require('froala-editor');
+require('froala-editor/js/plugins/align.min.js')
 
 document.addEventListener("DOMContentLoaded", function() {
-    
+    if (document.getElementById('description')) {
+        new FroalaEditor('textarea',{
+            width: '800'
+        });
+    }
     document.getElementById('closeSidebar').addEventListener('click', closeSidebar)
     document.getElementById('openSidebar').addEventListener('click', openSidebar)
     document.querySelectorAll('.deleteBtn').forEach((el) => {

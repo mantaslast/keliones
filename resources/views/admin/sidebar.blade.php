@@ -7,16 +7,13 @@
     <nav class="sidebar-nav">
       <ul>
         <li>
-          <a href="#"><i class="ion-bag"></i> <span>Pasiūlymai</span></a>
+          <a href="{{ route('offers.index') }}"><i class="ion-bag"></i> <span>Pasiūlymai</span></a>
           <ul class="nav-flyout">
             <li>
-              <a href="#"><i class="ion-ios-color-filter-outline"></i>Visi pasiūlymai</a>
+              <a href="{{ route('offers.create') }}"><i class="ion-ios-clock-outline"></i>Kurti naują</a>
             </li>
             <li>
-              <a href="#"><i class="ion-ios-clock-outline"></i>Kurti naują</a>
-            </li>
-            <li>
-              <a href="#"><i class="ion-android-star-outline"></i>Pasiūlymų rikiavimas</a>
+              <a href="{{ route('offers.index') }}"><i class="ion-android-star-outline"></i>Pasiūlymų rikiavimas</a>
             </li>
           </ul>
         </li>
