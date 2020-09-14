@@ -1,6 +1,7 @@
 @import 'header.scss';// Main headeris
 
-@import 'profile.scss'; //visam userio profile page'ui
+@import './shop/deal.scss'; // Deal'o puslapis
+
 
 .image{
     &_wrapper{
@@ -23,11 +24,59 @@
             top: 80%;
             left: 10%;
             right: 10%;
-            height: 70px;
+            height: 35px;
             background-color: #fff;
             border-radius: 10px;
             transform: translateY(-50%);
             display: flex;
+            .searchbar{
+                display:flex;
+                flex:1;
+                align-items: center;
+                .searchInput{
+                   flex-basis: 90%;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 0px 10px;
+                    &:focus{
+                        outline: none !important;
+                    }
+                }
+                i{
+                    font-size: 1.4rem;
+                    color:grey;
+                    cursor: pointer;
+                    position: relative;
+                    z-index: 2;
+                    &:hover{
+                        color: #000;
+                    }
+                    &.mic{
+                        &.active{
+                            &::after{
+                                content:'';
+                                position: absolute;
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                background-color: #B3CDE0;
+                                z-index: -3;
+                                left: -7px;
+                                top: -4px;
+                                animation: pulse .5s ease-in-out infinite alternate;
+                                @keyframes pulse {
+                                    0% {
+                                        transform: scale(1.0);
+                                    }
+                                    100% {
+                                        transform: scale(2.0);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

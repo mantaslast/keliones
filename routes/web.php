@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Public routai shop
 Route::get('/', function () {
-    return view('home');
+    return view('shop.home');
 })->name('home');
+
+Route::get('/deal', function() {
+    return view('shop.deal');
+});
 
 Auth::routes();
 

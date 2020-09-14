@@ -6,8 +6,7 @@
         <div class="image_wrapper big">
             <div class="image_intro_big"></div>
             <div class="image_intro_content">
-    
-
+                <app-search></app-search>
             </div>
         </div>    
     </div>
