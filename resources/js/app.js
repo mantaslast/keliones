@@ -2,6 +2,7 @@ import Vue from 'vue'
 import UserProfile from './components/user/ProfileComponent' // User profile component
 import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
+import Search from './components/shop/SearchComponent' //Searchbar
 
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
@@ -18,5 +19,5 @@ Vue.directive('click-outside', {
 });
 
 let app = new Vue({
-    components : { UserProfile, 'app-login':Login, 'app-registraion':Register }
+    components : { 'app-search' : Search ,UserProfile, 'app-login':Login, 'app-registraion':Register }
 }).$mount('#app')
