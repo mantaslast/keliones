@@ -89,12 +89,16 @@
                 font-size: $font-size-base;
             }
             &_reserve{
+                cursor: pointer;
                 border-radius: 5px;
                 padding: 5px 10px;
                 color: #fff;
                 text-align: center;
                 @media screen and (min-width: 458px) {
                     padding: 5px 40px;
+                }
+                &:hover{
+                    text-decoration: none;
                 }
             }
             &_description{

@@ -4,6 +4,7 @@ import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
 import Search from './components/shop/SearchComponent' //Searchbar
 import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
+require('./helpers/lazyload');
 
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {

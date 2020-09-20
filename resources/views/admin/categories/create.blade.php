@@ -11,6 +11,10 @@
                         <label for="name">Pavadinimas</label>
                         <input name="name" class="form-control" id="name">
                     </div>
+                    <div class="form-group col-md-6">
+                        <label for="slug">Seo url (Vietoje tarpų brūkšneliai, be lietuviškų simbolių)</label>
+                        <input name="slug" class="form-control" id="slug">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Išsaugoti</button>
             </form>

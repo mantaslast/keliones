@@ -15589,7 +15589,7 @@ nav {
   position: relative;
 }
 
-.menu_item a {
+.menu_item span {
   vertical-align: middle;
   line-height: 1;
   color: #fff;
@@ -15599,7 +15599,7 @@ nav {
   transform: translate(-50%, -50%);
 }
 
-.menu_item a:hover {
+.menu_item span:hover {
   text-decoration: none;
 }
 
@@ -15753,6 +15753,7 @@ nav {
 }
 
 .deal_info_wrapper .deal_reserve {
+  cursor: pointer;
   border-radius: 5px;
   padding: 5px 10px;
   color: #fff;
@@ -15763,6 +15764,10 @@ nav {
   .deal_info_wrapper .deal_reserve {
     padding: 5px 40px;
   }
+}
+
+.deal_info_wrapper .deal_reserve:hover {
+  text-decoration: none;
 }
 
 .deal_info_wrapper .deal_description {
@@ -15868,13 +15873,20 @@ nav {
   flex-basis: calc(50% - 1rem);
   flex-shrink: 1;
   flex-grow: 1;
-  height: 200px;
   margin-bottom: 1em;
   margin-right: 1rem;
-  display: flex;
-  flex-direction: column;
   position: relative;
   box-shadow: 0 0 4px 1.2px rgba(168, 178, 179, 0.8);
+}
+
+.top_deals .top_deal_inner {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+
+.top_deals .top_deal_inner:hover {
+  text-decoration: none;
 }
 
 .top_deals .top_deal.big {
@@ -15889,11 +15901,9 @@ nav {
 
 .top_deals .top_deal_image {
   flex-basis: 80%;
-  background-color: green;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  background-image: url("/images/web/eiffel.jpg");
 }
 
 .top_deals .top_deal_info {
@@ -16056,6 +16066,19 @@ nav {
 
 .top_cities_wrapper:first-of-type {
   margin-right: 1rem;
+}
+
+.card-header {
+  background-color: #03396c;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.success_message {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #3BB54A;
 }
 
 .discount_badge {
@@ -16371,6 +16394,13 @@ Sidebar Nav
 .offer_gallery_image {
   width: 200px;
   height: 200px;
+}
+
+.reservation_deal {
+  height: 300px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 }
 
 body {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\category;
+namespace App\Http\Requests\reservation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategory extends FormRequest
+class StoreReservation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,17 @@ class StoreCategory extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
-            'slug' => 'string|required',
+            'email' => ['email'],
+            'phone' => ['string','regex:/(86|\+3706)\d{7,7}$/'],
         ];
     }
-
+    
     public function messages()
     {
         return [
-            'name.string' => 'Neteisingas pavadinimo formatas',
-            'name.required' => 'Privaloma įvesti kategorijos pavadinimą',
-            'slug.string' => 'Neteisingas seo url formatas',
-            'slug.required' => 'Privaloma įvesti kategorijos seo url',
+            'email.email' => 'Neteisingas el. pašto formatas',
+            'phone.regex' => 'Neteisingas telefono numerio formatas',
+            'phone.string' => 'Neteisingas telefono numerio formatas',
         ];
     }
 }
