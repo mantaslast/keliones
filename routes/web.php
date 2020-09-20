@@ -12,30 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//Public routai shop
-Route::get('/', function () {
-    return view('shop.home');
-})->name('home');
-
-Route::get('/deal', function() {
-    return view('shop.deal');
-});
-
-Auth::routes();
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', 'WEB\user\ProfileController@index')->name('profile');
-});
-
-//Admino routai su prefixu /admin
-Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
-    Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
-    Route::resource('categories', 'WEB\admin\categories\CategoriesController');
-    Route::resource('offers', 'WEB\admin\offers\OffersController');
-
-});
-
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
@@ -45,3 +21,29 @@ Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], func
     Route::delete('/users/{user}', 'WEB\superAdmin\users\UserController@destroy')->name('superAdminUser');
     Route::put('/users/{user}', 'WEB\superAdmin\users\UserController@update')->name('superAdminUserUpdate');
 });
+
+//Admino routai su prefixu /admin
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
+    Route::resource('categories', 'WEB\admin\categories\CategoriesController');
+    Route::resource('offers', 'WEB\admin\offers\OffersController');
+});
+
+Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', 'WEB\user\ProfileController@index')->name('profile');
+});
+
+Route::group(['prefix' => 'rezervacija'], function () {
+    //Rezervacija
+    Route::post('/naujas', 'Web\shop\ReservationController@store')->name('reservation.store');
+    Route::get('/sekminga-rezervacija', 'WEB\shop\ReservationController@success')->name('reservation.success');
+    Route::get('/{offer}', 'WEB\shop\ReservationController@create')->name('reservation');
+});
+
+
+//Public routai shop
+Route::get('/', 'WEB\IndexController@index')->name('home');
+Route::get('/{category}/{offer}', 'WEB\shop\MainController@index')->name('offer');
+Route::get('/{category}', 'WEB\Shop\CategoryController@index')->name('category');

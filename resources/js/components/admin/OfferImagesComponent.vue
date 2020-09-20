@@ -14,7 +14,7 @@
             const element = document.querySelector("#drag-and-drop");
             const dragAndDrop = new DragAndDrop(element);
             dragAndDrop.run();
-            if (this.imgs.length > 0) {
+            if (this.imgs && this.imgs.length > 0) {
                 this.imgs.forEach(function(el) {
                     let imageEl = document.createElement('img');
                     imageEl.src = '/files/' + el

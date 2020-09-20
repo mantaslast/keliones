@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
     var dragAndDrop = new _helpers_imageupl_drag_and_drop_js__WEBPACK_IMPORTED_MODULE_0__["DragAndDrop"](element);
     dragAndDrop.run();
 
-    if (this.imgs.length > 0) {
+    if (this.imgs && this.imgs.length > 0) {
       this.imgs.forEach(function (el) {
         var imageEl = document.createElement('img');
         imageEl.src = '/files/' + el;
@@ -13352,6 +13352,8 @@ __webpack_require__.r(__webpack_exports__);
 
  // Image uploado component
 
+__webpack_require__(/*! ./helpers/lazyload */ "./resources/js/helpers/lazyload.js");
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('click-outside', {
   bind: function bind(el, binding, vnode) {
     el.clickOutsideEvent = function (event) {
@@ -13876,6 +13878,48 @@ var DragAndDrop = /*#__PURE__*/function () {
 
   return DragAndDrop;
 }();
+
+/***/ }),
+
+/***/ "./resources/js/helpers/lazyload.js":
+/*!******************************************!*\
+  !*** ./resources/js/helpers/lazyload.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+document.addEventListener("DOMContentLoaded", function () {
+  var lazyImages = [].slice.call(document.querySelectorAll(".lazy"));
+  var active = false;
+
+  var lazyLoad = function lazyLoad() {
+    if (active === false) {
+      active = true;
+      setTimeout(function () {
+        lazyImages.forEach(function (lazyImage) {
+          if (lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0 && getComputedStyle(lazyImage).display !== "none") {
+            lazyImage.style.backgroundImage = lazyImage.dataset.srcset;
+            lazyImage.classList.remove("lazy");
+            lazyImages = lazyImages.filter(function (image) {
+              return image !== lazyImage;
+            });
+
+            if (lazyImages.length === 0) {
+              document.removeEventListener("scroll", lazyLoad);
+              window.removeEventListener("resize", lazyLoad);
+              window.removeEventListener("orientationchange", lazyLoad);
+            }
+          }
+        });
+        active = false;
+      }, 200);
+    }
+  };
+
+  document.addEventListener("scroll", lazyLoad);
+  window.addEventListener("resize", lazyLoad);
+  window.addEventListener("orientationchange", lazyLoad);
+});
 
 /***/ }),
 

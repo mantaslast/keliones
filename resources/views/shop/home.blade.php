@@ -18,73 +18,22 @@
         </div>
         <div class="col-12">
             <div class="top_deals">
-                <div class="top_deal">
-                    <div class="discount_badge">- 50%</div>
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
+                @foreach($offers as $offer)
+                    <div class="top_deal">
+                        <a class="top_deal_inner" href="{{ route('offer', ['category'=>$offer->category->slug,'offer' => $offer->id]) }}">
+                            <div class="discount_badge">{{ round($offer->discount * 100 / $offer->price, 0)}}%</div>
+                            <div class="top_deal_image lazy" data-srcset="url('/files/{{ json_decode($offer->images)[0] }}')" style="background-image:url('images/web/preloader.gif')"></div>
+                            <div class="top_deal_info px-3">
+                                <span class="location">{{$offer->city}} <span class="country mx-2">({{ $offer->country }})</span></span>
+                                <div class="top_deal_icons">
+                                    <i class="far fa-clock"></i>
+                                    <i class="fas fa-socks"></i>
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="top_deal">
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="top_deal">
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="top_deal">
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="top_deal">
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="top_deal">
-                    <div class="top_deal_image"></div>
-                    <div class="top_deal_info px-3">
-                        <a href="#" class="location">Rio de Jeneiro <span class="country mx-2">(Brazil)</span></a>
-                        <div class="top_deal_icons">
-                            <i class="far fa-clock"></i>
-                            <i class="fas fa-socks"></i>
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

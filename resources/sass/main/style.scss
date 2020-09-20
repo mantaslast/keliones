@@ -85,17 +85,22 @@
     display: flex;
     flex-wrap: wrap;
     .top_deal{
+        &_inner{
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+            &:hover{
+                text-decoration: none;
+            }
+        }
         &.big{
             height: 350px;
         }
         flex-basis: calc(50% - 1rem);
         flex-shrink: 1;
         flex-grow: 1;
-        height: 200px;
         margin-bottom: 1em;
         margin-right: 1rem;
-        display: flex;
-        flex-direction: column;
         position: relative;
         box-shadow: 0 0 4px 1.2px hsla(185,7%,68%,.8);
         @media(min-width: 778px){
@@ -103,11 +108,9 @@
         }
         &_image{
             flex-basis: 80%;
-            background-color: green;
             background-repeat: no-repeat;
             background-position: 50% 50%;
             background-size: cover;
-            background-image: url('/images/web/eiffel.jpg');
         }
         &_info{
             flex-basis: 20%;
@@ -251,5 +254,22 @@
         &:first-of-type{
             margin-right: 1rem;
         }
+    }
+}
+.card-header{
+    background-color: #03396c;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.success{
+    &_wrapper{
+        
+    }
+    &_message{
+        font-weight: bold;
+        font-size: 2rem;
+        color: #3BB54A;
     }
 }

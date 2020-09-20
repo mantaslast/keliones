@@ -35,9 +35,9 @@
                     <div class="col-12 col-md-8">
                         <div class="menu_items_wrapper">
                             @foreach($categories as $category)
-                                <div class="menu_item">
-                                <a href="{{$category->name}}">{{ $category->name }}</a>
-                                </div>
+                                <a href="/{{$category->slug}}" class="menu_item">
+                                <span>{{ $category->name }}</span>
+                                </a>
                             @endforeach
                         </div>
                     </div>

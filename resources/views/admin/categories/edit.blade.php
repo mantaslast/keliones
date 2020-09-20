@@ -12,6 +12,10 @@
                         <label for="email">Pavadinimas</label>
                         <input name="name" class="form-control" id="email" value="{{ $category->name ? $category->name : ''}}">
                     </div>
+                    <div class="form-group col-md-6">
+                        <label for="slug">Seo url (Vietoje tarpų brūkšneliai, be lietuviškų simbolių)</label>
+                        <input name="slug" class="form-control" id="slug" value="{{ $category->slug ? $category->slug : ''}}">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Išsaugoti</button>
             </form>
