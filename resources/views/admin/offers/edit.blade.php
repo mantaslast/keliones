@@ -3,8 +3,8 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="title text-center">Naujas pasiūlymas</div>
-            <form method="POST" action="{{ action('WEB\admin\offers\OffersController@update',['offer' => $offer->id]) }}">
+            <div class="title text-center">Keičiamas id-{{ $offer->id }} ({{ $offer->name }}) Pasiūlymas</div>
+            <form enctype="multipart/form-data" method="POST" action="{{ action('WEB\admin\offers\OffersController@update',['offer' => $offer->id]) }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             {{ method_field('PUT') }}
                 <div class="form-row">
@@ -53,6 +53,12 @@
                     <label for="description">Aprašymas</label>
                     <textarea name="description" id="description" cols="30" rows="10">{{ old('description') ? old('description') : $offer->description}}</textarea>
                 </div>
+                <app-images :imgs="{{ $offer->images }}"></app-images>
+                @if($offer->images)
+                    @foreach(json_decode($offer->images) as $image)
+                        <input type="hidden" value="{{ $image }}" name="imgs[]">
+                    @endforeach
+                @endif
                 <button type="submit" class="btn btn-primary">Išsaugoti</button>
             </form>
                 @if ($errors->any())

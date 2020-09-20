@@ -3,6 +3,7 @@ import UserProfile from './components/user/ProfileComponent' // User profile com
 import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
 import Search from './components/shop/SearchComponent' //Searchbar
+import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
 
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
@@ -19,5 +20,10 @@ Vue.directive('click-outside', {
 });
 
 let app = new Vue({
-    components : { 'app-search' : Search ,UserProfile, 'app-login':Login, 'app-registraion':Register }
+    components : { 'app-search' : Search,
+    UserProfile, 
+    'app-login':Login, 
+    'app-registraion':Register,
+    'app-images' : OfferImages,
+  }
 }).$mount('#app')

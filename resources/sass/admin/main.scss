@@ -1,0 +1,10 @@
+.offer{
+    &_gallery{
+        display: flex;
+        flex-wrap: wrap;
+        &_image{
+            width: 200px;
+            height: 200px;
+        }
+    }
+}

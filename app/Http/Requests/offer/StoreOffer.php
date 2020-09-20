@@ -32,7 +32,7 @@ class StoreOffer extends FormRequest
             'leave_at' => 'required|date',
             'arrive_at' => 'required|date|after:leave_at',
             'category_id' => 'required',
-            'description' => 'required|string|min:10'
+            'description' => 'required|string|min:10',
         ];
     }
 
@@ -57,7 +57,7 @@ class StoreOffer extends FormRequest
             'description.string' => 'Neteisingas aprašymo formatas!',
             'description.min' => 'Per trumpas aprašymas!',
             'description.required' => 'Aprašymas privalomas!',
-            'category_id.required' => 'Kategorija privaloma!'
+            'category_id.required' => 'Kategorija privaloma!',
         ];
     }
 }

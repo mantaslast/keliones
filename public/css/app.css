@@ -16096,6 +16096,72 @@ nav {
   margin: 25px 0px;
 }
 
+label.button {
+  display: inline-block;
+  padding: 10px 28px 10px 28px;
+  background: #03396c;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+}
+
+label.button:hover {
+  background: black;
+}
+
+#fileElem {
+  display: none;
+}
+
+#drop-area {
+  border: 3px dashed black;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+#drop-area.highlight {
+  border-color: white;
+}
+
+#gallery {
+  margin-top: 10px;
+}
+
+#gallery img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+progress,
+progress[role][aria-valuenow] {
+  background: black;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+::-webkit-progress-bar {
+  background-color: black;
+  border-radius: 5px;
+}
+
+::-webkit-progress-value {
+  background-color: white;
+  border-radius: 5px;
+}
+
+::-moz-progress-bar {
+  background-color: white;
+  border-radius: 5px;
+}
+
 #loginPopup {
   position: absolute;
   top: 50%;
@@ -16295,6 +16361,16 @@ Sidebar Nav
 
 #openSidebar * {
   pointer-events: none;
+}
+
+.offer_gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.offer_gallery_image {
+  width: 200px;
+  height: 200px;
 }
 
 body {

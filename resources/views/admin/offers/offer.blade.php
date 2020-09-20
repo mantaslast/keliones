@@ -29,6 +29,11 @@
                 </tbody>
             </table>
         </div>
+        <div class="offer_gallery">
+            @foreach(json_decode($offer->images) as $image)
+                <img class="offer_gallery_image mx-2" src="/files/{{$image}}"/>
+            @endforeach
+        </div>
     </div>
 </div>
 

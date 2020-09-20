@@ -86,6 +86,42 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_imageupl_drag_and_drop_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/imageupl/drag-and-drop.js */ "./resources/js/helpers/imageupl/drag-and-drop.js");
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['imgs'],
+  mounted: function mounted() {
+    var element = document.querySelector("#drag-and-drop");
+    var dragAndDrop = new _helpers_imageupl_drag_and_drop_js__WEBPACK_IMPORTED_MODULE_0__["DragAndDrop"](element);
+    dragAndDrop.run();
+
+    if (this.imgs.length > 0) {
+      this.imgs.forEach(function (el) {
+        var imageEl = document.createElement('img');
+        imageEl.src = '/files/' + el;
+        document.getElementById('gallery').appendChild(imageEl);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auth/LoginComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auth/LoginComponent.vue?vue&type=script&lang=js& ***!
@@ -782,6 +818,37 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (this && this.clearImmediate);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("div", { attrs: { id: "drag-and-drop" } })])
+  }
+]
+render._withStripped = true
+
+
 
 /***/ }),
 
@@ -13273,6 +13340,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/auth/LoginComponent */ "./resources/js/components/auth/LoginComponent.vue");
 /* harmony import */ var _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/auth/RegisterComponent */ "./resources/js/components/auth/RegisterComponent.vue");
 /* harmony import */ var _components_shop_SearchComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/shop/SearchComponent */ "./resources/js/components/shop/SearchComponent.vue");
+/* harmony import */ var _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/OfferImagesComponent */ "./resources/js/components/admin/OfferImagesComponent.vue");
 
  // User profile component
 
@@ -13281,6 +13349,8 @@ __webpack_require__.r(__webpack_exports__);
  //Registration component
 
  //Searchbar
+
+ // Image uploado component
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('click-outside', {
   bind: function bind(el, binding, vnode) {
@@ -13301,9 +13371,79 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     'app-search': _components_shop_SearchComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
     UserProfile: _components_user_ProfileComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
     'app-login': _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'app-registraion': _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
+    'app-registraion': _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'app-images': _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }).$mount('#app');
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/OfferImagesComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/admin/OfferImagesComponent.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OfferImagesComponent.vue?vue&type=template&id=dc0bb758& */ "./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758&");
+/* harmony import */ var _OfferImagesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OfferImagesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OfferImagesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/OfferImagesComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OfferImagesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OfferImagesComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OfferImagesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OfferImagesComponent.vue?vue&type=template&id=dc0bb758& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OfferImagesComponent_vue_vue_type_template_id_dc0bb758___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -13582,6 +13722,160 @@ function getCookie(cname) {
 
   return "";
 }
+
+/***/ }),
+
+/***/ "./resources/js/helpers/imageupl/drag-and-drop.js":
+/*!********************************************************!*\
+  !*** ./resources/js/helpers/imageupl/drag-and-drop.js ***!
+  \********************************************************/
+/*! exports provided: DragAndDrop */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DragAndDrop", function() { return DragAndDrop; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var DragAndDrop = /*#__PURE__*/function () {
+  function DragAndDrop(el) {
+    _classCallCheck(this, DragAndDrop);
+
+    this.el = el;
+  }
+
+  _createClass(DragAndDrop, [{
+    key: "render",
+    value: function render() {
+      this.el.innerHTML = "\n      <div id=\"drop-area\">\n          <input name=\"images[]\" type=\"file\" id=\"fileElem\" multiple accept=\"file_extension\">\n          <label class=\"button\" for=\"fileElem\">Prid\u0117ti nuotrauk\u0173</label>\n        <div id=\"gallery\"></div>\n      </div>\n    ";
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      var dropArea = this.el.querySelector("#drop-area"); //const progressBar = this.el.querySelector("#progress-bar");
+
+      var fileElem = this.el.querySelector("#fileElem");
+      var gallery = this.el.querySelector("#gallery");
+      var uploadProgress = [];
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      function highlight() {
+        dropArea.classList.add("highlight");
+      }
+
+      function unHighlight() {
+        dropArea.classList.remove("active");
+      }
+
+      dropArea.addEventListener("drop", handleDrop, false);
+      fileElem.addEventListener("change", handleFiles.bind(fileElem.files));
+      ["dragenter", "dragover", "dragleave", "drop"].forEach(function (eventName) {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+      });
+      ["dragenter", "dragover"].forEach(function (eventName) {
+        dropArea.addEventListener(eventName, highlight, false);
+      });
+      ["dragleave", "drop"].forEach(function (eventName) {
+        dropArea.addEventListener(eventName, unHighlight, false);
+      });
+
+      function handleDrop(e) {
+        var dt = e.dataTransfer;
+        var files = dt.files;
+        files = _toConsumableArray(files);
+        initializeProgress(files.length); //files.forEach(uploadFile);
+
+        files.forEach(previewFile);
+      }
+
+      function initializeProgress(numFiles) {
+        //progressBar.value = 0;
+        uploadProgress = [];
+
+        for (var i = numFiles; i > 0; i--) {
+          uploadProgress.push(0);
+        }
+      }
+
+      function updateProgress(fileNumber, percent) {
+        uploadProgress[fileNumber] = percent;
+        var total = uploadProgress.reduce(function (tot, curr) {
+          return tot + curr;
+        }, 0) / uploadProgress.length;
+        console.debug("update", fileNumber, percent, total); //progressBar.value = total;
+      }
+
+      function handleFiles(files) {
+        files = _toConsumableArray(files.target.files);
+        console.log(files);
+        initializeProgress(files.length); // files.forEach(uploadFile);
+
+        files.forEach(previewFile);
+      }
+
+      function previewFile(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = function () {
+          if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/gif") {
+            var img = document.createElement("img");
+            img.src = reader.result;
+            gallery.appendChild(img);
+          } else {
+            var doc = document.createElement("img");
+            doc.src = "assets/img/document.png";
+            gallery.appendChild(doc);
+          }
+        };
+      }
+
+      function uploadFile(file, i) {
+        var url = "URL";
+        var formData = new FormData();
+        formData.append("file", file);
+        fetch(url, {
+          method: "POST",
+          body: formData
+        }).then(function () {
+          updateProgress(i, 100);
+        })["catch"](function () {
+          console.error("change the URL /uploadFile function/ to work with your back-end");
+        });
+      }
+    }
+  }, {
+    key: "run",
+    value: function run() {
+      this.render();
+      this.init();
+    }
+  }]);
+
+  return DragAndDrop;
+}();
 
 /***/ }),
 
