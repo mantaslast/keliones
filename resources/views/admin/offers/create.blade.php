@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="title text-center">Naujas pasiūlymas</div>
-            <form method="POST" action="{{ action('WEB\admin\offers\OffersController@store') }}">
+            <form enctype="multipart/form-data" method="POST" action="{{ action('WEB\admin\offers\OffersController@store') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -52,6 +52,7 @@
                     <label for="description">Aprašymas</label>
                     <textarea name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
                 </div>
+                <app-images></app-images>
                 <button type="submit" class="btn btn-primary">Išsaugoti</button>
             </form>
                 @if ($errors->any())

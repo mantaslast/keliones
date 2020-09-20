@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Offer;
 use App\Category;
 use App\Http\Requests\offer\StoreOffer;
+use Illuminate\Support\Str;
+
 
 class OffersController extends Controller
 {
@@ -42,6 +44,23 @@ class OffersController extends Controller
     public function store(StoreOffer $request)
     {
         $validated = $request->validated();
+
+        $this->validate($request, [
+            'images' => 'required',
+            'images.*' => 'image'
+        ]);
+
+        $data = [];
+        foreach($request->file('images') as $file)
+        {
+            $name = Str::random(10).time().'.'.$file->extension();
+            $file->move(public_path().'/files/', $name);  
+            $data[] = $name;  
+        }
+    
+        $filenames=json_encode($data);
+        $validated['images'] = $filenames;
+
         $offer = new Offer($validated);
         $offer->category()->associate(Category::find($validated['category_id']));
         $offer->save();
@@ -86,7 +105,29 @@ class OffersController extends Controller
     public function update(StoreOffer $request, $id)
     {
         $validated = $request->validated();
+     
+        $data = [];
 
+        if($request->hasfile('images'))
+         {
+            foreach($request->file('images') as $file)
+            {
+                $name = Str::random(10).time().'.'.$file->extension();
+                $file->move(public_path().'/files/', $name);  
+                $data[] = $name;  
+            }
+            
+         }
+
+         if($request->imgs) {
+            foreach($request->imgs as $file)
+            { 
+                $data[] = $file;  
+            }
+         }
+
+        $filenames=json_encode($data);        
+        $validated['images'] = $filenames;
         $offer = Offer::findOrFail($id);
         $offer->update($validated);
 
