@@ -49,31 +49,27 @@
                         </tr>
                     </tbody>
                 </table>
-                
             @endif
 
             @if (Auth::user()->isSuperAdmin())
- 
-            @endif
-
-            <form method="POST" action="{{ action('WEB\superAdmin\orders\OrdersController@update', ['order'=>$order->id ]) }}" >     
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                {{ method_field('PUT') }}    
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="inputState">Keisti užsakymo būseną</label>
-                        <select name="status" value="{{ $order->status }}" id="inputState" class="form-control">
-                            <option selected>Pasirinkti...</option>
-                            <option {{ $order->status == 0 ? 'selected' : '' }} value="0">Inicijuotas</option>
-                            <option {{ $order->status == 1 ? 'selected' : '' }} value="1">Atšauktas</option>
-                            <option {{ $order->status == 2 ? 'selected' : '' }} value="2">Apmokėtas</option>
-                            <option {{ $order->status == 3 ? 'selected' : '' }} value="3">Įvykęs</option>
-                        </select>
+                <form method="POST" action="{{ action('WEB\superAdmin\orders\OrdersController@update', ['order'=>$order->id ]) }}" >     
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    {{ method_field('PUT') }}    
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputState">Keisti užsakymo būseną</label>
+                            <select name="status" value="{{ $order->status }}" id="inputState" class="form-control">
+                                <option selected>Pasirinkti...</option>
+                                <option {{ $order->status == 0 ? 'selected' : '' }} value="0">Inicijuotas</option>
+                                <option {{ $order->status == 1 ? 'selected' : '' }} value="1">Atšauktas</option>
+                                <option {{ $order->status == 2 ? 'selected' : '' }} value="2">Apmokėtas</option>
+                                <option {{ $order->status == 3 ? 'selected' : '' }} value="3">Įvykęs</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
-            </form>
-            @if ($errors->any())
+                    <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                </form>
+                @if ($errors->any())
                     <div class="errors my-3">
                         @foreach ($errors->all() as $error)
                             <div class="error">{{$error}}</div>
@@ -86,7 +82,7 @@
                         <div class="successMsg">{{session('success')}}</div>
                     </div>
                 @endif
-
+            @endif
         </div>
     </div>
 </div>

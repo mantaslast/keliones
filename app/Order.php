@@ -13,9 +13,9 @@ class Order extends Model
         return $this->hasOne('App\User');
     }
 
-    public function Offer()
+    public function offer()
     {
-        return $this->hasOne('App\Offer');
+        return $this->belongsTo('App\Offer');
     }
 
     public function Admin()
