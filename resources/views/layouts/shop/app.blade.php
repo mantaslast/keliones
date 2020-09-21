@@ -7,7 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @if(isset($offer))
+    <meta name="description" content="{{ strip_tags($offer->description) }}">
+    <meta name="title" content="{{ $offer->name }}">
+    @endif
+
+    <title>{{ $title ?? 'Kelionės' }}</title>
     <link rel="preload" href="/fonts/Barlow-ExtraBold.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Medium.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Bold.ttf" as="font" crossorigin="anonymous">

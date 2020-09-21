@@ -15550,6 +15550,14 @@ a.text-dark:focus {
   font-size: 0.9rem;
 }
 
+h1 {
+  font-size: 2rem !important;
+}
+
+h2 {
+  font-size: 1.3rem !important;
+}
+
 nav {
   background-color: #03396c;
 }
@@ -15794,11 +15802,17 @@ nav {
   top: 80%;
   left: 10%;
   right: 10%;
-  height: 35px;
+  height: 54px;
   background-color: #fff;
   border-radius: 10px;
   transform: translateY(-50%);
-  display: flex;
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .image_intro_content {
+    display: flex;
+  }
 }
 
 .image_intro_content .searchbar {
@@ -15808,17 +15822,27 @@ nav {
 }
 
 .image_intro_content .searchbar .searchInput {
-  flex-basis: 90%;
-  border: none;
-  border-radius: 5px;
-  padding: 0px 10px;
+  flex-basis: 30%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  transition: all 0.3s;
+  font-size: 13px;
 }
 
 .image_intro_content .searchbar .searchInput:focus {
   outline: none !important;
 }
 
-.image_intro_content .searchbar i {
+.image_intro_content .searchbar .search_item {
+  flex-basis: 20%;
+  cursor: pointer;
+  transition: all 0.3s;
+  height: 100%;
+  padding: 10px 0px;
+}
+
+.image_intro_content .searchbar i:not([class^=mx]) {
   font-size: 1.4rem;
   color: grey;
   cursor: pointer;
@@ -15826,11 +15850,11 @@ nav {
   z-index: 2;
 }
 
-.image_intro_content .searchbar i:hover {
+.image_intro_content .searchbar i:not([class^=mx]):hover {
   color: #000;
 }
 
-.image_intro_content .searchbar i.mic.active::after {
+.image_intro_content .searchbar i:not([class^=mx]).mic.active::after {
   content: "";
   position: absolute;
   width: 30px;
@@ -15864,6 +15888,12 @@ nav {
   }
 }
 
+.image_intro_content .searchbar .mx-input:hover,
+.image_intro_content .searchbar .mx-input:focus {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .top_deals {
   display: flex;
   flex-wrap: wrap;
@@ -15872,7 +15902,6 @@ nav {
 .top_deals .top_deal {
   flex-basis: calc(50% - 1rem);
   flex-shrink: 1;
-  flex-grow: 1;
   margin-bottom: 1em;
   margin-right: 1rem;
   position: relative;
@@ -16073,6 +16102,16 @@ nav {
   display: flex;
   justify-content: space-between;
   color: #fff;
+}
+
+.card-body .currPrice {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.card-body .discount {
+  text-decoration: line-through;
+  color: red;
 }
 
 .success_message {

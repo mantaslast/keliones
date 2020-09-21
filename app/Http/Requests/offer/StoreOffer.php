@@ -30,7 +30,7 @@ class StoreOffer extends FormRequest
             'price' => 'required|numeric',
             'discount' => 'required|numeric',
             'leave_at' => 'required|date',
-            'arrive_at' => 'required|date|after:leave_at',
+            'arrive_at' => 'required|date|after_or_equal:leave_at',
             'category_id' => 'required',
             'description' => 'required|string|min:10',
         ];

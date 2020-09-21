@@ -1,4 +1,4 @@
-@extends('layouts.shop.app')
+@extends('layouts.shop.app', ['title' => 'Rezervacija'])
 
 @section('content')
 <div class="container">
@@ -36,8 +36,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $offer->name }}</h5>
                     <p class="card-text">{{ $offer->city }} ({{ $offer->country }}) </p>
-                    <span class="currPrice"></span>
-                    <span class="discount"></span>
+                    <span class="currPrice">{{ $offer->price }} &euro;</span>
+                    <span class="discount mx-3">{{ $offer->price + $offer->discount }} &euro;</span>
                 </div>
             </div>
         </div>

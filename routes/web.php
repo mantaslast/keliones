@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', 'WEB\user\ProfileController@index')->name('profile');
 });
 
+Route::get('/paieska', 'WEB\shop\SearchController@search')->name('search');
+
 Route::group(['prefix' => 'rezervacija'], function () {
     //Rezervacija
     Route::post('/naujas', 'Web\shop\ReservationController@store')->name('reservation.store');
@@ -46,4 +48,4 @@ Route::group(['prefix' => 'rezervacija'], function () {
 //Public routai shop
 Route::get('/', 'WEB\IndexController@index')->name('home');
 Route::get('/{category}/{offer}', 'WEB\shop\MainController@index')->name('offer');
-Route::get('/{category}', 'WEB\Shop\CategoryController@index')->name('category');
+Route::get('/{category}', 'WEB\shop\CategoryController@index')->name('category');

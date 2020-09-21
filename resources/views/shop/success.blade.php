@@ -8,7 +8,9 @@
             <span class="success_message my-4">{{$message}}</span>
             <img class="my-4" src="/images/web/success.png" alt="">
                 @if(Session::has('order'))
+                <div class="d-flex justify-content-center">
                 Rezervacijos raktas: <span class="success_order_key">{{ Session::get('order')['key']}}</span>
+                </div>
                 @endif
             </div>
         </div>
