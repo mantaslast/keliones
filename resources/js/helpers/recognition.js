@@ -8,12 +8,13 @@ export let rec = ((e) => {
     }
     
     recognition.onresult = event => {
-        e.target.previousElementSibling.previousElementSibling.value = event.results[0][0].transcript;
+        document.getElementById('search').value = event.results[0][0].transcript;
     }
     
     recognition.onend = () => {
         recognition.started = false;
         e.target.classList.remove('active')
+        document.getElementById('search').dispatchEvent(new Event('change'))
     }
     
     recognition.onerror = event => {

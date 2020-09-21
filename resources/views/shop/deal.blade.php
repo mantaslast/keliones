@@ -1,11 +1,11 @@
-@extends('layouts.shop.app')
+@extends('layouts.shop.app', ['title' => $offer->name, 'offer' => $offer])
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="title text-center">{{ $offer->name }}</div>
-            <div class="deal_location text-center"><i class="fas fa-map-marker-alt mr-2"></i>{{ $offer->country }} , {{ $offer->city }}</div>
+            <h1 class="title text-center my-3">{{ $offer->name }}</h1>
+            <h2 class="deal_location text-center"><i class="fas fa-map-marker-alt mr-2"></i>{{ $offer->country }} , {{ $offer->city }}</h2>
             <div class="deal_card">
                 <div class="deal_images">
                     <div class="item small">
