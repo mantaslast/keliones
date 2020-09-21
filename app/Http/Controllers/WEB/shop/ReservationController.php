@@ -10,6 +10,9 @@ use App\Order;
 use Auth;
 use Illuminate\Support\Str;
 use Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationSuccessfull;
+use Illuminate\Support\Facades\URL;
 
 class ReservationController extends Controller
 {
@@ -40,8 +43,18 @@ class ReservationController extends Controller
         return redirect(route('reservation.success'));
     }
 
+    public function show($key)
+    {
+        $order = Order::with('offer')->where('key', '=', $key)->first();
+
+        return view('shop.order', ['order' => $order]);
+    }
+
     public function success()
     {
+        $order = Session::get('order');
+        Mail::to($order->email)->send(new ReservationSuccessfull($order, route('reservation.show', ['order' => $order->key])));
+
         return view('shop.success', ['message' => 'Sėkmingai rezervuota kelionė!']);
     }
 }

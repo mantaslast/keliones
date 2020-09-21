@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Mail\ReservationSuccessfull;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
@@ -45,6 +47,7 @@ Route::group(['prefix' => 'rezervacija'], function () {
     Route::post('/naujas', 'Web\shop\ReservationController@store')->name('reservation.store');
     Route::get('/sekminga-rezervacija', 'WEB\shop\ReservationController@success')->name('reservation.success');
     Route::get('/{offer}', 'WEB\shop\ReservationController@create')->name('reservation');
+    Route::get('/ord/{order}', 'WEB\shop\ReservationController@show')->name('reservation.show');
 });
 
 
