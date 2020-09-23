@@ -22,12 +22,11 @@
                     </tr>
                 </tbody>
             </table>
-            @if ($user->profile)
+            
             <div class="title text-center font-weight-bold">Profilis</div>
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>
-                    <th scope="col">Profilio ID</th>
                     <th scope="col">Telefonas</th>
                     <th scope="col">Šalis</th>
                     <th scope="col">Adresas</th>
@@ -35,14 +34,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                    <th scope="row">{{$user->profile->id}}</th>
-                    <td>{{ $user->profile->phone }}</td>
-                    <td>{{ $user->profile->country }}</td>
-                    <td>{{ $user->profile->id }}</td>
+                    <td>{{ $user->phone }}</td>
+                    <td>{{ $user->country }}</td>
+                    <td>{{ $user->address }}</td>
                     </tr>
                 </tbody>
             </table>
-            @endif
+            
             <div class="title text-center font-weight-bold">Užsakymai</div>
         </div>
     </div>

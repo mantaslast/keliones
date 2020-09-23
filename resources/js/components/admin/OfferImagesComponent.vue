@@ -6,8 +6,6 @@
 
 <script>
     import { DragAndDrop } from "../../helpers/imageupl/drag-and-drop.js";
-
-
     export default {
         props:['imgs'],
         mounted : function () {

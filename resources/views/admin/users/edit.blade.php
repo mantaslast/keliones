@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group col-md-12">
                     <label for="phone">Telefonas</label>
-                    <input name="phone" type="text" class="form-control" id="phone" @if($user->profile) value="{{ $user->profile->phone ? $user->profile->phone : '' }}" @endif>
+                    <input name="phone" type="text" class="form-control" id="phone" value="{{ $user->phone ? $user->phone : '' }}">
                     </div>
                     <div class="form-group col-md-6">
                     <label for="password">Slaptažodis</label>
@@ -33,11 +33,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                     <label for="inputAddress">Adresas</label>
-                    <input name="address" type="text" class="form-control" id="inputAddress" @if ($user->profile) value="{{ $user->profile->address ? $user->profile->address : '' }}" @endif >
+                    <input name="address" type="text" class="form-control" id="inputAddress" value="{{ $user->address ? $user->address : '' }}" >
                     </div>
                     <div class="form-group col-md-6">
                     <label for="country">Šalis</label>
-                    <input name="country" type="text" class="form-control" id="country" @if ($user->profile) value="{{ $user->profile->country ? $user->profile->country : '' }}" @endif >
+                    <input name="country" type="text" class="form-control" id="country" value="{{ $user->country ? $user->country : '' }}" >
                     </div>
                 </div>
                 <div class="form-row">

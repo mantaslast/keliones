@@ -3,8 +3,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="title text-center">Naujas pasiūlymas</div>
-            <form enctype="multipart/form-data" method="POST" action="{{ action('WEB\admin\offers\OffersController@store') }}">
+            <div class="title text-center mb-4">Naujas pasiūlymas</div>
+            <app-scrapper></app-scrapper>
+            <form class="mt-4" enctype="multipart/form-data" method="POST" action="{{ action('WEB\admin\offers\OffersController@store') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-row">
                     <div class="form-group col-md-4">

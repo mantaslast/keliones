@@ -39,11 +39,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function Profile()
-    {
-        return $this->hasOne('App\Profile');
-    }
-
     public function generateToken()
     {
         $this->api_token = Str::random(60);
@@ -54,11 +49,10 @@ class User extends Authenticatable
 
     public function createProfile()
     {
-        $profile = new Profile;
-        $profile->phone = '';
-        $profile->address = '';
-        $profile->country = '';
-        $this->profile()->save($profile);
+        $this->phone = '';
+        $this->address = '';
+        $this->country = '';
+        $this->save();
     }
 
     public function isAdmin()

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\User;
-use App\Profile;
 use  App\Http\Requests\user\EditUser;
 
 class UserController extends Controller
@@ -35,11 +34,7 @@ class UserController extends Controller
     }
 
     public function destroy(User $user)
-    {
-        if ($user->profile) {
-            $user->profile->delete();
-        }
-        
+    {        
         $user->delete();
 
         return redirect()->back(); 
@@ -54,23 +49,12 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->role = $request->role;
-        if ($user->profile) {
-            $user->profile->phone = $request->phone;
-            $user->profile->address = $request->address;
-            $user->profile->country = $request->country;
-            $user->profile->save();
-        } else {
-            $profile = new Profile;
-            $profile->user_id = $user->id;
-            $profile->phone = $request->phone;
-            $profile->address = $request->address;
-            $profile->country = $request->country;
-            $profile->save();
-            $user->profile()->save($profile);
-        }
+        $user->email = $validated['email'];
+        $user->name = $validated['name'];
+        $user->role = $validated['role'];
+        $user->address = $validated['address'];
+        $user->phone = $validated['phone'];
+        $user->country = $validated['country'];
 
         $user->save();
 

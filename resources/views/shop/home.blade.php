@@ -20,8 +20,10 @@
             <div class="top_deals">
                 @foreach($offers as $offer)
                     <div class="top_deal">
-                        @if(Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
-                            <a style="position:absolute; right: 0;" href="{{route('offers.edit', $offer->id)}}"><i class="fas fa-edit"></i></a>
+                        @if(Auth::user())
+                            @if(Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
+                                <a style="position:absolute; right: 0;" href="{{route('offers.edit', $offer->id)}}"><i class="fas fa-edit"></i></a>
+                            @endif
                         @endif
                         <a class="top_deal_inner" href="{{ route('offer', ['category'=>$offer->category->slug,'offer' => $offer->id]) }}">
                             <div class="discount_badge">{{ round($offer->discount * 100 / $offer->price, 0)}}%</div>

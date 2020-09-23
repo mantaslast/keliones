@@ -29,6 +29,7 @@ class EditUser extends FormRequest
             'address' => 'string',
             'country' => 'string',
             'name' => 'string',
+            'role' => 'required'
         ];
     }
 
@@ -40,7 +41,8 @@ class EditUser extends FormRequest
             'phone.string' => 'Neteisingas telefono numerio formatas',
             'address.string' => 'Neteisingas adreso formatas',
             'country.string' => 'Neteisingas šalies formatas',
-            'name.string' => 'Neteisingas vardo formatas'
+            'name.string' => 'Neteisingas vardo formatas',
+            'role.required' => 'Rolė privaloma'
         ];
     }
 }
