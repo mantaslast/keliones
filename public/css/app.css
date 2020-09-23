@@ -16042,7 +16042,6 @@ nav {
 
 .top_deals .top_deal_icons {
   display: flex;
-  justify-content: space-between;
   flex-basis: 30%;
 }
 
@@ -16190,6 +16189,31 @@ nav {
   border-color: #03396c;
 }
 
+.order-card {
+  width: 100%;
+}
+
+.order-card img {
+  max-height: 10rem;
+  height: 10rem;
+}
+
+@media (min-width: 568px) {
+  .order-card {
+    width: 33%;
+  }
+}
+
+.orders {
+  flex-direction: column;
+}
+
+@media (min-width: 568px) {
+  .orders {
+    flex-direction: row;
+  }
+}
+
 .discount_badge {
   position: absolute;
   top: 7%;
@@ -16306,7 +16330,7 @@ progress[role][aria-valuenow] {
 
 @media (min-width: 778px) {
   #loginPopup {
-    top: 30%;
+    top: 400px;
     width: unset;
   }
 }
@@ -16329,6 +16353,10 @@ progress[role][aria-valuenow] {
 .login_submit {
   display: inline-block;
   width: 100%;
+}
+
+.fa-star {
+  color: #D9E11A;
 }
 
 body {

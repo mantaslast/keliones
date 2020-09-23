@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Rating;
 
 class Offer extends Model
 {
@@ -12,5 +13,16 @@ class Offer extends Model
     public function category()
     {
         return $this->belongsTo('App\Category');
+    }
+
+    public function countRatings()
+    {
+        if (Rating::where('offer_id', '=', $this->id)->count() > 0) {
+            $ratingsCount = Rating::where('offer_id', '=', $this->id)->count();
+            $ratings = Rating::where('offer_id', '=', $this->id)->sum('rating');
+            return round($ratings / $ratingsCount , 0); 
+        } else {
+            return 0;
+        }
     }
 }

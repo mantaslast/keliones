@@ -24,4 +24,5 @@ Route::middleware(['auth:api'])->group(function () {
     //Profile routes
     Route::apiResource('profile', 'API\ProfileController');
     Route::post('scrapper', 'Api\ScrapperController@get');
+    Route::post('rating', 'Api\RatingsController@setRating');
 });

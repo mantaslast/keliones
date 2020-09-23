@@ -28,6 +28,7 @@
         "font-awesome": "^4.7.0",
         "froala-editor": "^3.2.1",
         "vue-range-component": "Anoesj/vue-range-slider#master",
+        "vue-star-rating": "^1.6.1",
         "vuejs-datepicker": "^1.6.2"
     }
 }

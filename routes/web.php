@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Category;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +13,8 @@ use App\Category;
 |
 */
 Route::get('/asd', function () {
-    $categories = Category::all();
-    var_dump($categories[5]->id);
+    $users = User::all()->count();
+    var_dump($users);
 });
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], func
     Route::delete('/users/{user}', 'WEB\superAdmin\users\UserController@destroy')->name('superAdminUser');
     Route::put('/users/{user}', 'WEB\superAdmin\users\UserController@update')->name('superAdminUserUpdate');
     Route::get('/orders', 'WEB\superAdmin\orders\OrdersController@index')->name('superAdminOrders');
+    Route::get('/orders/filtered', 'WEB\superAdmin\orders\OrdersController@filtered')->name('superAdminOrderFiltered');
     Route::get('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@show')->name('superAdminOrder');
     Route::put('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@update')->name('superAdminOrderUpdate');
 });
@@ -39,7 +40,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', 'WEB\user\ProfileController@index')->name('profile');
+    Route::get('/profilis', 'WEB\user\ProfileController@index')->name('profile');
 });
 
 Route::get('/paieska', 'WEB\shop\SearchController@search')->name('search');
