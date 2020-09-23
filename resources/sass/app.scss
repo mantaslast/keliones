@@ -20,7 +20,19 @@
 @import 'auth/auth.scss'; // login, register popup
 
 @import 'admin/style.scss'; // Admin dashboardui
+
+html{
+    position:relative; 
+    min-height: 100%;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+}
+#app{
+    margin-bottom: 60px;
+}
 body{
     font-family: "Barlow";
-    height: 10000px;
 }

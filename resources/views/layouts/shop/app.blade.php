@@ -88,6 +88,13 @@
             @yield('content')
         </main>
     </div>
+    <div class="container-fluid footer mt-3">
+        <div style="height:60px;" class="row align-items-center">
+            <div class="col-12 text-center">
+                &copy; Kelionės, {{ date('yy', strtotime('now')) }}
+            </div>
+        </div>
+    </div>
     <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

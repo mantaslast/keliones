@@ -13,7 +13,11 @@
                         <div class="deal_image small" style="background-image:url('/files/{{ json_decode($offer->images)[1] }}');"></div>
                     </div>
                     <div class="item big">
-                        <div class="deal_image big" style="background-image:url('/files/{{ json_decode($offer->images)[2] }}');"></div>
+                        @if (count(json_decode($offer->images)) > 3)
+                            <div class="deal_image big" style="background-image:url('/files/{{ json_decode($offer->images)[2] }}');"></div>
+                        @else
+                            <div class="deal_image big" style="background-image:url('/files/{{ json_decode($offer->images)[1] }}');"></div>
+                        @endif
                     </div>
                 </div>
                 <div class="deal_info_wrapper my-3">
@@ -28,15 +32,15 @@
                     </div>
                 </div>
                 <div class="deal_info_wrapper my-1">
-                    <div class="deal_info_item_wrapper bottom">
+                    <div class="deal_info_item_wrapper bottom flex-column flex-md-row">
                         <div class="deal_price">{{ $offer->price }} &euro;</div>
-                        <div class="deal_discount ml-3">{{ $offer->discount + $offer->price}} &euro;</div>
-                        <a href="{{ route('reservation', ['offer' => $offer->id]) }}" class="deal_reserve btn-primary ml-4">Rezervuoti</a>
+                        <div class="deal_discount mx-0 ml-md-3">{{ $offer->discount + $offer->price}} &euro;</div>
+                        <a href="{{ route('reservation', ['offer' => $offer->id]) }}" class="deal_reserve btn-primary mx-0 ml-md-4">Rezervuoti</a>
                     </div>
                 </div>
             </div>
 
-            <div class="deal_card mt-4">
+            <div class="deal_card my-4">
                 <div class="deal_description">
                 {!! $offer->description !!}
                 </div>

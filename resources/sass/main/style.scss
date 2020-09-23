@@ -2,6 +2,8 @@
 
 @import './shop/deal.scss'; // Deal'o puslapis
 
+@import './shop/footer.scss'; // Footeris
+
 
 .image{
     &_wrapper{
@@ -21,21 +23,31 @@
         }
         &_content{
             position: absolute;
-            top: 80%;
+            top: 50%;
             left: 10%;
             right: 10%;
             height: 54px;
             background-color: #fff;
             border-radius: 10px;
             transform: translateY(-50%);
-            display: none;
             @media(min-width: 992px){
-                display:flex;    
+                display:flex;  
+                top: 80%;  
             }
             .searchbar{
                 display: flex;
                 flex:1;
                 align-items: center;
+                flex-direction: column;
+                border-radius: 5px;
+                background: #fff;
+                padding: 15px 0px;
+                @media(min-width: 992px){
+                    flex-direction: row;
+                    padding: 0;
+                    background: unset;
+                    border-radius: unset;   
+                }
                 .searchInput{
                    flex-basis: 30%;
                     border: 1px solid #ccc;
@@ -115,7 +127,7 @@
         &.big{
             height: 350px;
         }
-        flex-basis: calc(50% - 1rem);
+        flex-basis: 100%;
         flex-shrink: 1;
         margin-bottom: 1em;
         margin-right: 1rem;
@@ -191,6 +203,10 @@
 
 .top_cities{
     display: flex;
+    flex-direction: column;
+    @media(min-width: 778px){
+        flex-direction: row;
+    }
     .top_city{
         border-radius: 5px;
         display: flex;
@@ -239,8 +255,12 @@
         &.small{
             height: 150px;
             margin-bottom: 1rem;
-            margin-right: 1rem;
-            flex-basis: calc(50% - 1rem);
+            flex-basis: calc(50% - .3rem);
+            
+            @media(min-width: 778px){
+                margin-right: 1rem;
+                flex-basis: calc(50% - 1rem);
+            }
             .info{
                 width: 100%;
                 height: 40%;
@@ -270,7 +290,9 @@
         flex-wrap: wrap;
         flex-basis: calc(50% - 1rem);
         &:first-of-type{
-            margin-right: 1rem;
+            @media(min-width: 778px){
+                margin-right: 1rem;
+            }
         }
     }
 }
@@ -299,5 +321,19 @@
         font-weight: bold;
         font-size: 2rem;
         color: #3BB54A;
+    }
+}
+.pagination_wrapper{
+    nav{
+        background: unset !important;
+        margin: 0px auto;
+    }
+    .page-item{
+        &.active{
+            .page-link{
+                background-color: #03396c;
+                border-color: #03396c;
+            }
+        }
     }
 }

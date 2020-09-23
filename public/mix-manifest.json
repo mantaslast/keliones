@@ -1,6 +1,6 @@
 {
-    "/js/admin/admin.js": "/js/admin/admin.js",
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/common/common.js": "/js/common/common.js"
+    "/js/admin/admin.js": "/js/admin/admin.js?id=f908c09c361c16660d6d",
+    "/js/app.js": "/js/app.js?id=650eced981ab8a8b9665",
+    "/css/app.css": "/css/app.css?id=cc37d4a6db3f681b008e",
+    "/js/common/common.js": "/js/common/common.js?id=3be72f180dcfc1105d1a"
 }

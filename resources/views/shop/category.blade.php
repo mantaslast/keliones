@@ -10,6 +10,9 @@
                 <div class="top_deals">
                     @foreach($category->offers as $offer)
                         <div class="top_deal">
+                        @if(Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
+                            <a style="position:absolute; right: 0;" href="{{route('offers.edit', $offer->id)}}"><i class="fas fa-edit"></i></a>
+                        @endif
                             <a class="top_deal_inner" href="/pasiulymas/{{ $offer->id }}">
                                 <div class="discount_badge">{{ round($offer->discount * 100 / $offer->price, 0)}}%</div>
                                 <div class="top_deal_image" style="background-image:url('/files/{{ json_decode($offer->images)[0] }}')"></div>

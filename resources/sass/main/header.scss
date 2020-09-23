@@ -15,6 +15,9 @@ nav{
         align-items: center;
         height: 100%;
         width: 100%;
+        &:hover{
+            text-decoration: none;
+        }
     }
     &_items{
         color: #fff;
@@ -22,14 +25,20 @@ nav{
         &_wrapper{
             display: flex;
             justify-content: space-between;
+            flex-direction: column;
+            @media(min-width: 778px){
+                flex-direction: row;
+            }
         }
     }
     &_item{
-        flex: 1;
         height: 50px;
         transition: all .2s;
         cursor: pointer;
         position: relative;
+        @media(min-width: 778px){
+            flex: 1;
+        }
         span{
             vertical-align: middle;
             line-height: 1;
@@ -38,8 +47,12 @@ nav{
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            font-size: 14px;
             &:hover{
                 text-decoration: none;
+            }
+            @media(min-width: 778px){
+                font-size: 16px;
             }
         }
         &:hover{

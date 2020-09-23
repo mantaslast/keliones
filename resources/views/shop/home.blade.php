@@ -20,6 +20,9 @@
             <div class="top_deals">
                 @foreach($offers as $offer)
                     <div class="top_deal">
+                        @if(Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
+                            <a style="position:absolute; right: 0;" href="{{route('offers.edit', $offer->id)}}"><i class="fas fa-edit"></i></a>
+                        @endif
                         <a class="top_deal_inner" href="{{ route('offer', ['category'=>$offer->category->slug,'offer' => $offer->id]) }}">
                             <div class="discount_badge">{{ round($offer->discount * 100 / $offer->price, 0)}}%</div>
                             <div class="top_deal_image lazy" data-srcset="url('/files/{{ json_decode($offer->images)[0] }}')" style="background-image:url('images/web/preloader.gif')"></div>
@@ -42,75 +45,72 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
-            <div class="container-title">TOP Miestai</div>
+            <div class="container-title">TOP Šalys</div>
         </div>
         <div class="col-12">
             <div class="top_cities">
                 <div class="top_cities_wrapper">
-                    <div class="top_city big">
+                    <a href="/paieska?country=Turkija" class="top_city big">
                         <div class="top_city_image"></div>
                         <div class="info">
                             <div class="info_title">
-                                Europe
+                                Turkija
                             </div>
                             <div class="info_content">
-                                pradedant nuo 2400 &euro;
+                                
                             </div>  
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="top_cities_wrapper">
-                    <div class="top_city small">
+                <div class="top_cities_wrapper justify-content-between mt-2 mt-md-0">
+                    <a href="/paieska?country=Bulgarija" class="top_city small">
                         <div class="top_city_image"></div>
                         <div class="info">
                             <div class="info_title">
-                                Usa 
+                                Bulgarija 
                             </div>
                             <div class="info_content">
-                                pradedant nuo 2400 &euro;
+                                
                             </div>
                         </div>
-                    </div>
-                    <div class="top_city small">
+                    </a>
+                    <a href="/paieska?country=Andora" class="top_city small">
                         <div class="top_city_image"></div>
                         <div class="info">
                             <div class="info_title">
-                                India 
+                                Andora 
                             </div>
                             <div class="info_content">
-                                pradedant nuo 2400 &euro;
                             </div>
                         </div>
-                    </div>
-                    <div class="top_city small">
+                    </a>
+                    <a href="/paieska?country=Kipras" class="top_city small">
                         <div class="top_city_image"></div>
                         <div class="info">
                             <div class="info_title">
-                                Dubai 
+                                Kipras 
                             </div>
                             <div class="info_content">
-                                pradedant nuo 2400 &euro;
                             </div>
                         </div>
-                    </div>
-                    <div class="top_city small">
+                    </a>
+                    <a href="/paieska?country=Latvija" class="top_city small">
                         <div class="top_city_image"></div>
                         <div class="info">
                             <div class="info_title">
-                                London 
+                                Latvija 
                             </div>
                             <div class="info_content">
-                                pradedant nuo 2400 &euro;
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
             <div class="container-title">Galima užsisakyti dabar</div>
@@ -178,5 +178,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @endsection
