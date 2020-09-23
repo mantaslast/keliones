@@ -35,5 +35,12 @@ class ViewServiceProvider extends ServiceProvider
             
             $view->with($data);
         });
+
+        view()->composer('layouts.admin.adminLayout', function($view) {
+            if (Auth::user()) {
+                $data['api_token'] = Auth::user()->api_token;
+                $view->with($data);
+            };
+        });
     }
 }

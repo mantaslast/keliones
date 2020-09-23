@@ -26,7 +26,7 @@
     import {post, get, put} from '../../helpers/requests'
     import {showErrors, hideAllErrors} from '../../helpers/validation'
     export default {
-        props: ['userid','profileid'],
+        props: ['userid'],
         data : ()=>({
             address : '',
             phone : '',
@@ -36,7 +36,7 @@
             submitForm(event){
                 event.preventDefault()
                 hideAllErrors('#profileForm')
-                put('/profile/'+this.profileid,{
+                put('/profile/'+this.userid,{
                     address : this.address,
                     phone : this.phone,
                     country : this.country
@@ -52,9 +52,9 @@
         mounted: function() {
             get('/profile').then(response => {
                 if (response.data) {
-                    this.address = response.data.profile.address
-                    this.phone = response.data.profile.phone
-                    this.country = response.data.profile.country
+                    this.address = response.data.address
+                    this.phone = response.data.phone
+                    this.country = response.data.country
                     this.userId = response.data.id
                 }
             })

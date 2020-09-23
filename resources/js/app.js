@@ -4,6 +4,7 @@ import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
 import Search from './components/shop/SearchComponent' //Searchbar
 import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
+import Scrapper from './components/admin/ScrapperComponent' // Scrapperio komponentas
 require('./helpers/lazyload');
 
 Vue.directive('click-outside', {
@@ -26,5 +27,6 @@ let app = new Vue({
     'app-login':Login, 
     'app-registraion':Register,
     'app-images' : OfferImages,
+    'app-scrapper' : Scrapper
   }
 }).$mount('#app')

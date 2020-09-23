@@ -16,7 +16,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                     <label for="phone">Telefono numeris</label>
-                    <input name="phone" class="form-control" id="phone" placeholder="Telefono numeris" value="{{ Auth::user() ? Auth::user()->profile->phone : '' }}">
+                    <input name="phone" class="form-control" id="phone" placeholder="Telefono numeris" value="{{ Auth::user() ? Auth::user()->phone : '' }}">
                     </div>
                 </div>
 

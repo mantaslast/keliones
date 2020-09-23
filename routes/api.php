@@ -23,5 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['auth:api'])->group(function () {
     //Profile routes
     Route::apiResource('profile', 'API\ProfileController');
-
+    Route::post('scrapper', 'Api\ScrapperController@get');
 });

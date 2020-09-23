@@ -14,7 +14,6 @@ class EditProfile extends FormRequest
      */
     public function authorize()
     {
-        //dd(Auth::user());
         return true;
     }
 
