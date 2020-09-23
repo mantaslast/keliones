@@ -331,7 +331,9 @@ __webpack_require__.r(__webpack_exports__);
           searchIcon.style.color = 'grey';
         });
       } else {
-        window.location = this.$refs.searchForm.action + 'paieska?' + filterQuery;
+        var location = this.$refs.searchForm.action + 'paieska?' + filterQuery;
+        location = location.replace('#', '');
+        window.location = location;
       }
     },
     listen: function listen(e) {

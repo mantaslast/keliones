@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="container-title">Paieškos rezultatai</div>
+                <div class="container-title">@if(count($offers) > 0) Paieškos rezultatai @else Pagal Jūsų paieškos kriterijus pasiūlymų neradome... @endif</div>
             </div>
             @if (count($offers) > 0)
             <div class="col-12">
@@ -26,10 +26,6 @@
                         </div>      
                     @endforeach
                 </div>
-            </div>
-            @else
-            <div class="col-6">
-                <div class="container-title">Pagal Jūsų paieškos kriterijus pasiūlymų neradome...</div>
             </div>
             @endif
         </div>
