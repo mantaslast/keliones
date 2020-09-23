@@ -284,6 +284,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -1861,7 +1865,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "search_item " },
+      { staticClass: "search_item w-75" },
       [
         _c("rangeslider", {
           staticClass: "mt-2",
@@ -1887,24 +1891,33 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("i", {
-      staticClass: "fas fa-search mx-2",
-      attrs: { id: "searchIcon" },
-      on: {
-        click: function($event) {
-          return _vm.search($event)
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("i", {
-      staticClass: "fas fa-microphone mic mx-2",
-      on: {
-        click: function($event) {
-          return _vm.listen($event)
-        }
-      }
-    })
+    _c(
+      "div",
+      {
+        staticClass: "search_item d-flex align-items-center",
+        staticStyle: { "flex-basis": "10%" }
+      },
+      [
+        _c("i", {
+          staticClass: "fas fa-search mx-2",
+          attrs: { id: "searchIcon" },
+          on: {
+            click: function($event) {
+              return _vm.search($event)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("i", {
+          staticClass: "fas fa-microphone mic mx-2",
+          on: {
+            click: function($event) {
+              return _vm.listen($event)
+            }
+          }
+        })
+      ]
+    )
   ])
 }
 var staticRenderFns = []

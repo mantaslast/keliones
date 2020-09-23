@@ -15579,6 +15579,10 @@ nav {
   width: 100%;
 }
 
+.menu_action:hover {
+  text-decoration: none;
+}
+
 .menu_items {
   color: #fff;
   flex: 1;
@@ -15587,14 +15591,26 @@ nav {
 .menu_items_wrapper {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+}
+
+@media (min-width: 778px) {
+  .menu_items_wrapper {
+    flex-direction: row;
+  }
 }
 
 .menu_item {
-  flex: 1;
   height: 50px;
   transition: all 0.2s;
   cursor: pointer;
   position: relative;
+}
+
+@media (min-width: 778px) {
+  .menu_item {
+    flex: 1;
+  }
 }
 
 .menu_item span {
@@ -15605,10 +15621,17 @@ nav {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 14px;
 }
 
 .menu_item span:hover {
   text-decoration: none;
+}
+
+@media (min-width: 778px) {
+  .menu_item span {
+    font-size: 16px;
+  }
 }
 
 .menu_item:hover {
@@ -15783,6 +15806,15 @@ nav {
   color: #000;
 }
 
+.footer {
+  background-color: #03396c;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .image_wrapper.big {
   position: relative;
   width: 100%;
@@ -15799,19 +15831,19 @@ nav {
 
 .image_intro_content {
   position: absolute;
-  top: 80%;
+  top: 50%;
   left: 10%;
   right: 10%;
   height: 54px;
   background-color: #fff;
   border-radius: 10px;
   transform: translateY(-50%);
-  display: none;
 }
 
 @media (min-width: 992px) {
   .image_intro_content {
     display: flex;
+    top: 80%;
   }
 }
 
@@ -15819,6 +15851,19 @@ nav {
   display: flex;
   flex: 1;
   align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px 0px;
+}
+
+@media (min-width: 992px) {
+  .image_intro_content .searchbar {
+    flex-direction: row;
+    padding: 0;
+    background: unset;
+    border-radius: unset;
+  }
 }
 
 .image_intro_content .searchbar .searchInput {
@@ -15900,7 +15945,7 @@ nav {
 }
 
 .top_deals .top_deal {
-  flex-basis: calc(50% - 1rem);
+  flex-basis: 100%;
   flex-shrink: 1;
   margin-bottom: 1em;
   margin-right: 1rem;
@@ -16003,6 +16048,13 @@ nav {
 
 .top_cities {
   display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 778px) {
+  .top_cities {
+    flex-direction: row;
+  }
 }
 
 .top_cities .top_city {
@@ -16059,8 +16111,14 @@ nav {
 .top_cities .top_city.small {
   height: 150px;
   margin-bottom: 1rem;
-  margin-right: 1rem;
-  flex-basis: calc(50% - 1rem);
+  flex-basis: calc(50% - .3rem);
+}
+
+@media (min-width: 778px) {
+  .top_cities .top_city.small {
+    margin-right: 1rem;
+    flex-basis: calc(50% - 1rem);
+  }
 }
 
 .top_cities .top_city.small .info {
@@ -16093,8 +16151,10 @@ nav {
   flex-basis: calc(50% - 1rem);
 }
 
-.top_cities_wrapper:first-of-type {
-  margin-right: 1rem;
+@media (min-width: 778px) {
+  .top_cities_wrapper:first-of-type {
+    margin-right: 1rem;
+  }
 }
 
 .card-header {
@@ -16118,6 +16178,16 @@ nav {
   font-weight: bold;
   font-size: 2rem;
   color: #3BB54A;
+}
+
+.pagination_wrapper nav {
+  background: unset !important;
+  margin: 0px auto;
+}
+
+.pagination_wrapper .page-item.active .page-link {
+  background-color: #03396c;
+  border-color: #03396c;
 }
 
 .discount_badge {
@@ -16226,11 +16296,19 @@ progress[role][aria-valuenow] {
 
 #loginPopup {
   position: absolute;
-  top: 50%;
+  top: 8%;
   transform: translate(-50%, -50%);
   left: 50%;
-  z-index: 10;
+  z-index: 15;
   border: none;
+  width: 300px;
+}
+
+@media (min-width: 778px) {
+  #loginPopup {
+    top: 30%;
+    width: unset;
+  }
 }
 
 #loginPopup .card-header {
@@ -16442,8 +16520,22 @@ Sidebar Nav
   background-size: cover;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  margin-bottom: 60px;
+}
+
 body {
   font-family: "Barlow";
-  height: 10000px;
 }
 

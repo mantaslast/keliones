@@ -21,7 +21,7 @@
             :placeholder="'Atvykimas iki'"></datepicker>
         </div>
         
-        <div class="search_item ">
+        <div class="search_item w-75">
                 <rangeslider class="mt-2" 
                 :min="0" 
                 :max="5000"
@@ -31,8 +31,12 @@
                 v-model="price">
             </rangeslider>
         </div>
-        <i id="searchIcon" @click="search($event)" class="fas fa-search mx-2"></i>
-        <i @click="listen($event)" class="fas fa-microphone mic mx-2"></i>
+        <div class="search_item d-flex align-items-center" style="flex-basis:10%;">
+            <i id="searchIcon" @click="search($event)" class="fas fa-search mx-2"></i>
+            <i @click="listen($event)" class="fas fa-microphone mic mx-2"></i>
+        </div>
+        
+
     </div>
 </template>
 

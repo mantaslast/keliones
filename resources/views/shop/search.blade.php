@@ -11,20 +11,26 @@
                 <div class="top_deals">
                     @foreach($offers as $offer)
                         <div class="top_deal">
+                        @if(Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
+                            <a style="position:absolute; right: 0;" href="{{route('offers.edit', $offer->id)}}"><i class="fas fa-edit"></i></a>
+                        @endif
                             <a class="top_deal_inner" href="/pasiulymas/{{ $offer->id }}">
                                 <div class="discount_badge">{{ round($offer->discount * 100 / $offer->price, 0)}}%</div>
                                 <div class="top_deal_image" style="background-image:url('/files/{{ json_decode($offer->images)[0] }}')"></div>
                                 <div class="top_deal_info px-3">
                                     <span class="location">{{$offer->city}} <span class="country mx-2">({{ $offer->country }})</span></span>
                                     <div class="top_deal_icons">
-                                        <i class="far fa-clock"></i>
-                                        <i class="fas fa-socks"></i>
-                                        <i class="fas fa-calendar-alt"></i>
+                                        <i style="color: #EBC9A1" class="far fa-clock"></i>
+                                        <i style="color: #E6DD9A" class="fas fa-socks"></i>
+                                        <i style="color: #C7D391" class="fas fa-calendar-alt"></i>
                                     </div>
                                 </div>
                             </a>
                         </div>      
                     @endforeach
+                </div>
+                <div class="pagination_wrapper">
+                {{ $offers->links() }}
                 </div>
             </div>
             @endif

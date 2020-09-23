@@ -12,7 +12,7 @@ $factory->define(Offer::class, function (Faker $faker) use ($categories) {
     $fromDate = $faker->dateTimeBetween('now', '+2 months');
     $toDate = $faker->dateTimeBetween($fromDate->format('Y-m-d H:i:s'), $fromDate->format('Y-m-d H:i:s').'+7 days');
     $images = [];
-    for ($i = 0; $i < 3; $i ++){
+    for ($i = 0; $i < 2; $i ++){
         array_push($images, 'seed'.rand(0,7).'.jpg' );
     }
     $price = $faker->randomFloat(2,20,5000);

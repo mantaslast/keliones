@@ -31,8 +31,11 @@ class SearchController extends Controller
             $prices = explode(",", $request->price);
             $query->whereBetween('price', $prices);
         }
+        if ($request->country) {
+            $query->where('country', $request->country);
+        }
 
-        $offers = $query->get();
+        $offers = $query->paginate(20);
 
         return view('shop.search', ['offers' => $offers]);
    }
