@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Mail\ReservationSuccessfull;
-
+use App\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +12,10 @@ use App\Mail\ReservationSuccessfull;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/asd', function () {
+    $categories = Category::all();
+    var_dump($categories[5]->id);
+});
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
