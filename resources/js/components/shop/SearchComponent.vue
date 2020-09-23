@@ -76,7 +76,9 @@
                             setTimeout(() => {resolve()}, 2000)
                         }).then(() => {searchIcon.style.color = 'grey'})
                     } else {
-                        window.location = this.$refs.searchForm.action + 'paieska?' + filterQuery;
+                        let location  = this.$refs.searchForm.action + 'paieska?' + filterQuery;
+                        location = location.replace('#','');
+                        window.location = location
                     }
             },
 
