@@ -7,7 +7,7 @@
     border:none;
     width: 300px;
     @media(min-width: 778px){
-        top: 30%;
+        top: 400px;
         width: unset;
     }
     .card-header{
@@ -29,4 +29,7 @@
         display: inline-block;
         width: 100%;
     }
+}
+.fa-star{
+    color: #D9E11A;
 }

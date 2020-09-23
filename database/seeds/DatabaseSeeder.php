@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, 10)->create();
 
         factory(App\Offer::class, 20)->create();
+        factory(App\Rating::class, 20)->create();
     }
 }

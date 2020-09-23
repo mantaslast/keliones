@@ -62,7 +62,7 @@
                                 @endif
                             @else
                             <div class="menu_item">
-                                <a class="menu_action" href="/profile">
+                                <a class="menu_action" href="{{ route('profile') }}">
                                     <i class="fas fa-user-alt"></i>
                                 </a>
                             </div>
