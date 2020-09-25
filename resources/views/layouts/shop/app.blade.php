@@ -83,6 +83,9 @@
                 </div>
             </div>
         </nav>
+        <div id="parentmsg" class="success-message mt-2" style="display: none;">
+            <div id="msg" class="message">asd</div>
+        </div>
         <app-login id="loginPopup" style="display:none;"></app-login>
         <main>
             @yield('content')

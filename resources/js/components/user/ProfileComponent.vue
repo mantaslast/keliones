@@ -44,7 +44,11 @@
                     if (resp.errors) {
                         showErrors(resp.errors)
                     } else {
-                        
+                        document.getElementById('msg').innerText = 'Sėkmingai išsaugota profilio informacija'
+                        document.getElementById('parentmsg').style.display = 'block'
+                        setTimeout(() => {
+                            document.getElementById('parentmsg').style.display = 'none'
+                        }, 4000);
                     }
                 })
             }
