@@ -12,7 +12,7 @@
     <meta name="title" content="{{ $offer->name }}">
     @endif
 
-    <title>{{ $title ?? 'Kelionės' }}</title>
+    <title>{{ $title ?? 'Travel' }}</title>
     <link rel="preload" href="/fonts/Barlow-ExtraBold.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Medium.ttf" as="font" crossorigin="anonymous">
     <link rel="preload" href="/fonts/Barlow-Bold.ttf" as="font" crossorigin="anonymous">
@@ -91,7 +91,7 @@
     <div class="container-fluid footer mt-3">
         <div style="height:60px;" class="row align-items-center">
             <div class="col-12 text-center">
-                &copy; Kelionės, {{ date('yy', strtotime('now')) }}
+                &copy; Travel, {{ date('yy', strtotime('now')) }}
             </div>
         </div>
     </div>
