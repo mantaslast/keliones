@@ -4,16 +4,8 @@
             <div class="col-md-8">
                 <form id="profileForm">
                     <div class="form-group">
-                        <label for="inputAddress">Adresas</label>
-                        <input v-model="address" name="address" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
                         <label for="inputAddress">Telefonas</label>
                         <input v-model="phone" name="phone" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2">Šalis</label>
-                        <input v-model="country" name="country" type="text" class="form-control">
                     </div>
                     <button @click="submitForm($event)" type="submit" class="btn btn-primary">Išsaugoti</button>
                 </form>
@@ -37,9 +29,7 @@
                 event.preventDefault()
                 hideAllErrors('#profileForm')
                 put('/profile/'+this.userid,{
-                    address : this.address,
                     phone : this.phone,
-                    country : this.country
                 }).then(resp => {
                     if (resp.errors) {
                         showErrors(resp.errors)

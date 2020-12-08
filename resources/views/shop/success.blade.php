@@ -3,10 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="success_wrapper text-center">
             <span class="success_message my-4">{{$message}}</span>
-            <img class="my-4" src="/images/web/success.png" alt="">
+            <div class="check_mark">
+                <div class="sa-icon sa-success animate">
+                    <span class="sa-line sa-tip animateSuccessTip"></span>
+                    <span class="sa-line sa-long animateSuccessLong"></span>
+                    <div class="sa-placeholder"></div>
+                    <div class="sa-fix"></div>
+                </div>
+            </div>
                 @if(Session::has('order'))
                 <div class="d-flex justify-content-center">
                 Rezervacijos raktas: <span class="success_order_key">{{ Session::get('order')['key']}}</span>
