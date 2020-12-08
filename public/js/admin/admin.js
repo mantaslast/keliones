@@ -186,7 +186,7 @@ function closeSidebarOnOutsideClick(e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\keliones\keliones\resources\js\blade\admin.js */"./resources/js/blade/admin.js");
+module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\Keliones\keliones\resources\js\blade\admin.js */"./resources/js/blade/admin.js");
 
 
 /***/ })

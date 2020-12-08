@@ -353,3 +353,13 @@
         flex-direction: row;
     }
 }
+.success-message{
+    border: 1px solid green;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    text-align: center;
+    .message{
+        color: green;
+    }
+}

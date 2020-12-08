@@ -21,11 +21,6 @@
                                 <div class="top_deal_image" style="background-image:url('/files/{{ json_decode($offer->images)[0] }}')"></div>
                                 <div class="top_deal_info px-3">
                                     <span class="location">{{$offer->city}} <span class="country mx-2">({{ $offer->country }})</span></span>
-                                    <div class="top_deal_icons">
-                                        <i style="color: #EBC9A1" class="far fa-clock"></i>
-                                        <i style="color: #E6DD9A" class="fas fa-socks"></i>
-                                        <i style="color: #C7D391" class="fas fa-calendar-alt"></i>
-                                    </div>
                                 </div>
                             </a>
                         </div>      

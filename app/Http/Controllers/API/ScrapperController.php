@@ -4,37 +4,35 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
+use App\Classes\Scrapper\Scrapper;
 
 class ScrapperController extends Controller
 {
     public function get(Request $request)
     {
+        $domain = parse_url($request->url, PHP_URL_HOST);
         $url = $request->url;
-        $gouteClient = new Client();
-        $guzzleClient = new GuzzleClient(array(
-            'timeout' => 60,
-        ));
-        $gouteClient->setClient($guzzleClient);
-        $crawler = $gouteClient->request('GET', $url);
-        $info = [];
-        try {
-            $description = $crawler->filter('.hiddenDescriptionTab')->first()->html();
-            $name = $crawler->filter('.inner-deal-header  ')->first()->text();
-            $i = 0;
-            $crawler->filter('.choice-item')->each( function ($subNode) use (&$info, &$i, $description){
-                $dates = explode(' ', $subNode->filter('.smallDate')->text('default'));
-                $info[$i]['dateFrom'] = $dates[0];
-                $info[$i]['dateTo'] = $dates[1];
-                $price = floatval($subNode->filter('.priceField')->text('default'));
-                $info[$i]['price'] = $price;
-                $i++;
-            });
-
-            return json_encode(['data' => $info, 'description' => $description, 'name' => $name]);
-        } catch (Exception $e) {
-            return json_encode(['errors' => $e]);
+         //return json_encode(['url' => $url, 'domain' => $domain]);
+        
+        switch($domain) {
+            case ('www.guliveriokeliones.lt'):
+            case ('guliveriokeliones.lt'):
+                $scrapper = new Scrapper(new \App\Classes\Scrapper\GuliverisScrapperStrategy());
+                break;
+            case ('beta.lt'):
+            case ('www.beta.lt'):
+                $scrapper = new Scrapper(new \App\Classes\Scrapper\BetaScrapperStrategy());
+                break;
+            case ('www.makalius.lt'):
+            case ('makalius.lt'):
+                $scrapper = new Scrapper(new \App\Classes\Scrapper\MakaliusScrapperStrategy());
+                break;
+            default:
+                return json_encode(['errors' => 1]);
         }
+
+        $data = $scrapper->executeScrapper($url);
+
+        return json_encode($data);
     }
 }

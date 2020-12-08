@@ -70,12 +70,14 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'address' => '',
+            'phone' => '',
+            'country' => ''
         ]);
     }
 
     protected function registered(Request $request, User $user) {
         $api_token = $user->generateToken();
-        $user->createProfile();
         if($request->wantsJson()){
             return response()->json(['data' => $user->toArray()], 201);
         }

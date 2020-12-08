@@ -21,9 +21,9 @@
                                 <div class="top_deal_info px-3">
                                     <span class="location">{{$offer->city}} <span class="country mx-2">({{ $offer->country }})</span></span>
                                     <div class="top_deal_icons">
-                                        <i class="far fa-clock"></i>
-                                        <i class="fas fa-socks"></i>
-                                        <i class="fas fa-calendar-alt"></i>
+                                        @for($i = 0; $i < $offer->countRatings(); $i++)
+                                            <i class="fas fa-star"></i>                                   
+                                        @endfor
                                     </div>
                                 </div>
                             </a>

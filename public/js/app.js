@@ -499,14 +499,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -523,13 +515,17 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
       Object(_helpers_validation__WEBPACK_IMPORTED_MODULE_1__["hideAllErrors"])('#profileForm');
       Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["put"])('/profile/' + this.userid, {
-        address: this.address,
-        phone: this.phone,
-        country: this.country
+        phone: this.phone
       }).then(function (resp) {
         if (resp.errors) {
           Object(_helpers_validation__WEBPACK_IMPORTED_MODULE_1__["showErrors"])(resp.errors);
-        } else {}
+        } else {
+          document.getElementById('msg').innerText = 'Sėkmingai išsaugota profilio informacija';
+          document.getElementById('parentmsg').style.display = 'block';
+          setTimeout(function () {
+            document.getElementById('parentmsg').style.display = 'none';
+          }, 4000);
+        }
       });
     }
   },
@@ -2279,34 +2275,6 @@ var render = function() {
         _c("form", { attrs: { id: "profileForm" } }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "inputAddress" } }, [
-              _vm._v("Adresas")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.address,
-                  expression: "address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { name: "address", type: "text" },
-              domProps: { value: _vm.address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.address = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "inputAddress" } }, [
               _vm._v("Telefonas")
             ]),
             _vm._v(" "),
@@ -2328,32 +2296,6 @@ var render = function() {
                     return
                   }
                   _vm.phone = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "inputAddress2" } }, [_vm._v("Šalis")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.country,
-                  expression: "country"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { name: "country", type: "text" },
-              domProps: { value: _vm.country },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.country = $event.target.value
                 }
               }
             })
@@ -19484,8 +19426,8 @@ function isElement(element) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Mantas\Desktop\keliones\keliones\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\keliones\keliones\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Mantas\Desktop\Keliones\keliones\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Mantas\Desktop\Keliones\keliones\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

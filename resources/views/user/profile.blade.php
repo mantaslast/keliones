@@ -12,7 +12,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                @if(count($orders) > 0)
                 <div class="title text-center">Užsakymai</div>
+                @endif
                <div class="row my-3 orders">
                     @foreach($orders as $order)
                         <div class="card order-card">
