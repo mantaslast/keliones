@@ -13,6 +13,7 @@ use Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationSuccessfull;
 use Illuminate\Support\Facades\URL;
+use App\Reminder;
 
 class ReservationController extends Controller
 {
@@ -33,6 +34,16 @@ class ReservationController extends Controller
             'description' => $offer->name . '; ' . $offer->country . '; ' . $offer->city . '; ' . $offer->price,
             'key' => Str::random(20),    
         ]);
+
+        $reminder = Reminder::create([
+            'email' => $order->email,
+            'title' => 'Įvertinkite kelionę!',
+            'body' => 'Norėtume sužinoti, ar Jums patiko kelionė! Jūsų įsigytų kelionių informaciją galite rasti savo profilio puslapyje, adresu: <a href="'.URL::to('/').'/profilis">'.URL::to('/').'/profilis</a>',
+            'order_id' => $order->id,
+            'send_at' => $offer->arrive_at,
+        ]);
+
+        $reminder->save();
 
         if (Auth::user()) {
             $order->user_id = Auth::user()->id;
