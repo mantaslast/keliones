@@ -6,6 +6,7 @@ import Register from './components/auth/RegisterComponent' //Registration compon
 import Search from './components/shop/SearchComponent' //Searchbar
 import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
 import Scrapper from './components/admin/ScrapperComponent' // Scrapperio komponentas
+import OffersTableComponent from './components/admin/OffersTableComponent' // Offerio lenteles
 
 require('./helpers/lazyload');
 
@@ -30,6 +31,7 @@ let app = new Vue({
     'app-registraion':Register,
     'app-images' : OfferImages,
     'app-scrapper' : Scrapper,
-    'app-ratings' : RatingsComponent
+    'app-ratings' : RatingsComponent,
+    'app-offers-table' : OffersTableComponent,
   }
 }).$mount('#app')

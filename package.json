@@ -29,6 +29,7 @@
         "froala-editor": "^3.2.1",
         "vue-range-component": "Anoesj/vue-range-slider#master",
         "vue-star-rating": "^1.6.1",
+        "vue-table-dynamic": "^0.3.3",
         "vuejs-datepicker": "^1.6.2"
     }
 }

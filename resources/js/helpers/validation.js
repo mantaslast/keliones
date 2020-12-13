@@ -13,6 +13,15 @@ export function hideAllErrors(wrapper) {
       }
 }
 
+export function deleteRecordConfirm () {
+    let c = confirm(' Ar tikrai norite ištrinti įrašą? ')
+    if (c === true) {
+        return true
+    } else {
+        return false
+    }
+}
+
 function manageClassOfElement (el, className, action) {
     let element = isElement(el) ? el : document.querySelector(el)
     if (action === 'add') {

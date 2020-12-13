@@ -26,3 +26,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('scrapper', 'Api\ScrapperController@get');
     Route::post('rating', 'Api\RatingsController@setRating');
 });
+
+
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    Route::post('offers/destroy', 'Api\admin\OffersController@destroy');
+});

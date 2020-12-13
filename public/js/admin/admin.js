@@ -140,9 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById('closeSidebar').addEventListener('click', closeSidebar);
   document.getElementById('openSidebar').addEventListener('click', openSidebar);
-  document.querySelectorAll('.deleteBtn').forEach(function (el) {
-    el.addEventListener('click', deleteUserConfirm);
-  });
   document.addEventListener('click', closeSidebarOnOutsideClick);
 });
 
@@ -154,17 +151,6 @@ function closeSidebar(e) {
 function openSidebar(e) {
   var sidebar = document.querySelector('.sidebar');
   sidebar.style.left = '0';
-}
-
-function deleteUserConfirm(e) {
-  e.preventDefault();
-  var c = confirm(' Ar tikrai norite ištrinti įrašą? ');
-
-  if (c === true) {
-    e.target.closest('form').submit();
-  } else {
-    return false;
-  }
 }
 
 function closeSidebarOnOutsideClick(e) {

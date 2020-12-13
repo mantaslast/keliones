@@ -2,8 +2,12 @@
 @section('content')
 <div class="container">
     <div class="row">
+    <div class="title ml-3">Pasiūlymai</div>
         <div class="col-12">
-            <table class="table table-dark">
+        <app-offers-table :offers="{{json_encode($offers)}}"></app-offers-table>
+
+
+            <!-- <table class="table table-dark">
                 <thead>
                     <tr>
                     <th scope="col">Pavadinimas</th>
@@ -25,7 +29,7 @@
                 </tr>
                 @endforeach
                 </tbody>
-            </table>
+            </table> -->
         </div>
     </div>
 </div>
