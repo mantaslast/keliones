@@ -8,6 +8,7 @@ use App\Offer;
 use App\Category;
 use App\Http\Requests\offer\StoreOffer;
 use Illuminate\Support\Str;
+use PDF;
 
 
 class OffersController extends Controller
@@ -146,5 +147,14 @@ class OffersController extends Controller
         $offer->delete();
 
         return redirect()->back();
+    }
+
+    public function generatePdf()
+    {
+        $offers = Offer::all();
+        view()->share('admin.offers.pdf',$offers);
+        $pdf = PDF::loadView('admin.offers.pdf', $offers);
+
+        return $pdf->download('pdf_file.pdf');
     }
 }

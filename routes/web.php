@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\User;
+use App\Offer;
 
 // use App\Mail\RatingReminder;
 // use App\Reminder;
@@ -17,18 +18,18 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/testas', function () {
-    // $currDate = date('Y-m-d',strtotime('now'));
-    // $reminders = Reminder::where([
-    //     'send_at' => $currDate,
-    //     'sent' => 0,
-    //     ])->get();
-    // foreach($reminders as $key => $reminder){
-    //     Mail::to($reminder->email)->send(new RatingReminder($reminder->title, $reminder->body ));
-    //     $reminder->sent = 1;
-    //     $reminder->save();
-    // }
-});
+// Route::get('/testas', function () {
+//     $offers = Offer::all();
+    
+//     foreach($offers as $key => $offer) {
+//         $currDate = date('Y-m-d',strtotime('now +'.rand(0,30) .' day'));
+//         $offer->leave_at = $currDate;
+//         $offer->arrive_at = $currDate;
+//         $offer->save();
+//     }
+    
+
+// });
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/users/{user}', 'WEB\superAdmin\users\UserController@update')->name('superAdminUserUpdate');
     Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
     Route::resource('categories', 'WEB\admin\categories\CategoriesController');
+    Route::get('/offers/pdf', 'WEB\admin\offers\OffersController@generatePdf')->name('generateOffersPdf');
     Route::resource('offers', 'WEB\admin\offers\OffersController');
 });
 

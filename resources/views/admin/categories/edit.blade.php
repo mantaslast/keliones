@@ -17,7 +17,7 @@
                         <input name="slug" class="form-control" id="slug" value="{{ $category->slug ? $category->slug : ''}}">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())
                     <div class="errors my-3">

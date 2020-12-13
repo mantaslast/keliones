@@ -54,7 +54,7 @@
                     <textarea name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
                 </div>
                 <app-images></app-images>
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())
                     <div class="errors my-3">

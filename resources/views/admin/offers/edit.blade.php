@@ -59,7 +59,7 @@
                         <input type="hidden" value="{{ $image }}" name="imgs[]">
                     @endforeach
                 @endif
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())
                     <div class="errors my-3">
