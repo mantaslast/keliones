@@ -40,4 +40,17 @@ let put = (url, params = {}, token = getApiTokenFromDom()) => {
      }).then(response => response.json())
 }
 
-export {post, get, put}
+let getPdf = (url, params = {}, token = getApiTokenFromDom()) => {
+     if (!token) token = ''
+     return fetch('/api' + url, {
+          headers: {
+               'Accept': 'application/pdf',
+               'Content-Type': 'application/json',
+               'Authorization' : 'Bearer ' + token
+        },
+        method:'POST',
+        body:JSON.stringify(params),
+     }).then(response => response.blob())
+}
+
+export {post, get, put, getPdf}

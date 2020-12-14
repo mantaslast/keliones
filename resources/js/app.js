@@ -8,7 +8,12 @@ import OfferImages from './components/admin/OfferImagesComponent' // Image uploa
 import Scrapper from './components/admin/ScrapperComponent' // Scrapperio komponentas
 import OffersTableComponent from './components/admin/OffersTableComponent' // Offerio lenteles
 
+import VueNotification from "@kugatsu/vuenotification";
+
 require('./helpers/lazyload');
+Vue.use(VueNotification, {
+  timer: 20
+});
 
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {

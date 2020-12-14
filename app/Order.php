@@ -15,7 +15,7 @@ class Order extends Model
 
     public function offer()
     {
-        return $this->belongsTo('App\Offer');
+        return $this->belongsTo('App\Offer')->withTrashed();
     }
 
     public function Admin()

@@ -9,8 +9,14 @@ use App\Offer;
 
 class MainController extends Controller
 {
-    public function index($slug, Offer $offer)
-    {   
-        return view('shop.deal', ['offer' => $offer]);
+    public function index($slug, Request $request)
+    {
+        $offer = Offer::withTrashed()->findOrFail($request->offer);
+        $trashed = 0;
+        if ($offer->trashed()) {
+            $trashed = 1;
+        }
+
+        return view('shop.deal', ['offer' => $offer, 'trashed' => $trashed]);
     }
 }

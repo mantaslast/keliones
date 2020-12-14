@@ -29,5 +29,9 @@ Route::middleware(['auth:api'])->group(function () {
 
 
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    //Offers routes
     Route::post('offers/destroy', 'Api\admin\OffersController@destroy');
+    Route::post('offers/generatePdf', 'Api\admin\OffersController@generatePdf');
+    //PDF routes
+    
 });

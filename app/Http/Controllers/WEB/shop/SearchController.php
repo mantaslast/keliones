@@ -34,7 +34,8 @@ class SearchController extends Controller
         if ($request->country) {
             $query->where('country', $request->country);
         }
-
+        
+        $query->whereNull('deleted_at');
         $offers = $query->paginate(20);
 
         return view('shop.search', ['offers' => $offers]);
