@@ -4,11 +4,18 @@ import RatingsComponent from './components/user/RatingsComponent' // User profil
 import Login from './components/auth/LoginComponent' // Login component
 import Register from './components/auth/RegisterComponent' //Registration component
 import Search from './components/shop/SearchComponent' //Searchbar
+import Payment from './components/shop/PaymentComponent' //Payment
+
 import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
 import Scrapper from './components/admin/ScrapperComponent' // Scrapperio komponentas
 import OffersTableComponent from './components/admin/OffersTableComponent' // Offerio lenteles
 
 import VueNotification from "@kugatsu/vuenotification";
+
+
+import VueCardFormat from 'vue-credit-card-validation';
+Vue.use(VueCardFormat);
+
 
 require('./helpers/lazyload');
 Vue.use(VueNotification, {
@@ -38,5 +45,6 @@ let app = new Vue({
     'app-scrapper' : Scrapper,
     'app-ratings' : RatingsComponent,
     'app-offers-table' : OffersTableComponent,
+    'app-payment' : Payment
   }
 }).$mount('#app')

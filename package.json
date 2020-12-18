@@ -29,6 +29,7 @@
         "font-awesome": "^4.7.0",
         "froala-editor": "^3.2.1",
         "gsap": "^3.5.1",
+        "vue-credit-card-validation": "^0.1.10",
         "vue-range-component": "Anoesj/vue-range-slider#master",
         "vue-star-rating": "^1.6.1",
         "vue-table-dynamic": "^0.3.3",

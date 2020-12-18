@@ -100,6 +100,24 @@ loginPopupShow = function loginPopupShow(event) {
   return false;
 };
 
+bodyOverlayShow = function bodyOverlayShow() {
+  document.querySelector('.body_overlay').style.display = 'block';
+};
+
+bodyOverlayHide = function bodyOverlayHide() {
+  document.querySelector('.body_overlay').style.display = 'none';
+};
+
+paymentModalShow = function paymentModalShow() {
+  bodyOverlayShow();
+  document.querySelector('.paymentModal').style.display = 'block';
+};
+
+paymentModalHide = function paymentModalHide() {
+  bodyOverlayHide();
+  document.querySelector('.paymentModal').style.display = 'none';
+};
+
 /***/ }),
 
 /***/ 1:

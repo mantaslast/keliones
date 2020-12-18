@@ -152,7 +152,7 @@ class OffersController extends Controller
     public function generatePdf()
     {
         $offers = Offer::all();
-        dd($offers);
+        
         view()->share('admin.offers.pdf',$offers);
         $pdf = PDF::loadView('admin.offers.pdf', compact('offers'));
 

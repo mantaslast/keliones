@@ -1,0 +1,39 @@
+.paymentModal{
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 500px;
+    background-color: #fff;
+    @media(max-width: 778px){
+        top: 0px;
+    }
+    label{
+        color: #03396c;
+    }
+    .closePaymentsModal{
+        height: 10px;
+        width: 10px;
+        position: absolute;
+        top: -3px;
+        right: 10px;
+        opacity: .5;
+        color: grey;
+        font-size: 22px;
+        cursor: pointer;
+        &:hover{
+            opacity: 1;
+        }
+    }
+    &_err{
+        color: red;
+        border-radius: 5px;
+        border: 1px solid red;
+        padding: 10px 5px;
+    }
+}

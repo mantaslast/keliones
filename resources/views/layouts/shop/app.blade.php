@@ -98,6 +98,7 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

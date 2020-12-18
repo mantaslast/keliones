@@ -15835,6 +15835,53 @@ nav {
   right: 0;
 }
 
+.paymentModal {
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 500px;
+  background-color: #fff;
+}
+
+@media (max-width: 778px) {
+  .paymentModal {
+    top: 0px;
+  }
+}
+
+.paymentModal label {
+  color: #03396c;
+}
+
+.paymentModal .closePaymentsModal {
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  top: -3px;
+  right: 10px;
+  opacity: 0.5;
+  color: grey;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.paymentModal .closePaymentsModal:hover {
+  opacity: 1;
+}
+
+.paymentModal_err {
+  color: red;
+  border-radius: 5px;
+  border: 1px solid red;
+  padding: 10px 5px;
+}
+
 .image_wrapper.big {
   position: relative;
   width: 100%;
@@ -16244,6 +16291,24 @@ nav {
 
 .success-message .message {
   color: green;
+}
+
+.statusIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.statusIcon .successfullOrder {
+  color: #80ff80;
+}
+
+.statusIcon .canceledOrder {
+  color: red;
+}
+
+.statusIcon .waitingPaymentOrder {
+  color: #ffbf00;
 }
 
 .discount_badge {

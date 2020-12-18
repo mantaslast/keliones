@@ -17,6 +17,7 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
+        "stripe/stripe-php": "^7.67",
         "weidner/goutte": "^1.6"
     },
     "require-dev": {

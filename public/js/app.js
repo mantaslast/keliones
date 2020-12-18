@@ -3897,6 +3897,148 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['stripekey', 'postroute', 'orderprice', 'csrf', 'orderid'],
+  data: function data() {
+    return {
+      fullname: '',
+      cardexp: '',
+      cardcvv: '',
+      cardnumber: '',
+      errors: {}
+    };
+  },
+  methods: {
+    submitPayment: function submitPayment(e) {
+      var _this = this;
+
+      var regName = /^[a-zA-Z]{2,40}( [a-zA-Z]{2,40})+$/;
+
+      if (!regName.test(this.fullname.trim())) {
+        this.$refs.fullname.classList.add('is-invalid');
+        this.errors['fullname'] = true;
+      } else {
+        this.$refs.fullname.classList.remove('is-invalid');
+        this.errors['fullname'] = false;
+      }
+
+      if (this.cardcvv.length >= 3) {
+        this.$refs.cardcvv.classList.remove('is-invalid');
+        this.errors['cardcvv'] = false;
+      } else {
+        this.$refs.cardcvv.classList.add('is-invalid');
+        this.errors['cardcvv'] = true;
+      }
+
+      if (this.cardnumber.length < 16 || this.cardnumber.length > 20) {
+        this.$refs.cardnumber.classList.add('is-invalid');
+        this.errors['cardnumber'] = true;
+      } else {
+        this.$refs.cardnumber.classList.remove('is-invalid');
+        this.errors['cardnumber'] = false;
+      }
+
+      if (this.cardexp.length !== 9) {
+        this.$refs.cardexp.classList.add('is-invalid');
+        this.errors['cardexp'] = true;
+      } else {
+        this.$refs.cardexp.classList.remove('is-invalid');
+        this.errors['cardexp'] = false;
+      }
+
+      if (this.errors['fullname'] == true || this.errors['cardnumber'] == true || this.errors['cardcvv'] == true || this.errors['cardexp'] == true) {
+        this.$refs.paymentError.style.display = 'block';
+      } else {
+        this.$refs.paymentError.style.display = 'none';
+        Stripe.setPublishableKey(this.stripekey);
+        Stripe.createToken({
+          number: this.cardnumber.replace(/ /g, ""),
+          cvc: this.cardcvv,
+          exp_month: this.cardexp.split('/')[0].trim(),
+          exp_year: this.cardexp.split('/')[1].trim()
+        }, function (status, response) {
+          if (response.error) {
+            alert('Įvyko klaida');
+          } else {
+            /* token contains id, last4, and card type */
+            var token = response['id'];
+            var form = _this.$refs.form;
+            form.innerHTML += "<input type='hidden' name='stripeToken' value='" + token + "'/>";
+            form.submit(); // $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            // $form.get(0).submit();
+          }
+        });
+      }
+    }
+  },
+  mounted: function mounted() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/SearchComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shop/SearchComponent.vue?vue&type=script&lang=js& ***!
@@ -10674,6 +10816,754 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-credit-card-validation/dist/vue-credit-card-validation.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/vue-credit-card-validation/dist/vue-credit-card-validation.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * vue-credit-card-validation v0.1.9 
+ * (c) 2020 Michael Wuori
+ * Released under the MIT License.
+ */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  undefined;
+}(this, (function () { 'use strict';
+
+var cards = [
+    {
+        type: 'maestro',
+        patterns: [
+            5018, 502, 503, 506, 56, 58, 639, 6220, 67, 633
+        ],
+        format: /(\d{1,4})/g,
+        length: [12, 13, 14, 15, 16, 17, 18, 19],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'forbrugsforeningen',
+        patterns: [600],
+        format: /(\d{1,4})/g,
+        length: [16],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'dankort',
+        patterns: [5019],
+        format: /(\d{1,4})/g,
+        length: [16],
+        cvcLength: [3],
+        luhn: true
+    },
+    // Credit cards
+    {
+        type: 'visa',
+        patterns: [4],
+        format: /(\d{1,4})/g,
+        length: [13, 16],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'mastercard',
+        patterns: [
+            51, 52, 53, 54, 55,
+            22, 23, 24, 25, 26, 27
+        ],
+        format: /(\d{1,4})/g,
+        length: [16],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'amex',
+        patterns: [34, 37],
+        format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,
+        length: [15, 16],
+        cvcLength: [3, 4],
+        luhn: true
+    },
+    {
+        type: 'dinersclub',
+        patterns: [30, 36, 38, 39],
+        format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/,
+        length: [14],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'discover',
+        patterns: [60, 64, 65, 622],
+        format: /(\d{1,4})/g,
+        length: [16],
+        cvcLength: [3],
+        luhn: true
+    },
+    {
+        type: 'unionpay',
+        patterns: [62, 88],
+        format: /(\d{1,4})/g,
+        length: [16, 17, 18, 19],
+        cvcLength: [3],
+        luhn: false
+    },
+    {
+        type: 'jcb',
+        patterns: [35],
+        format: /(\d{1,4})/g,
+        length: [16],
+        cvcLength: [3],
+        luhn: true
+    }
+];
+
+var validation = {
+
+    cardExpiryVal: function (value) {
+        var ref = Array.from(value.split(/[\s\/]+/, 2));
+        var month = ref[0];
+        var year = ref[1];
+
+        // Allow for year shortcut
+        if (((year != null ? year.length : undefined) === 2) && /^\d+$/.test(year)) {
+            var prefix = (new Date).getFullYear();
+            prefix = prefix.toString().slice(0, 2);
+            year = prefix + year;
+        }
+
+        month = parseInt(month, 10);
+        year = parseInt(year, 10);
+
+        return { month: month, year: year };
+    },
+
+    validateCardNumber: function (num) {
+        num = (num + '').replace(/\s+|-/g, '');
+        if (!/^\d+$/.test(num)) { return false; }
+
+        var card = cardFormatUtils.cardFromNumber(num);
+        if (!card) { return false; }
+
+        return Array.from(card.length).includes(num.length) &&
+            ((card.luhn === false) || cardFormatUtils.luhnCheck(num));
+    },
+
+    validateCardExpiry: function (month, year) {
+
+        if(!month){
+            return false;
+        }
+
+        if(!year){
+            var assign;
+            ((assign = validation.cardExpiryVal(month), month = assign.month, year = assign.year));
+        }
+
+        // Allow passing an object
+        if ((typeof month === 'object') && 'month' in month) {
+            var assign$1;
+            ((assign$1 = month, month = assign$1.month, year = assign$1.year));
+        }
+
+        if (!month || !year) { return false; }
+
+        month = month.toString().trim();
+        year = year.toString().trim();
+
+        if (!/^\d+$/.test(month)) { return false; }
+        if (!/^\d+$/.test(year)) { return false; }
+        if (!(1 <= month && month <= 12)) { return false; }
+
+        if (year.length === 2) {
+            if (year < 70) {
+                year = "20" + year;
+            } else {
+                year = "19" + year;
+            }
+        }
+
+        if (year.length !== 4) { return false; }
+
+        var expiry = new Date(year, month);
+        var currentTime = new Date;
+
+        // Months start from 0 in JavaScript
+        expiry.setMonth(expiry.getMonth() - 1);
+
+        // The cc expires at the end of the month,
+        // so we need to make the expiry the first day
+        // of the month after
+        expiry.setMonth(expiry.getMonth() + 1, 1);
+
+        return expiry > currentTime;
+    },
+
+    validateCardCVC: function (cvc, type) {
+        if(!cvc){
+            return false;
+        }
+        cvc = cvc.toString().trim();
+        if (!/^\d+$/.test(cvc)) { return false; }
+
+        var card = cardFormatUtils.cardFromType(type);
+        if (card != null) {
+            // Check against a explicit card type
+            return Array.from(card.cvcLength).includes(cvc.length);
+        } else {
+            // Check against all types
+            return (cvc.length >= 3) && (cvc.length <= 4);
+        }
+    },
+
+    cardType: function (num) {
+        if (!num) { return null; }
+        return cardFormatUtils.__guard__(cardFormatUtils.cardFromNumber(num), function (x) { return x.type; }) || null;
+    },
+
+    formatCardNumber: function (num) {
+
+        num = num.toString().replace(/\D/g, '');
+        var card = cardFormatUtils.cardFromNumber(num);
+        if (!card) { return num; }
+
+        var upperLength = card.length[card.length.length - 1];
+        num = num.slice(0, upperLength);
+
+        if (card.format.global) {
+            return cardFormatUtils.__guard__(num.match(card.format), function (x) { return x.join(' '); });
+        } else {
+            var groups = card.format.exec(num);
+            if (groups == null) { return; }
+            groups.shift();
+            // @TODO: Change to native filter()
+            //groups = grep(groups, n => n); // Filter empty groups
+            return groups.join(' ');
+        }
+    },
+
+    formatExpiry: function (expiry) {
+        var parts = expiry.match(/^\D*(\d{1,2})(\D+)?(\d{1,4})?/);
+        if (!parts) { return ''; }
+
+        var mon = parts[1] || '';
+        var sep = parts[2] || '';
+        var year = parts[3] || '';
+
+        if (year.length > 0) {
+            sep = ' / ';
+
+        } else if (sep === ' /') {
+            mon = mon.substring(0, 1);
+            sep = '';
+
+        } else if ((mon.length === 2) || (sep.length > 0)) {
+            sep = ' / ';
+
+        } else if ((mon.length === 1) && !['0', '1'].includes(mon)) {
+            mon = "0" + mon;
+            sep = ' / ';
+        }
+
+        return mon + sep + year;
+    }
+};
+
+var cardFormatUtils = {
+
+    cardFromNumber : function (num) {
+        num = (num + '').replace(/\D/g, '');
+        for (var i in cards) {
+            for (var j in cards[i].patterns) {
+                var p = cards[i].patterns[j] + '';
+                if (num.substr(0, p.length) === p) { return cards[i]; }
+            }
+        }
+    },
+
+    cardFromType: function (type) {
+        for (var i in cards) { if (cards[i].type === type) { return cards[i]; } }
+    },
+
+    luhnCheck: function (num) {
+        var odd = true;
+        var sum = 0;
+
+        var digits = (num + '').split('').reverse();
+
+        for (var i in digits) {
+            var digit = parseInt(digits[i], 10);
+            if (odd = !odd) { digit *= 2; }
+            if (digit > 9) { digit -= 9; }
+            sum += digit;
+        }
+
+        return (sum % 10) === 0;
+    },
+
+    hasTextSelected: function (target) {
+        // If some text is selected
+        if ((target.selectionStart != null) &&
+            (target.selectionStart !== target.selectionEnd)) { return true; }
+
+        // If some text is selected in IE
+        if (cardFormatUtils.__guard__(typeof document !== 'undefined' && document !== null ? document.selection : undefined, function (x) { return x.createRange; }) != null) {
+            if (document.selection.createRange().text) { return true; }
+        }
+
+        return false;
+    },
+
+    // Private
+
+    // Safe Val
+
+    safeVal: function (value, target, e) {
+        if (e.inputType === 'deleteContentBackward') {
+          return;
+        }
+        var cursor;
+        try {
+            cursor = target.selectionStart;
+        } catch (error) {
+            cursor = null;
+        }
+        var last = target.value;
+        target.value = value;
+        value = target.value;
+        if ((cursor !== null) && document.activeElement == target) {
+            if (cursor === last.length) { cursor = target.value.length; }
+
+            // This hack looks for scenarios where we are changing an input's value such
+            // that "X| " is replaced with " |X" (where "|" is the cursor). In those
+            // scenarios, we want " X|".
+            //
+            // For example:
+            // 1. Input field has value "4444| "
+            // 2. User types "1"
+            // 3. Input field has value "44441| "
+            // 4. Reformatter changes it to "4444 |1"
+            // 5. By incrementing the cursor, we make it "4444 1|"
+            //
+            // This is awful, and ideally doesn't go here, but given the current design
+            // of the system there does not appear to be a better solution.
+            //
+            // Note that we can't just detect when the cursor-1 is " ", because that
+            // would incorrectly increment the cursor when backspacing, e.g. pressing
+            // backspace in this scenario: "4444 1|234 5".
+            if (last !== value) {
+                var prevPair = last.slice(cursor - 1, +cursor + 1 || undefined);
+                var currPair = target.value.slice(cursor - 1, +cursor + 1 || undefined);
+                var digit = value[cursor];
+                if (/\d/.test(digit) &&
+                    (prevPair === (digit + " ")) && (currPair === (" " + digit))) { cursor = cursor + 1; }
+            }
+
+            target.selectionStart = cursor;
+            return target.selectionEnd = cursor;
+        }
+    },
+
+    // Replace Full-Width Chars
+
+    replaceFullWidthChars: function (str) {
+        if (str == null) { str = ''; }
+        var fullWidth = '\uff10\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19';
+        var halfWidth = '0123456789';
+
+        var value = '';
+        var chars = str.split('');
+
+        // Avoid using reserved word `char`
+        for (var i in chars) {
+            var idx = fullWidth.indexOf(chars[i]);
+            if (idx > -1) { 
+                chars[i] = halfWidth[idx]; 
+            }
+            value += chars[i];
+        }
+
+        return value;
+    },
+
+    // Format Numeric
+
+    reFormatNumeric: function (e) {
+        var target = e.currentTarget;
+        return setTimeout(function () {
+            var value = target.value;
+            value = cardFormatUtils.replaceFullWidthChars(value);
+            value = value.replace(/\D/g, '');
+            return cardFormatUtils.safeVal(value, target, e);
+        });
+    },
+
+    // Format Card Number
+
+    reFormatCardNumber: function (e) {
+        var target = e.currentTarget;
+        return setTimeout(function () {
+            var value = target.value;
+            value = cardFormatUtils.replaceFullWidthChars(value);
+            value = validation.formatCardNumber(value);
+            return cardFormatUtils.safeVal(value, target, e);
+        });
+    },
+
+    formatCardNumber: function (e) {
+        // Only format if input is a number
+        var re;
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+
+        var target = e.currentTarget;
+        var value = target.value;
+        var card = cardFormatUtils.cardFromNumber(value + digit);
+        var length = (value.replace(/\D/g, '') + digit);
+
+        var upperLength = 16;
+        if (card) { upperLength = card.length[card.length.length - 1]; }
+        if (length >= upperLength) { return; }
+
+        // Return if focus isn't at the end of the text
+        if ((target.selectionStart != null) &&
+            (target.selectionStart !== value.length)) { return; }
+
+        if (card && (card.type === 'amex')) {
+            // AMEX cards are formatted differently
+            re = /^(\d{4}|\d{4}\s\d{6})$/;
+        } else {
+            re = /(?:^|\s)(\d{4})$/;
+        }
+
+        // If '4242' + 4
+        if (re.test(value + digit)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = value + ' ' + digit; });
+
+            // If '424' + 2
+        } else if (re.test(value + digit)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = value + digit + ' '; });
+        }
+
+    },
+
+    formatBackCardNumber: function (e) {
+        var target = e.currentTarget;
+        var value = target.value;
+
+        // Return unless backspacing
+        if (e.which !== 8) { return; }
+
+        // Return if focus isn't at the end of the text
+        if ((target.selectionStart != null) &&
+            (target.selectionStart !== value.length)) { return; }
+
+        // Remove the digit + trailing space
+        if (/\d\s$/.test(value)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = value.replace(/\d\s$/, ''); });
+            // Remove digit if ends in space + digit
+        } else if (/\s\d?$/.test(value)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = value.replace(/\d$/, ''); });
+        }
+    },
+
+    // Format Expiry
+
+    reFormatExpiry: function (e) {
+        var target = e.currentTarget;
+        return setTimeout(function () {
+            var value = target.value;
+            value = cardFormatUtils.replaceFullWidthChars(value);
+            value = validation.formatExpiry(value);
+            return cardFormatUtils.safeVal(value, target, e);
+        });
+    },
+
+    formatExpiry: function (e) {
+        // Only format if input is a number
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+
+        var target = e.currentTarget;
+        var val = target.value + digit;
+
+        if (/^\d$/.test(val) && !['0', '1'].includes(val)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = (("0" + val + " / ")); });
+
+        } else if (/^\d\d$/.test(val)) {
+            e.preventDefault();
+            return setTimeout(function () {
+                // Split for months where we have the second digit > 2 (past 12) and turn
+                // that into (m1)(m2) => 0(m1) / (m2)
+                var m1 = parseInt(val[0], 10);
+                var m2 = parseInt(val[1], 10);
+                if ((m2 > 2) && (m1 !== 0)) {
+                    return target.value = (("0" + m1 + " / " + m2));
+                } else {
+                    return target.value = ((val + " / "));
+                }
+            });
+        }
+    },
+
+    formatForwardExpiry: function (e) {
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+
+        var target = e.currentTarget;
+        var val = target.value;
+
+        if (/^\d\d$/.test(val)) {
+            return target.value = ((val + " / "));
+        }
+    },
+
+    formatForwardSlashAndSpace: function (e) {
+        var which = String.fromCharCode(e.which);
+        if ((which !== '/') && (which !== ' ')) { return; }
+
+        var target = e.currentTarget;
+        var val = target.value;
+
+        if (/^\d$/.test(val) && (val !== '0')) {
+            return target.value = (("0" + val + " / "));
+        }
+    },
+
+    formatBackExpiry: function (e) {
+        var target = e.currentTarget;
+        var value = target.value;
+
+        // Return unless backspacing
+        if (e.which !== 8) { return; }
+
+        // Return if focus isn't at the end of the text
+        if ((target.selectionStart != null) &&
+            (target.selectionStart !== value.length)) { return; }
+
+        // Remove the trailing space + last digit
+        if (/\d\s\/\s$/.test(value)) {
+            e.preventDefault();
+            return setTimeout(function () { return target.value = value.replace(/\d\s\/\s$/, ''); });
+        }
+    },
+
+    // Adds maxlength to Expiry field
+    handleExpiryAttributes: function(e){
+        e.setAttribute('maxlength', 9);
+    },
+
+    // Format CVC
+    reFormatCVC: function (e) {
+        var target = e.currentTarget;
+        return setTimeout(function () {
+            var value = target.value;
+            value = cardFormatUtils.replaceFullWidthChars(value);
+            value = value.replace(/\D/g, '').slice(0, 4);
+            return cardFormatUtils.safeVal(value, target, e);
+        });
+    },
+
+    // Restrictions
+    restrictNumeric: function (e) {
+
+        // Key event is for a browser shortcut
+        if (e.metaKey || e.ctrlKey) { return true; }
+
+        // If keycode is a space
+        if (e.which === 32) { return false; }
+
+        // If keycode is a special char (WebKit)
+        if (e.which === 0) { return true; }
+
+        // If char is a special char (Firefox)
+        if (e.which < 33) { return true; }
+
+        var input = String.fromCharCode(e.which);
+
+        // Char is a number or a space
+        return (!!/[\d\s]/.test(input)) ? true : e.preventDefault();
+    },
+
+    restrictCardNumber: function (e) {
+        var target = e.currentTarget;
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+        if (cardFormatUtils.hasTextSelected(target)) { return; }
+        // Restrict number of digits
+        var value = (target.value + digit).replace(/\D/g, '');
+        var card = cardFormatUtils.cardFromNumber(value);
+
+        if (card) {
+            return value.length <= card.length[card.length.length - 1];
+        } else {
+            // All other cards are 16 digits long
+            return value.length <= 16;
+        }
+    },
+
+    restrictExpiry: function (e) {
+        var target = e.currentTarget;
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+
+        if (cardFormatUtils.hasTextSelected(target)) { return; }
+
+        var value = target.value + digit;
+        value = value.replace(/\D/g, '');
+
+        if (value.length > 6) { return false; }
+    },
+
+    restrictCVC: function (e) {
+        var target = e.currentTarget;
+        var digit = String.fromCharCode(e.which);
+        if (!/^\d+$/.test(digit)) { return; }
+
+        if (cardFormatUtils.hasTextSelected(target)) { return; }
+
+        var val = target.value + digit;
+        return val.length <= 4;
+    },
+
+    setCardType: function (e) {
+        
+        var target = e.currentTarget;
+        var val = target.value;
+        var cardType = validation.cardType(val) || 'unknown';
+
+        if (target.className.indexOf(cardType) === -1) {
+            
+            var allTypes = [];
+            for(var i in cards){
+                allTypes.push(cards[i].type);
+            }
+
+            target.classList.remove('unknown');
+            target.classList.remove('identified');
+            (ref = target.classList).remove.apply(ref, allTypes);
+            target.classList.add(cardType);
+            target.dataset.cardBrand = cardType;
+            
+            if(cardType !== 'unknown'){
+                target.classList.add('identified');
+            }
+
+        }
+        var ref;
+    },
+
+    __guard__: function (value, transform) {
+        return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+    }
+
+};
+
+var format = {
+
+    validateCardNumber: validation.validateCardNumber,
+    validateCardCVC: validation.validateCardCVC,
+    validateCardExpiry: validation.validateCardExpiry,
+    
+    setCardType: function(el) {
+        cardFormatUtils.setCardType(el);
+        setTimeout(function(){
+            el.currentTarget.dispatchEvent(new Event('keyup'));
+            el.currentTarget.dispatchEvent(new Event('change'));
+        }, 100);
+    },
+
+    formatCardCVC: function (el) {
+        el.addEventListener('keypress', cardFormatUtils.restrictNumeric);
+        el.addEventListener('keypress', cardFormatUtils.restrictCVC);
+        el.addEventListener('paste', cardFormatUtils.reFormatCVC);
+        el.addEventListener('change', cardFormatUtils.reFormatCVC);
+        el.addEventListener('input', cardFormatUtils.reFormatCVC);
+        return this;
+    },
+
+    formatCardExpiry: function (el) {
+        cardFormatUtils.handleExpiryAttributes(el);
+        el.addEventListener('keypress', cardFormatUtils.restrictNumeric);
+        el.addEventListener('keypress', cardFormatUtils.formatExpiry);
+        el.addEventListener('keypress', cardFormatUtils.formatForwardSlashAndSpace);
+        el.addEventListener('keypress', cardFormatUtils.formatForwardExpiry);
+        el.addEventListener('keydown', cardFormatUtils.formatBackExpiry);
+        el.addEventListener('change', cardFormatUtils.reFormatExpiry);
+        el.addEventListener('input', cardFormatUtils.reFormatExpiry);
+        el.addEventListener('blur', cardFormatUtils.reFormatExpiry);
+        return this;
+    },
+
+    formatCardNumber: function (el) {
+        el.addEventListener('keypress', cardFormatUtils.restrictNumeric);
+        el.addEventListener('keypress', cardFormatUtils.restrictCardNumber);
+        el.addEventListener('keypress', cardFormatUtils.formatCardNumber);
+        el.addEventListener('keydown', cardFormatUtils.formatBackCardNumber);
+        el.addEventListener('keyup', cardFormatUtils.setCardType);
+        el.addEventListener('paste', cardFormatUtils.reFormatCardNumber);
+        el.addEventListener('change', cardFormatUtils.reFormatCardNumber);
+        el.addEventListener('input', cardFormatUtils.reFormatCardNumber);
+        el.addEventListener('input', cardFormatUtils.setCardType);
+        return this;
+    },
+
+    restrictNumeric: function (el) {
+        el.addEventListener('keypress', cardFormatUtils.restrictNumeric);
+        el.addEventListener('paste', cardFormatUtils.restrictNumeric);
+        el.addEventListener('change', cardFormatUtils.restrictNumeric);
+        el.addEventListener('input', cardFormatUtils.restrictNumeric);
+        return this;
+    },
+};
+
+var VueCardFormat = {
+  install: function install(vue, opts) {
+    // provide plugin to Vue
+    vue.prototype.$cardFormat = format;
+    // provide directive
+    vue.directive('cardformat', {
+      bind: function bind(el, binding, vnode) {
+        // see if el is an input
+        if (el.nodeName.toLowerCase() !== 'input'){
+          el = el.querySelector('input');
+        }
+        // call format function from prop
+        var method = Object.keys(format).find(function (key) { return key.toLowerCase() === binding.arg.toLowerCase(); });
+        format[method](el, vnode);
+        // update cardBrand value if available
+        if (method == 'formatCardNumber' && typeof vnode.context.cardBrand !== 'undefined'){
+          el.addEventListener('keyup', function () {
+            if (el.dataset.cardBrand) {
+              vnode.context.cardBrand = el.dataset.cardBrand;
+            }
+          });
+        }
+      }
+    });  
+  }
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VueCardFormat);
+}
+
+return VueCardFormat;
+
+})));
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/OfferImagesComponent.vue?vue&type=template&id=dc0bb758& ***!
@@ -11084,6 +11974,252 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "paymentModal", staticStyle: { display: "none" } },
+    [
+      _c(
+        "form",
+        {
+          ref: "form",
+          staticClass: "require-validation",
+          attrs: {
+            role: "form",
+            action: this.postroute,
+            method: "post",
+            "data-cc-on-file": "false",
+            "data-stripe-publishable-key": this.stripekey,
+            id: "payment-form"
+          }
+        },
+        [
+          _c("input", {
+            attrs: { type: "hidden", name: "_token" },
+            domProps: { value: this.csrf }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "hidden", name: "orderid" },
+            domProps: { value: this.orderid }
+          }),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              ref: "paymentError",
+              staticClass: "form-row row paymentModal_err",
+              staticStyle: { display: "none" }
+            },
+            [_vm._v("\n            Neteisingai įvesti duomenys\n        ")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row row" }, [
+            _c("div", { staticClass: "col-12 form-group required" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Vardas, pavardė")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.fullname,
+                    expression: "fullname"
+                  }
+                ],
+                ref: "fullname",
+                staticClass: "form-control card-holder",
+                attrs: { type: "text" },
+                domProps: { value: _vm.fullname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.fullname = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row row" }, [
+            _c("div", { staticClass: "col-12 form-group required" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Kortelės numeris")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.cardnumber,
+                    expression: "cardnumber"
+                  },
+                  {
+                    name: "cardformat",
+                    rawName: "v-cardformat:formatCardNumber",
+                    arg: "formatCardNumber"
+                  }
+                ],
+                ref: "cardnumber",
+                staticClass: "form-control card-number",
+                attrs: { autocomplete: "off", type: "text" },
+                domProps: { value: _vm.cardnumber },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.cardnumber = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row row" }, [
+            _c("div", { staticClass: "col-12 form-group cvc required" }, [
+              _c("label", { staticClass: "control-label" }, [_vm._v("CVV")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.cardcvv,
+                    expression: "cardcvv"
+                  },
+                  {
+                    name: "cardformat",
+                    rawName: "v-cardformat:formatCardCVC",
+                    arg: "formatCardCVC"
+                  }
+                ],
+                ref: "cardcvv",
+                staticClass: "form-control card-cvc",
+                attrs: {
+                  autocomplete: "off",
+                  placeholder: "pvz.: 123",
+                  type: "text"
+                },
+                domProps: { value: _vm.cardcvv },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.cardcvv = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row row" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 form-group expiration required" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Galiojimas")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.cardexp,
+                      expression: "cardexp"
+                    },
+                    {
+                      name: "cardformat",
+                      rawName: "v-cardformat:formatCardExpiry",
+                      arg: "formatCardExpiry"
+                    }
+                  ],
+                  ref: "cardexp",
+                  staticClass: "form-control card-expiry-month",
+                  attrs: { placeholder: "01/2020", type: "text" },
+                  domProps: { value: _vm.cardexp },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.cardexp = $event.target.value
+                    }
+                  }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c(
+                "button",
+                {
+                  ref: "subBtn",
+                  staticClass: "btn btn-primary btn-lg btn-block mx-0",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.submitPayment($event)
+                    }
+                  }
+                },
+                [_vm._v("Apmokėti (" + _vm._s(this.orderprice) + "€)")]
+              )
+            ])
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "closePaymentsModal",
+        attrs: { onclick: "paymentModalHide()" }
+      },
+      [_c("i", { staticClass: "fas fa-times" })]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/SearchComponent.vue?vue&type=template&id=05bac5c7&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/shop/SearchComponent.vue?vue&type=template&id=05bac5c7& ***!
@@ -11293,7 +12429,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primary",
+              staticClass: "btn btn-primary mx-0",
               attrs: { type: "submit" },
               on: {
                 click: function($event) {
@@ -27449,11 +28585,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/auth/LoginComponent */ "./resources/js/components/auth/LoginComponent.vue");
 /* harmony import */ var _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/auth/RegisterComponent */ "./resources/js/components/auth/RegisterComponent.vue");
 /* harmony import */ var _components_shop_SearchComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/shop/SearchComponent */ "./resources/js/components/shop/SearchComponent.vue");
-/* harmony import */ var _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/OfferImagesComponent */ "./resources/js/components/admin/OfferImagesComponent.vue");
-/* harmony import */ var _components_admin_ScrapperComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/ScrapperComponent */ "./resources/js/components/admin/ScrapperComponent.vue");
-/* harmony import */ var _components_admin_OffersTableComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/OffersTableComponent */ "./resources/js/components/admin/OffersTableComponent.vue");
-/* harmony import */ var _kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @kugatsu/vuenotification */ "./node_modules/@kugatsu/vuenotification/dist/vueNotification.common.js");
-/* harmony import */ var _kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _components_shop_PaymentComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/shop/PaymentComponent */ "./resources/js/components/shop/PaymentComponent.vue");
+/* harmony import */ var _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/OfferImagesComponent */ "./resources/js/components/admin/OfferImagesComponent.vue");
+/* harmony import */ var _components_admin_ScrapperComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/ScrapperComponent */ "./resources/js/components/admin/ScrapperComponent.vue");
+/* harmony import */ var _components_admin_OffersTableComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/OffersTableComponent */ "./resources/js/components/admin/OffersTableComponent.vue");
+/* harmony import */ var _kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @kugatsu/vuenotification */ "./node_modules/@kugatsu/vuenotification/dist/vueNotification.common.js");
+/* harmony import */ var _kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var vue_credit_card_validation__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-credit-card-validation */ "./node_modules/vue-credit-card-validation/dist/vue-credit-card-validation.js");
+/* harmony import */ var vue_credit_card_validation__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_credit_card_validation__WEBPACK_IMPORTED_MODULE_11__);
 
  // User profile component
 
@@ -27465,6 +28604,8 @@ __webpack_require__.r(__webpack_exports__);
 
  //Searchbar
 
+ //Payment
+
  // Image uploado component
 
  // Scrapperio komponentas
@@ -27473,9 +28614,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_credit_card_validation__WEBPACK_IMPORTED_MODULE_11___default.a);
+
 __webpack_require__(/*! ./helpers/lazyload */ "./resources/js/helpers/lazyload.js");
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_9___default.a, {
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_kugatsu_vuenotification__WEBPACK_IMPORTED_MODULE_10___default.a, {
   timer: 20
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('click-outside', {
@@ -27498,10 +28641,11 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     UserProfile: _components_user_ProfileComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
     'app-login': _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
     'app-registraion': _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
-    'app-images': _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_6__["default"],
-    'app-scrapper': _components_admin_ScrapperComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
+    'app-images': _components_admin_OfferImagesComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
+    'app-scrapper': _components_admin_ScrapperComponent__WEBPACK_IMPORTED_MODULE_8__["default"],
     'app-ratings': _components_user_RatingsComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'app-offers-table': _components_admin_OffersTableComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
+    'app-offers-table': _components_admin_OffersTableComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
+    'app-payment': _components_shop_PaymentComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
   }
 }).$mount('#app');
 
@@ -27580,15 +28724,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/admin/OffersTableComponent.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _OffersTableComponent_vue_vue_type_template_id_5e96b69e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OffersTableComponent.vue?vue&type=template&id=5e96b69e& */ "./resources/js/components/admin/OffersTableComponent.vue?vue&type=template&id=5e96b69e&");
 /* harmony import */ var _OffersTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OffersTableComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/OffersTableComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _OffersTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _OffersTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -27618,7 +28761,7 @@ component.options.__file = "resources/js/components/admin/OffersTableComponent.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/admin/OffersTableComponent.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27831,6 +28974,75 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 component.options.__file = "resources/js/components/auth/RegisterComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/shop/PaymentComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/shop/PaymentComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaymentComponent.vue?vue&type=template&id=5733ae75& */ "./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75&");
+/* harmony import */ var _PaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaymentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/shop/PaymentComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PaymentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/PaymentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PaymentComponent.vue?vue&type=template&id=5733ae75& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/shop/PaymentComponent.vue?vue&type=template&id=5733ae75&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentComponent_vue_vue_type_template_id_5733ae75___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
