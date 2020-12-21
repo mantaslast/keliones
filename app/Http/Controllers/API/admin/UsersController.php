@@ -4,17 +4,17 @@ namespace App\Http\Controllers\API\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Offer;
+use App\User;
 use PDF;
 
-class OffersController extends Controller
+class UsersController extends Controller
 {
     public function destroy(Request $request)
     {
         try{
             $id = $request->id;
-            $offer = Offer::findOrFail($id);
-            $offer->delete();
+            $user = User::findOrFail($id);
+            $user->delete();
             return json_encode(['success' => 1]);
         } catch(Exception $e) {
             return json_encode(['success' => 0]);
@@ -23,10 +23,10 @@ class OffersController extends Controller
 
     public function generatePdf(Request $request)
     {
-        $offers = $request->offers;
-        array_shift($offers);
-        view()->share('admin.offers.pdf',$offers);
-        $pdf = PDF::loadView('admin.offers.pdf', compact('offers'));
+        $users = $request->users;
+        array_shift($users);
+        view()->share('admin.users.pdf',$users);
+        $pdf = PDF::loadView('admin.users.pdf', compact('users'));
 
         return $pdf->stream('pdf_file.pdf');
     }

@@ -13,8 +13,7 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $orders = Order::paginate(20);
-
+        $orders = Order::with('offer')->get();
         return view('admin.orders.index', ['orders' => $orders]);
     }
 
@@ -29,22 +28,5 @@ class OrdersController extends Controller
         $order->admin_id = Auth::user()->id;
         $order->update($validated);
         return redirect()->back()->withSuccess('Sėkmingai atnaujintas pasiūlymas!'); 
-    }
-
-    public function filtered(Request $request)
-    {
-        $query = DB::table('orders');
-        
-        if ($request->email) {
-            $query->where('email','like', '%'.$request->email.'%');
-        }
-
-        if ($request->key) {
-            $query->where('key','like', '%'.$request->key.'%');
-        }
-
-        $orders = $query->paginate(20);
-
-        return view('admin.orders.index', ['orders' => $orders]);
     }
 }

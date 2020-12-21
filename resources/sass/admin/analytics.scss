@@ -1,0 +1,30 @@
+.analytics{
+    &_card{
+        height: 150px;
+        border-radius: 5px;
+        box-shadow: 0 7px 18px -7px hsla(213,9%,58%,.4);
+        padding: 15px;
+        &:nth-of-type(1) {
+            background-color: #8A2BE2;
+        }
+        &:nth-of-type(2){
+            background-color:#4B0082;
+        }
+        &:nth-of-type(3) {
+            background-color:#9370DB;
+        }
+        .fas, .far{
+            color: #fff;
+            font-size: 120px;
+        }
+        &_title, &_content{
+            font-size: 25px;
+            color: #fff;
+        }
+    }
+}
+.chartBlock{
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 0 7px 18px -7px hsla(213,9%,58%,.4);
+}

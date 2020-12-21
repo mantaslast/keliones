@@ -9,6 +9,9 @@ import Payment from './components/shop/PaymentComponent' //Payment
 import OfferImages from './components/admin/OfferImagesComponent' // Image uploado component
 import Scrapper from './components/admin/ScrapperComponent' // Scrapperio komponentas
 import OffersTableComponent from './components/admin/OffersTableComponent' // Offerio lenteles
+import OrdersTableComponent from './components/admin/OrdersTableComponent' // Orderio lenteles
+import CategoryTableComponent from './components/admin/CategoryTableComponent' // Kategoriju lenteles
+import UsersTableComponent from './components/admin/UsersTableComponent' // Vartotoju lenteles
 
 import VueNotification from "@kugatsu/vuenotification";
 
@@ -45,6 +48,10 @@ let app = new Vue({
     'app-scrapper' : Scrapper,
     'app-ratings' : RatingsComponent,
     'app-offers-table' : OffersTableComponent,
+    'app-orders-table' : OrdersTableComponent,
+    'app-categories-table' : CategoryTableComponent,
+    'app-users-table' : UsersTableComponent,
+
     'app-payment' : Payment
   }
 }).$mount('#app')

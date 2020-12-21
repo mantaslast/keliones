@@ -48,7 +48,7 @@
         @endif
         @if (Auth::user()->isSuperAdmin())
           <li>
-            <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Analitika</span></a>
+            <a href="/admin"><i class="ion-ios-briefcase-outline"></i> <span class="">Analitika</span></a>
           </li>
         @endif
       </ul>

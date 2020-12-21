@@ -32,6 +32,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     //Offers routes
     Route::post('offers/destroy', 'Api\admin\OffersController@destroy');
     Route::post('offers/generatePdf', 'Api\admin\OffersController@generatePdf');
-    //PDF routes
-    
+    //Orders routes
+    Route::post('orders/generatePdf', 'Api\admin\OrdersController@generatePdf');
+    //Categories routes
+    Route::post('categories/destroy', 'Api\admin\CategoriesController@destroy');
+    Route::post('categories/generatePdf', 'Api\admin\CategoriesController@generatePdf');
+    //Users routes
+    Route::post('users/destroy', 'Api\admin\UsersController@destroy');
+    Route::post('users/generatePdf', 'Api\admin\UsersController@generatePdf');
 });

@@ -2,8 +2,9 @@
     <div class="base-demo" style="width: 100%; position:relative;">
         <vue-table-dynamic ref="table" :params="params">
             <template v-slot:column-6="{ props }">
-                <div class="btn btn-warning ml-0" @click="editOffer(props)">Redaguoti</div>
-                <div class="btn btn-danger ml-1" @click.prevent="deleteOffer(props)">Ištrinti</div>
+                <div class="btn btn-primary" @click="viewOffer(props)" ><i class="far fa-eye"></i></div>
+                <div class="btn btn-warning ml-1" @click="editOffer(props)"><i class="fas fa-edit"></i></div>
+                <div class="btn btn-danger ml-1" @click.prevent="deleteOffer(props)"><i class="far fa-trash-alt"></i></div>
             </template>
         </vue-table-dynamic>
         <i @click="exportPdf" class="far fa-file-pdf pdfIcon"></i>
@@ -12,9 +13,9 @@
 </template>
 
 <script>
-import {formatOffersTableData} from '../../helpers/tablehelpers'
+import {formatOffersTableData, formatForCsv, today} from '../../helpers/tablehelpers'
 import {deleteRecordConfirm} from '../../helpers/validation'
-import {post, getPdf} from '../../helpers/requests'
+import {post, getPdf, getCsv} from '../../helpers/requests'
 import VueTableDynamic from 'vue-table-dynamic'
 export default {
     components: { VueTableDynamic },
@@ -28,7 +29,7 @@ export default {
     mounted : function () {
         this.params = {
             data: [
-                ['Id', 'Pavadinimas', 'Miestas', 'Šalis', 'Kategorija', 'Kaina', 'Veiksmas'],
+                ['Id', 'Pavadinimas', 'Miestas', 'Šalis', 'Kategorija', 'Kaina (€)', 'Veiksmas'],
                 ...this.offers.reduce((accumulator, currentValue, currentIndex) => {
                     accumulator[currentIndex] = [currentValue.id, currentValue.name, currentValue.city, currentValue.country, this.categories[currentValue.category_id],currentValue.price ,'']
                     return accumulator
@@ -65,12 +66,15 @@ export default {
             window.location = window.location.origin+'/admin/offers/' + offerId+ '/edit'
         },
 
+        viewOffer : function (props) {
+            let offerId = props.rowData[0].data
+            window.location = window.location.origin + '/admin/offers/' + offerId
+        },
+
         exportCsv : function () {
-            // let tableData = this.$refs.table.tableData.activatedRows
-            // let formattedData = formatOffersTableData(tableData)
-            // post('/admin/offers/generatePdf',{offers: formattedData}).then(resp => {
-            //     console.log(resp)
-            // })
+            let tableData = this.$refs.table.tableData.activatedRows
+            let formattedData = formatOffersTableData(tableData)
+            getCsv('pasiulymai_'+today()+'.csv',formatForCsv(formattedData))
         },
 
         exportPdf : function () {

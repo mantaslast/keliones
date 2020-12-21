@@ -18,15 +18,9 @@ use App\Offer;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/testas', function () {
-//     $offers = Offer::all();
-    
-//     foreach($offers as $key => $offer) {
-//         $currDate = date('Y-m-d',strtotime('now +'.rand(0,30) .' day'));
-//         $offer->leave_at = $currDate;
-//         $offer->arrive_at = $currDate;
-//         $offer->save();
-//     }
+Route::get('/testas', function () {
+    dd('asd');
+});
     
 
 // });
@@ -34,7 +28,6 @@ use App\Offer;
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
     Route::get('/orders', 'WEB\superAdmin\orders\OrdersController@index')->name('superAdminOrders');
-    Route::get('/orders/filtered', 'WEB\superAdmin\orders\OrdersController@filtered')->name('superAdminOrderFiltered');
     Route::get('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@show')->name('superAdminOrder');
     Route::put('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@update')->name('superAdminOrderUpdate');
 });
