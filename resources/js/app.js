@@ -13,6 +13,7 @@ import OrdersTableComponent from './components/admin/OrdersTableComponent' // Or
 import CategoryTableComponent from './components/admin/CategoryTableComponent' // Kategoriju lenteles
 import UsersTableComponent from './components/admin/UsersTableComponent' // Vartotoju lenteles
 
+import AnalyticsDashboardComponent from './components/admin/AnalyticsDashboardComponent' // Analytics dashboardas
 import VueNotification from "@kugatsu/vuenotification";
 
 
@@ -51,7 +52,7 @@ let app = new Vue({
     'app-orders-table' : OrdersTableComponent,
     'app-categories-table' : CategoryTableComponent,
     'app-users-table' : UsersTableComponent,
-
+    'app-dashboard' : AnalyticsDashboardComponent,
     'app-payment' : Payment
   }
 }).$mount('#app')

@@ -26,9 +26,11 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
         "@kugatsu/vuenotification": "^1.1.4",
+        "chart.js": "^2.9.4",
         "font-awesome": "^4.7.0",
         "froala-editor": "^3.2.1",
         "gsap": "^3.5.1",
+        "vue-chartjs": "^3.5.1",
         "vue-credit-card-validation": "^0.1.10",
         "vue-range-component": "Anoesj/vue-range-slider#master",
         "vue-star-rating": "^1.6.1",

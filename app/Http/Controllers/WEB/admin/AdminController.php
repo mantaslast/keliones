@@ -38,8 +38,7 @@ class AdminController extends Controller
             'users' => $users,
             'orders' => $orders,
         );
-         dd($return);
         
-        return view('admin.index');
+        return view('admin.index', ['data' => $return]);
     }
 }

@@ -40,4 +40,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     //Users routes
     Route::post('users/destroy', 'Api\admin\UsersController@destroy');
     Route::post('users/generatePdf', 'Api\admin\UsersController@generatePdf');
+
+    //Analytics dashboard
+    Route::get('analytics', 'Api\admin\AnalyticsController@get');
 });
