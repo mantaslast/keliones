@@ -36,6 +36,7 @@ class SearchController extends Controller
         }
         
         $query->whereNull('deleted_at');
+        $query->where('hidden', 0);
         $offers = $query->paginate(20);
 
         return view('shop.search', ['offers' => $offers]);

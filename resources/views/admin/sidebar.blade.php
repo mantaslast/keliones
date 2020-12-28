@@ -13,7 +13,10 @@
               <a href="{{ route('offers.create') }}"><i class="ion-ios-clock-outline"></i>Kurti naują</a>
             </li>
             <li>
-              <a href="{{ route('offers.index') }}"><i class="ion-android-star-outline"></i>Pasiūlymų rikiavimas</a>
+              <a href="{{ route('offers.imports') }}"><i class="ion-android-star-outline"></i>Pasiūlymų importas</a>
+            </li>
+            <li>
+              <a href="{{ route('offers.imported') }}"><i class="ion-android-star-outline"></i>Importuoti pasiūlymai</a>
             </li>
           </ul>
         </li>

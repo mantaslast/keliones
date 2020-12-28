@@ -29,7 +29,10 @@
                                     Įvykęs
                                 @endif
                             </div>
-                        
+                            @if($order->status == 2)
+                                <app-order-pdf :orderid="'{{json_encode($order->id)}}'"></app-order-pdf>
+                            @endif
+
                             <img class="card-img-top" src="files/{{ json_decode($order->offer->images)[0] }}" alt="Card image cap">
                             <div class="card-body">
                                 Užsakymo raktas: <br><a href="{{ route('reservation.show',['order' => $order->key]) }}" class="card-title">{{ $order->key }}</a><br>

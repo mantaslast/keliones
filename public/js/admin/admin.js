@@ -133,9 +133,7 @@ __webpack_require__(/*! froala-editor/js/plugins/align.min.js */ "./node_modules
 
 document.addEventListener("DOMContentLoaded", function () {
   if (document.getElementById('description')) {
-    new FroalaEditor('textarea', {
-      width: '800'
-    });
+    new FroalaEditor('textarea', {});
   }
 
   document.getElementById('closeSidebar').addEventListener('click', closeSidebar);

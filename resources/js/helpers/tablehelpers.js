@@ -26,6 +26,9 @@ export function formatOrdersTableData (data) {
         } else if (currentValue.cells[2].data == 3) {
             status = 'Įvykęs'
         }
+
+        let risk = currentValue.cells[6].data === 'Rizika' ? 'Rizika' : currentValue.cells[6].data.score
+
         accumulator.push({
             id: currentValue.cells[0].data, 
             key: currentValue.cells[1].data,
@@ -33,6 +36,7 @@ export function formatOrdersTableData (data) {
             email: currentValue.cells[3].data,
             offer_name: currentValue.cells[4].data,
             price: currentValue.cells[5].data,
+            risk: risk
         })
         return accumulator
     }, [])
@@ -90,4 +94,11 @@ export function formatForCsv (data) {
 export function today () {
     let today = new Date().toISOString().slice(0, 10)
     return today
+}
+
+export function getMonday (d) {
+    d = new Date(d);
+    var day = d.getDay(),
+    diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
 }

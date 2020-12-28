@@ -11,7 +11,7 @@ class MainController extends Controller
 {
     public function index($slug, Request $request)
     {
-        $offer = Offer::withTrashed()->findOrFail($request->offer);
+        $offer = Offer::withTrashed()->where('hidden', 0)->findOrFail($request->offer);
         $trashed = 0;
         if ($offer->trashed()) {
             $trashed = 1;

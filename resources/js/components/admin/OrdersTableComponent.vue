@@ -5,8 +5,10 @@
                 <span v-html="renderStatus(props)"></span>
             </template>
             <template v-slot:column-6="{ props }">
+                <span v-html="renderRisk(props)"></span>
+            </template>
+            <template v-slot:column-7="{ props }">
                 <div class="btn btn-primary" @click="viewOrder(props)" ><i class="far fa-eye"></i></div>
-                
             </template>
         </vue-table-dynamic>
         <i @click="exportPdf" class="far fa-file-pdf pdfIcon"></i>
@@ -30,9 +32,9 @@ export default {
     mounted : function () {
         this.params = {
             data: [
-                ['Id','Raktas', 'Būsena', 'El. paštas', 'Kelionės pavadinimas', 'Kaina (€)', 'Veiksmas'],
+                ['Id','Raktas', 'Būsena', 'El. paštas', 'Kelionės pavadinimas', 'Kaina (€)','Rizika','Veiksmas'],
                 ...this.orders.reduce((accumulator, currentValue, currentIndex) => {
-                    accumulator[currentIndex] = [currentValue.id, currentValue.key, currentValue.status, currentValue.email, currentValue.offer.name, currentValue.offer.price,'']
+                    accumulator[currentIndex] = [currentValue.id, currentValue.key, currentValue.status, currentValue.email, currentValue.offer.name, currentValue.offer.price,{level:currentValue.risk_level, score:currentValue.risk_score},'']
                     return accumulator
                 }, [])
             ],
@@ -44,7 +46,7 @@ export default {
             pageSize: 20,
             pageSizes: [20, 50, 100, 500],
             showTotal: true,
-            columnWidth: [{column: 0, width: 40}, {column: 1, width: 200}, {column: 2, width: 100},{column: 5, width: 100}, {column: 6, width: 60}],
+            columnWidth: [{column: 0, width: 40}, {column: 1, width: 200}, {column: 2, width: 100},{column: 5, width: 100},  {column: 6, width: 60},{column: 7, width: 60}],
         }
     },
     methods : {
@@ -63,6 +65,17 @@ export default {
                 return '<div style="color:#21A226;">Apmokėtas</div>'
             } else if (status == 3) {
                 return '<div style="color:green;">Įvykęs</div>'
+            }
+        },
+        
+        renderRisk: function (prop) {
+            if (prop.cellData.score === null) {
+                return '<div>-</div>'
+            }
+            if (prop.cellData.score > 50) {
+                return '<div style="color:red;" title="'+prop.cellData.level+'">'+prop.cellData.score+'</div>'
+            } else if (prop.cellData.score < 50) {
+                return '<div style="color:green;" title="'+prop.cellData.level+'">'+prop.cellData.score+'</div>'
             }
         },
 

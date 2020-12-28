@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Offer;
 use PDF;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class OffersController extends Controller
 {
@@ -29,5 +31,37 @@ class OffersController extends Controller
         $pdf = PDF::loadView('admin.offers.pdf', compact('offers'));
 
         return $pdf->stream('pdf_file.pdf');
+    }
+
+    public function addOfferImage(Request $request)
+    {
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $name = Str::random(10).time().'.'.$file->extension();
+            $file->move(public_path().'/files/', $name);
+        }
+
+        return json_encode(['name' => $name]);
+    }
+
+    public function deleteOfferImage(Request $request)
+    {
+        $filename = $request->name;
+        File::delete(public_path("files/".$filename));
+
+        return json_encode($request->name);
+    }
+    
+    public function getOfferImage(Request $request)
+    {
+        $returnFiles = [];
+        $filenames = $request->filenames;
+        foreach($filenames as $key => $filename) {
+            $file = File::get(public_path('files/'.$filename));
+            return (json_encode($file));
+        }
+
+
+        return json_encode($filenames);
     }
 }

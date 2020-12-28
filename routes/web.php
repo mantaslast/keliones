@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\User;
-use App\Offer;
+use App\Order;
 
 // use App\Mail\RatingReminder;
 // use App\Reminder;
@@ -19,11 +18,16 @@ use App\Offer;
 |
 */
 Route::get('/testas', function () {
-    dd('asd');
+    $order = Order::where('status', 2)->first();
+    // dd($order);
+    // view()->share('admin.offers.pdf',$offers);
+    // dd($order);
+    $pdf = PDF::loadView('shop.invoice');
+
+    return $pdf->download('pdf_file.pdf');
+    
 });
     
-
-// });
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
@@ -42,6 +46,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
     Route::resource('categories', 'WEB\admin\categories\CategoriesController');
     Route::get('/offers/pdf', 'WEB\admin\offers\OffersController@generatePdf')->name('generateOffersPdf');
+    Route::get('/offers/imports', 'WEB\admin\offers\OffersController@getImports')->name('offers.imports');
+    Route::get('/offers/imported', 'WEB\admin\offers\OffersController@getImported')->name('offers.imported');
+    Route::get('/reports', 'WEB\admin\reports\ReportsController@get')->name('reports.index');
     Route::resource('offers', 'WEB\admin\offers\OffersController');
 });
 

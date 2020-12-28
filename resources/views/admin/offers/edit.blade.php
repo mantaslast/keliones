@@ -53,12 +53,13 @@
                     <label for="description">Aprašymas</label>
                     <textarea name="description" id="description" cols="30" rows="10">{{ old('description') ? old('description') : $offer->description}}</textarea>
                 </div>
-                <app-images :imgs="{{ $offer->images }}"></app-images>
-                @if($offer->images)
-                    @foreach(json_decode($offer->images) as $image)
-                        <input type="hidden" value="{{ $image }}" name="imgs[]">
-                    @endforeach
-                @endif
+
+                @if(strlen($offer->images) > 0)
+                    <app-images :imgs="{{ $offer->images }}"></app-images>
+                @else
+                    <app-images></app-images>
+                @endisset
+                
                 <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())

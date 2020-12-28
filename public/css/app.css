@@ -16311,6 +16311,20 @@ nav {
   color: #ffbf00;
 }
 
+.statusIcon_pdf {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  color: red;
+  opacity: 0.5;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.statusIcon_pdf:hover {
+  opacity: 1;
+}
+
 .discount_badge {
   position: absolute;
   top: 7%;
@@ -16584,17 +16598,6 @@ Sidebar Nav
   vertical-align: middle;
 }
 
-.sidebar-nav > ul > li > a:after {
-  content: "\F125";
-  font-family: ionicons;
-  font-size: 0.5em;
-  width: 10px;
-  color: #fff;
-  position: absolute;
-  right: 0.75em;
-  top: 45%;
-}
-
 .sidebar-nav .nav-flyout {
   position: absolute;
   background-color: #080D11;
@@ -16667,6 +16670,16 @@ Sidebar Nav
 .csvIcon {
   right: 0%;
   color: green;
+}
+
+.fr-toolbar {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.fr-wrapper {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .analytics_card {

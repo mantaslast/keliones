@@ -93,5 +93,26 @@ function getCsv(filename, rows) {
      }
  }
 
+function postCsv (url, params = {}, token = getApiTokenFromDom()) {
+    if (!token) token = '' 
+    return fetch('/api'+url,{
+            headers: {
+                'Authorization' : 'Bearer ' + token,
+            },
+            method:'POST',
+            body:params['body'],
+    }).then(response=>response.json())
+}
 
-export {post, get, put, getPdf, getCsv}
+function getLocalFile (url, params = {}, token = getApiTokenFromDom()) {
+    if (!token) token = '' 
+    return fetch(url,{
+            headers: {
+                'Authorization' : 'Bearer ' + token,
+                'Content-Type': 'multipart/form-data',
+            },
+            method:'GET',
+    }).then(response=>response.blob())
+}
+
+export {post, get, put, getPdf, getCsv, postCsv, getLocalFile}

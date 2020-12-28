@@ -20,7 +20,7 @@
                         <div class="deal_image small" style="background-image:url('/files/{{ json_decode($offer->images)[1] }}');"></div>
                     </div>
                     <div class="item big">
-                        @if (count(json_decode($offer->images)) > 3)
+                        @if (count(json_decode($offer->images)) >= 3)
                             <div class="deal_image big" style="background-image:url('/files/{{ json_decode($offer->images)[2] }}');"></div>
                         @else
                             <div class="deal_image big" style="background-image:url('/files/{{ json_decode($offer->images)[1] }}');"></div>

@@ -6,7 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $appends = ['risk_score', 'risk_level'];
+
     protected $fillable = ['status', 'description', 'offer_id', 'email', 'phone', 'key'];
+
+    public $risk_score = null;
+    public $risk_level = null;
+    
+    public function getRiskLevelAttribute($value)
+    {
+        return $this->risk_level;
+    }
+
+    public function getRiskScoreAttribute($value)
+    {
+        return $this->risk_score;
+    }
 
     public function User()
     {

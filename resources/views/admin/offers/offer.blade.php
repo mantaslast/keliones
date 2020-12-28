@@ -30,9 +30,11 @@
             </table>
         </div>
         <div class="offer_gallery">
-            @foreach(json_decode($offer->images) as $image)
-                <img class="offer_gallery_image mx-2" src="/files/{{$image}}"/>
-            @endforeach
+            @if(json_decode($offer->images))
+                @foreach(json_decode($offer->images) as $image)
+                    <img class="offer_gallery_image mx-2" src="/files/{{$image}}"/>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>

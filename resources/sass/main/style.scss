@@ -379,5 +379,17 @@
     .waitingPaymentOrder{
         color: #ffbf00;
     }
-
+    &_pdf{
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        color: red;
+        opacity: .5;
+        transition: all .2s;
+        cursor: pointer;
+        &:hover{
+            opacity: 1;
+        }
+    }
 }
+

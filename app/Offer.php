@@ -11,7 +11,7 @@ class Offer extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['name', 'leave_at', 'arrive_at', 'price', 'discount', 'description', 'country', 'city', 'images'];
+    protected $fillable = ['name', 'leave_at', 'arrive_at', 'price', 'discount', 'description', 'country', 'city', 'images', 'hidden', 'imported'];
 
     public function category()
     {
