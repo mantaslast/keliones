@@ -4,6 +4,7 @@
         v-model="dropdownSelected"
         :option="dropdownOptions"
         :placement="'down'"
+        @input="cleardata"
         ></v-select>
         <VueFileAgent
         v-model="fileRecords"
@@ -25,29 +26,37 @@
         <button class="ml-0 mt-1" :disabled="!fileRecordsForUpload.length" @click="uploadFiles()">
         Generuoti
         </button>
-     
+        <div title="Išvalyti duomenis" @click="cleardata" class="refresh d-inline ml-2">
+            <i class="fas fa-redo"></i>
+        </div>
+
         <div v-if="this.importData.success || this.importData.failed || this.importData.rejected" class="importResults d-flex mt-2">
             <div title="Sėkmingai importuoti" v-show="this.importData.success && this.importData.success.length > 0" class="modal_success mbadge d-flex align-items-center my-1">
                 <i style="width: 50px;" class="fas fa-check-circle"></i>
                 <div v-if="this.importData.success !== undefined" class="modal_count">{{this.importData.success.length}}</div>
             </div>
-            <div :class="{active : open}" @click="open=true" title="Ne pasiūlymo URL su teisingu domenu" v-show="this.importData.failed && this.importData.failed.length > 0" class="modal_warning mbadge d-flex align-items-center my-1">
+            <div :class="{active : open}" @click="open=true" :title="warningTitle" v-show="this.importData.failed && this.importData.failed.length > 0" class="modal_warning mbadge d-flex align-items-center my-1">
                 <i style="width: 50px;" class="fas fa-exclamation-triangle"></i>
                 <div v-if="this.importData.failed !== undefined" class="modal_count">{{this.importData.failed.length}}</div>
             </div>
-            <div title="Netinkamas URL" v-show="this.importData.rejected && this.importData.rejected.length > 0" class="modal_failed mbadge d-flex align-items-center my-1">
+            <div :title="dangerTitle" v-show="this.importData.rejected && this.importData.rejected.length > 0" class="modal_failed mbadge d-flex align-items-center my-1">
                 <i style="width: 50px;" class="fas fa-exclamation"></i>
                 <div v-if="this.importData.rejected !== undefined" class="modal_count">{{this.importData.rejected.length}}</div>
             </div>
         </div>
 
-        <vue-table-dynamic ref="table" :params="params">
+        <vue-table-dynamic v-if="dropdownSelected.value=='scrapper'" ref="table" :params="params">
              <template v-slot:column-4="{ props }">
                 <div v-html="limitText(props)"></div>
             </template>
             <template v-slot:column-5="{ props }">
-                <div v-if="props.cellData == 0" title="Išsaugoti prie importuotų" class="btn btn-warning ml-1" @click="saveImported(props)"><i class="fas fa-share-square"></i></div>
-                <div v-if="props.cellData == 1" title="Išsaugotas prie importuotų" class="btn btn-primary ml-1"><i class="far fa-check-circle"></i></div>
+                <div title="Išsaugoti prie importuotų" class="btn btn-warning ml-1" @click="saveImported(props)"><i class="fas fa-share-square"></i></div>
+            </template>
+        </vue-table-dynamic>
+
+        <vue-table-dynamic v-if="dropdownSelected.value=='plain'" ref="table" :params="params">
+             <template v-slot:[actionSlot]="{ props }">
+                <div title="Išsaugoti prie importuotų" class="btn btn-warning ml-1" @click="saveImportedPlain(props)"><i class="fas fa-share-square"></i></div>
             </template>
         </vue-table-dynamic>
 
@@ -98,6 +107,7 @@ export default {
       open: false,
       importData: {},
       params : {},
+      actionSlot : ''
     };
   },
   methods: {
@@ -110,20 +120,25 @@ export default {
 
         if (this.dropdownSelected.value == 'scrapper') {
             postCsv('/admin/scrapperimports', {body:formData}).then(res => {
-                console.log(res)
                 this.importData = res
                 this.$notification.removeAll()
                 this.$notification.success("Duomenys sugeneruoti sėkmingai!", {  timer: 6});
                 if (this.importData.success.length > 0) {
-                      this.setTableData(this.importData.success)
+                    this.setScrapperTableData(this.importData.success)
                 }
             })
         } else if (this.dropdownSelected.value == 'plain') {
             postCsv('/admin/plainimports', {body:formData}).then(res => {
-                console.log(res)
-                this.importData = res
-                this.$notification.removeAll()
-                this.$notification.success("Duomenys sugeneruoti sėkmingai!", {  timer: 6});
+                if (res.success == false) {
+                    this.$notification.error("Nepavyko sugeneruoti pasiūlymų!", {  timer: 6});
+                } else {
+                    this.importData = res
+                    this.$notification.removeAll()
+                    this.$notification.success("Duomenys sugeneruoti sėkmingai!", {  timer: 6});
+                    if (this.importData.success.length > 0) {
+                        this.setPlainTableData(this.importData)
+                    }
+                }
             })
         }
     },
@@ -163,7 +178,7 @@ export default {
       }
     },
 
-    setTableData(data) {
+    setScrapperTableData(data) {
         let offers = Array.prototype.concat.apply([], data.map(offer => {
             return offer.data.map(trg => {
                 return [offer.name, trg.dateFrom === undefined ? '-' : trg.dateFrom , trg.dateTo, trg.price, offer.description,0]
@@ -186,6 +201,54 @@ export default {
             columnWidth: [{column: 0, width: 250}, {column: 1, width: 100}, {column: 2, width: 100}, {column: 3, width: 100}, {column: 5, width: 60}],
         }
     },
+    setPlainTableData(data) {
+        let columnNamesMap = {
+            'price': 'Kaina (€)',
+            'name': 'Pavadinimas',
+            'country': 'Šalis',
+            'city': 'Miestas',
+            'discount': 'Nuolaida',
+            'leave_at': 'Išvykimas',
+            'arrive_at': 'Atvykimas',
+            'description': 'Aprašymas',
+            'category' : 'Kategorija'
+        }
+        
+        let headerValues = data.column_names.map(name => {
+            if (name in columnNamesMap) return columnNamesMap[name]
+        })
+
+        headerValues.push('Veiksmas')
+
+        let offers = data.success.map((offer, index) => {
+            let temp = data.column_names.map(columnName => {
+                if (columnName in offer) {
+                   
+                    return offer[columnName]
+                }
+            })
+            temp.push(index)
+            return temp
+        })
+
+        this.actionSlot = 'column-' + (headerValues.length-1).toString()
+
+        this.params = {
+            data: [
+                headerValues,
+                ...offers
+            ],
+            header: 'row',
+            sort: [0, 1, 2, 3],
+            border: true,
+            enableSearch: true,
+            pagination: true,
+            pageSize: 20,
+            pageSizes: [20, 50, 100, 500],
+            showTotal: true,
+            columnWidth: [{column: headerValues.length-1, width: 60}],
+        }
+    },
     saveImported : function (props) {
         let rowData = props.rowData
         let offerData = {
@@ -196,7 +259,24 @@ export default {
             description : rowData[4].data,
         }
         this.params.data.splice(props.row, 1)
-        post('/admin/storeImportedOffer', {data : offerData}).then(res => {
+        post('/admin/storeScrappedImportedOffer', {data : offerData}).then(res => {
+           this.$notification.success("Pasiūlymas perkeltas prie importuotų sąrašo!", {  timer: 4});
+        })
+    },
+    saveImportedPlain : function (props) {
+        let categoriesMap = {
+            'Egzotinės kelionės': 4,
+            'Poilsinės kelionės': 1,
+            'Pažintinės kelionės': 2, 
+            'Pramoginės kelionės': 3,
+        }
+
+        let actionTab = props.rowData.length - 1
+        let offerId = props.rowData[actionTab].data
+        let offer = this.importData.success[offerId]
+        if ('category' in offer) offer.category = categoriesMap[offer.category]
+        this.params.data.splice(props.row, 1)
+        post('/admin/storePlainImportedOffer', {data : offer}).then(res => {
            this.$notification.success("Pasiūlymas perkeltas prie importuotų sąrašo!", {  timer: 4});
         })
     },
@@ -206,8 +286,30 @@ export default {
     limitText(props) {
         let str = props.cellData
         return str.length + ' Simboliai'
+    },
+    cleardata(){
+        this.params = {}
+        this.importData = []
+        console.log('clear')
+        this.$refs.table.tableData = {}
     }
   },
+  computed : {
+      warningTitle () {
+          if (this.dropdownSelected.value == 'scrapper') {
+              return 'Ne pasiūlymo URL su teisingu domenu'
+          } else if (this.dropdownSelected.value == 'plain') {
+              return 'Stulpelių reikšmės neatpažintos'
+          }
+      },
+      dangerTitle () {
+          if (this.dropdownSelected.value == 'scrapper') {
+              return 'Netinkamas URL'
+          } else if (this.dropdownSelected.value == 'plain') {
+              return 'Netinkami pasiūlymai'
+          }
+      }
+  }
 };
 </script>
 
@@ -258,5 +360,15 @@ export default {
     justify-content: space-evenly;
     background: white;
     border: 1px solid gainsboro;
+}
+.refresh{
+    i{
+        cursor: pointer;
+        color: red;
+        opacity: .7;
+        &:hover{
+            opacity: 1;
+        }
+    }
 }
 </style>

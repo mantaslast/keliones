@@ -1,5 +1,6 @@
 <template>
-    <div class="paymentModal" style="display:none;">
+    <div :class="{paymentModal:true, pleasewait:loading}" style="display:none;">
+        <div class="loader2" v-show="loading"></div>
         <form 
             ref="form"
             role="form" 
@@ -60,10 +61,12 @@
             cardexp: '',
             cardcvv: '',
             cardnumber: '',
-            errors: {}
+            errors: {},
+            loading: false
         }),
         methods: {
             submitPayment(e) {
+                this.loading = true
                 let regName = /^[a-zA-Z]{2,40}( [a-zA-Z]{2,40})+$/;
                 if(!regName.test(this.fullname.trim())){
                     this.$refs.fullname.classList.add('is-invalid')
@@ -99,6 +102,7 @@
 
                 if (this.errors['fullname'] == true || this.errors['cardnumber'] == true || this.errors['cardcvv'] == true || this.errors['cardexp'] == true) {
                     this.$refs.paymentError.style.display = 'block'
+                    this.loading = false
                 } else {
                     this.$refs.paymentError.style.display = 'none'
                     Stripe.setPublishableKey(this.stripekey);
@@ -110,13 +114,14 @@
                     }, (status, response) => {
                         if (response.error) {
                             alert('Įvyko klaida')
+                            this.loading = false
                         } else {
                             /* token contains id, last4, and card type */
                             let token = response['id'];
                             let form = this.$refs.form
                             form.innerHTML += "<input type='hidden' name='stripeToken' value='" + token + "'/>";
                             form.submit()
-
+                            console.log('pranesimas tesiamas')
                             // $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
                             // $form.get(0).submit();
                         }

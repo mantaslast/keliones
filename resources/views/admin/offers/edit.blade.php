@@ -45,7 +45,7 @@
                 <label for="category">Kategorija</label>
                     <select value="{{ old('category_id') ? old('category_id') : $offer->category_id }}" name="category_id" class="form-control" id="category">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>                        
+                            <option @if($offer->category_id == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>                        
                         @endforeach
                     </select>
                 </div>

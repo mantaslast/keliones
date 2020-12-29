@@ -47,7 +47,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('reports', 'Api\admin\ReportsController@getData');
     Route::post('scrapperimports', 'Api\admin\ImportsController@parseScrapperCsv');
     Route::post('plainimports', 'Api\admin\ImportsController@parsePlainCsv');
-    Route::post('storeImportedOffer', 'Api\admin\ImportsController@storeImportedOffer');
+    Route::post('storeScrappedImportedOffer', 'Api\admin\ImportsController@storeScrappedImportedOffer');
+    Route::post('storePlainImportedOffer', 'Api\admin\ImportsController@storePlainImportedOffer');
     //Analytics dashboard
     Route::get('analytics', 'Api\admin\AnalyticsController@get');
 });

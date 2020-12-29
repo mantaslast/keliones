@@ -4104,6 +4104,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4130,7 +4139,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       fileRecordsForUpload: [],
       open: false,
       importData: {},
-      params: {}
+      params: {},
+      actionSlot: ''
     };
   },
   methods: {
@@ -4160,7 +4170,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_1__["postCsv"])('/admin/scrapperimports', {
           body: formData
         }).then(function (res) {
-          console.log(res);
           _this.importData = res;
 
           _this.$notification.removeAll();
@@ -4170,21 +4179,30 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           });
 
           if (_this.importData.success.length > 0) {
-            _this.setTableData(_this.importData.success);
+            _this.setScrapperTableData(_this.importData.success);
           }
         });
       } else if (this.dropdownSelected.value == 'plain') {
         Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_1__["postCsv"])('/admin/plainimports', {
           body: formData
         }).then(function (res) {
-          console.log(res);
-          _this.importData = res;
+          if (res.success == false) {
+            _this.$notification.error("Nepavyko sugeneruoti pasiūlymų!", {
+              timer: 6
+            });
+          } else {
+            _this.importData = res;
 
-          _this.$notification.removeAll();
+            _this.$notification.removeAll();
 
-          _this.$notification.success("Duomenys sugeneruoti sėkmingai!", {
-            timer: 6
-          });
+            _this.$notification.success("Duomenys sugeneruoti sėkmingai!", {
+              timer: 6
+            });
+
+            if (_this.importData.success.length > 0) {
+              _this.setPlainTableData(_this.importData);
+            }
+          }
         });
       }
     },
@@ -4219,7 +4237,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.deleteUploadedFile(fileRecord);
       }
     },
-    setTableData: function setTableData(data) {
+    setScrapperTableData: function setScrapperTableData(data) {
       var offers = Array.prototype.concat.apply([], data.map(function (offer) {
         return offer.data.map(function (trg) {
           return [offer.name, trg.dateFrom === undefined ? '-' : trg.dateFrom, trg.dateTo, trg.price, offer.description, 0];
@@ -4253,6 +4271,48 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }]
       };
     },
+    setPlainTableData: function setPlainTableData(data) {
+      var columnNamesMap = {
+        'price': 'Kaina (€)',
+        'name': 'Pavadinimas',
+        'country': 'Šalis',
+        'city': 'Miestas',
+        'discount': 'Nuolaida',
+        'leave_at': 'Išvykimas',
+        'arrive_at': 'Atvykimas',
+        'description': 'Aprašymas',
+        'category': 'Kategorija'
+      };
+      var headerValues = data.column_names.map(function (name) {
+        if (name in columnNamesMap) return columnNamesMap[name];
+      });
+      headerValues.push('Veiksmas');
+      var offers = data.success.map(function (offer, index) {
+        var temp = data.column_names.map(function (columnName) {
+          if (columnName in offer) {
+            return offer[columnName];
+          }
+        });
+        temp.push(index);
+        return temp;
+      });
+      this.actionSlot = 'column-' + (headerValues.length - 1).toString();
+      this.params = {
+        data: [headerValues].concat(_toConsumableArray(offers)),
+        header: 'row',
+        sort: [0, 1, 2, 3],
+        border: true,
+        enableSearch: true,
+        pagination: true,
+        pageSize: 20,
+        pageSizes: [20, 50, 100, 500],
+        showTotal: true,
+        columnWidth: [{
+          column: headerValues.length - 1,
+          width: 60
+        }]
+      };
+    },
     saveImported: function saveImported(props) {
       var _this2 = this;
 
@@ -4265,10 +4325,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         description: rowData[4].data
       };
       this.params.data.splice(props.row, 1);
-      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_1__["post"])('/admin/storeImportedOffer', {
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_1__["post"])('/admin/storeScrappedImportedOffer', {
         data: offerData
       }).then(function (res) {
         _this2.$notification.success("Pasiūlymas perkeltas prie importuotų sąrašo!", {
+          timer: 4
+        });
+      });
+    },
+    saveImportedPlain: function saveImportedPlain(props) {
+      var _this3 = this;
+
+      var categoriesMap = {
+        'Egzotinės kelionės': 4,
+        'Poilsinės kelionės': 1,
+        'Pažintinės kelionės': 2,
+        'Pramoginės kelionės': 3
+      };
+      var actionTab = props.rowData.length - 1;
+      var offerId = props.rowData[actionTab].data;
+      var offer = this.importData.success[offerId];
+      if ('category' in offer) offer.category = categoriesMap[offer.category];
+      this.params.data.splice(props.row, 1);
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_1__["post"])('/admin/storePlainImportedOffer', {
+        data: offer
+      }).then(function (res) {
+        _this3.$notification.success("Pasiūlymas perkeltas prie importuotų sąrašo!", {
           timer: 4
         });
       });
@@ -4279,6 +4361,28 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     limitText: function limitText(props) {
       var str = props.cellData;
       return str.length + ' Simboliai';
+    },
+    cleardata: function cleardata() {
+      this.params = {};
+      this.importData = [];
+      console.log('clear');
+      this.$refs.table.tableData = {};
+    }
+  },
+  computed: {
+    warningTitle: function warningTitle() {
+      if (this.dropdownSelected.value == 'scrapper') {
+        return 'Ne pasiūlymo URL su teisingu domenu';
+      } else if (this.dropdownSelected.value == 'plain') {
+        return 'Stulpelių reikšmės neatpažintos';
+      }
+    },
+    dangerTitle: function dangerTitle() {
+      if (this.dropdownSelected.value == 'scrapper') {
+        return 'Netinkamas URL';
+      } else if (this.dropdownSelected.value == 'plain') {
+        return 'Netinkami pasiūlymai';
+      }
     }
   }
 });
@@ -5180,6 +5284,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['stripekey', 'postroute', 'orderprice', 'csrf', 'orderid'],
   data: function data() {
@@ -5188,13 +5293,15 @@ __webpack_require__.r(__webpack_exports__);
       cardexp: '',
       cardcvv: '',
       cardnumber: '',
-      errors: {}
+      errors: {},
+      loading: false
     };
   },
   methods: {
     submitPayment: function submitPayment(e) {
       var _this = this;
 
+      this.loading = true;
       var regName = /^[a-zA-Z]{2,40}( [a-zA-Z]{2,40})+$/;
 
       if (!regName.test(this.fullname.trim())) {
@@ -5231,6 +5338,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.errors['fullname'] == true || this.errors['cardnumber'] == true || this.errors['cardcvv'] == true || this.errors['cardexp'] == true) {
         this.$refs.paymentError.style.display = 'block';
+        this.loading = false;
       } else {
         this.$refs.paymentError.style.display = 'none';
         Stripe.setPublishableKey(this.stripekey);
@@ -5242,12 +5350,14 @@ __webpack_require__.r(__webpack_exports__);
         }, function (status, response) {
           if (response.error) {
             alert('Įvyko klaida');
+            _this.loading = false;
           } else {
             /* token contains id, last4, and card type */
             var token = response['id'];
             var form = _this.$refs.form;
             form.innerHTML += "<input type='hidden' name='stripeToken' value='" + token + "'/>";
-            form.submit(); // $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            form.submit();
+            console.log('pranesimas tesiamas'); // $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
             // $form.get(0).submit();
           }
         });
@@ -21732,7 +21842,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".down.select {\n  width: 220px;\n}\n.modal_count {\n  font-size: 30px;\n}\n.modal_success i {\n  color: #7FFF00;\n}\n.modal_warning {\n  cursor: pointer;\n}\n.modal_warning:hover i {\n  opacity: 1;\n}\n.modal_warning i {\n  opacity: 0.5;\n  color: #FFD700;\n}\n.modal_warning.active i {\n  opacity: 1;\n}\n.modal_failed i {\n  color: #FF0000;\n}\n.mbadge {\n  font-size: 45px;\n}\n.importResults {\n  padding: 15px;\n  border-radius: 15px;\n  justify-content: space-evenly;\n  background: white;\n  border: 1px solid gainsboro;\n}", ""]);
+exports.push([module.i, ".down.select {\n  width: 220px;\n}\n.modal_count {\n  font-size: 30px;\n}\n.modal_success i {\n  color: #7FFF00;\n}\n.modal_warning {\n  cursor: pointer;\n}\n.modal_warning:hover i {\n  opacity: 1;\n}\n.modal_warning i {\n  opacity: 0.5;\n  color: #FFD700;\n}\n.modal_warning.active i {\n  opacity: 1;\n}\n.modal_failed i {\n  color: #FF0000;\n}\n.mbadge {\n  font-size: 45px;\n}\n.importResults {\n  padding: 15px;\n  border-radius: 15px;\n  justify-content: space-evenly;\n  background: white;\n  border: 1px solid gainsboro;\n}\n.refresh i {\n  cursor: pointer;\n  color: red;\n  opacity: 0.7;\n}\n.refresh i:hover {\n  opacity: 1;\n}", ""]);
 
 // exports
 
@@ -54599,6 +54709,7 @@ var render = function() {
       _c("v-select", {
         staticClass: "mb-2",
         attrs: { option: _vm.dropdownOptions, placement: "down" },
+        on: { input: _vm.cleardata },
         model: {
           value: _vm.dropdownSelected,
           callback: function($$v) {
@@ -54657,6 +54768,16 @@ var render = function() {
         [_vm._v("\n      Generuoti\n      ")]
       ),
       _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "refresh d-inline ml-2",
+          attrs: { title: "Išvalyti duomenis" },
+          on: { click: _vm.cleardata }
+        },
+        [_c("i", { staticClass: "fas fa-redo" })]
+      ),
+      _vm._v(" "),
       this.importData.success ||
       this.importData.failed ||
       this.importData.rejected
@@ -54710,7 +54831,7 @@ var render = function() {
                 staticClass:
                   "modal_warning mbadge d-flex align-items-center my-1",
                 class: { active: _vm.open },
-                attrs: { title: "Ne pasiūlymo URL su teisingu domenu" },
+                attrs: { title: _vm.warningTitle },
                 on: {
                   click: function($event) {
                     _vm.open = true
@@ -54747,7 +54868,7 @@ var render = function() {
                 ],
                 staticClass:
                   "modal_failed mbadge d-flex align-items-center my-1",
-                attrs: { title: "Netinkamas URL" }
+                attrs: { title: _vm.dangerTitle }
               },
               [
                 _c("i", {
@@ -54765,57 +54886,85 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("vue-table-dynamic", {
-        ref: "table",
-        attrs: { params: _vm.params },
-        scopedSlots: _vm._u([
-          {
-            key: "column-4",
-            fn: function(ref) {
-              var props = ref.props
-              return [
-                _c("div", {
-                  domProps: { innerHTML: _vm._s(_vm.limitText(props)) }
-                })
-              ]
-            }
-          },
-          {
-            key: "column-5",
-            fn: function(ref) {
-              var props = ref.props
-              return [
-                props.cellData == 0
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "btn btn-warning ml-1",
-                        attrs: { title: "Išsaugoti prie importuotų" },
-                        on: {
-                          click: function($event) {
-                            return _vm.saveImported(props)
+      _vm.dropdownSelected.value == "scrapper"
+        ? _c("vue-table-dynamic", {
+            ref: "table",
+            attrs: { params: _vm.params },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "column-4",
+                  fn: function(ref) {
+                    var props = ref.props
+                    return [
+                      _c("div", {
+                        domProps: { innerHTML: _vm._s(_vm.limitText(props)) }
+                      })
+                    ]
+                  }
+                },
+                {
+                  key: "column-5",
+                  fn: function(ref) {
+                    var props = ref.props
+                    return [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-warning ml-1",
+                          attrs: { title: "Išsaugoti prie importuotų" },
+                          on: {
+                            click: function($event) {
+                              return _vm.saveImported(props)
+                            }
                           }
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-share-square" })]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                props.cellData == 1
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "btn btn-primary ml-1",
-                        attrs: { title: "Išsaugotas prie importuotų" }
-                      },
-                      [_c("i", { staticClass: "far fa-check-circle" })]
-                    )
-                  : _vm._e()
-              ]
-            }
-          }
-        ])
-      }),
+                        },
+                        [_c("i", { staticClass: "fas fa-share-square" })]
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              4231764816
+            )
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.dropdownSelected.value == "plain"
+        ? _c("vue-table-dynamic", {
+            ref: "table",
+            attrs: { params: _vm.params },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: _vm.actionSlot,
+                  fn: function(ref) {
+                    var props = ref.props
+                    return [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-warning ml-1",
+                          attrs: { title: "Išsaugoti prie importuotų" },
+                          on: {
+                            click: function($event) {
+                              return _vm.saveImportedPlain(props)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-share-square" })]
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              true
+            )
+          })
+        : _vm._e(),
       _vm._v(" "),
       _vm.importData.failed && _vm.importData.failed.length > 0
         ? _c(
@@ -55578,8 +55727,23 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "paymentModal", staticStyle: { display: "none" } },
+    {
+      class: { paymentModal: true, pleasewait: _vm.loading },
+      staticStyle: { display: "none" }
+    },
     [
+      _c("div", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ],
+        staticClass: "loader2"
+      }),
+      _vm._v(" "),
       _c(
         "form",
         {

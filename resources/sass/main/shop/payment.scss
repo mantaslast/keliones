@@ -36,4 +36,8 @@
         border: 1px solid red;
         padding: 10px 5px;
     }
+    &.pleasewait{
+        opacity: .8;
+        pointer-events: none;
+    }
 }
