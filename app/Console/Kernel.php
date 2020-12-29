@@ -5,6 +5,10 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Mail\RatingReminder;
+use App\Reminder;
+use Illuminate\Support\Facades\Mail;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -25,6 +29,18 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $currDate = date('Y-m-d',strtotime('now'));
+            $reminders = Reminder::where([
+                'send_at' => $currDate,
+                'sent' => 0,
+                ])->get();
+            foreach($reminders as $key => $reminder){
+                Mail::to($reminder->email)->send(new RatingReminder($reminder->title, $reminder->body ));
+                $reminder->sent = 1;
+                $reminder->save();
+            }
+        })->daily();
     }
 
     /**

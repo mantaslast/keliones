@@ -45,7 +45,7 @@
                 <label for="category">Kategorija</label>
                     <select value="{{ old('category_id') ? old('category_id') : $offer->category_id }}" name="category_id" class="form-control" id="category">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>                        
+                            <option @if($offer->category_id == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>                        
                         @endforeach
                     </select>
                 </div>
@@ -53,13 +53,14 @@
                     <label for="description">Aprašymas</label>
                     <textarea name="description" id="description" cols="30" rows="10">{{ old('description') ? old('description') : $offer->description}}</textarea>
                 </div>
-                <app-images :imgs="{{ $offer->images }}"></app-images>
-                @if($offer->images)
-                    @foreach(json_decode($offer->images) as $image)
-                        <input type="hidden" value="{{ $image }}" name="imgs[]">
-                    @endforeach
-                @endif
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
+
+                @if(strlen($offer->images) > 0)
+                    <app-images :imgs="{{ $offer->images }}"></app-images>
+                @else
+                    <app-images></app-images>
+                @endisset
+                
+                <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())
                     <div class="errors my-3">

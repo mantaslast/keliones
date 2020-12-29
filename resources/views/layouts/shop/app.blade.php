@@ -94,10 +94,11 @@
     <div class="container-fluid footer mt-3">
         <div style="height:60px;" class="row align-items-center">
             <div class="col-12 text-center">
-                &copy; Travel, {{ date('yy', strtotime('now')) }}
+                &copy; Mantas Lastakauskas, {{ date('yy', strtotime('now')) }}
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

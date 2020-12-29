@@ -43,7 +43,7 @@
                 <div class="form-row">
                     <div class="form-group col-12">
                         <label class="mr-sm-2" for="role">Rolė</label>
-                        <select name="role" class="custom-select" id="role">
+                        <select  @if (Auth::user()->isAdmin()) disabled @endif name="role" class="custom-select" id="role">
                         @for ($i = 0; $i < 4; $i++)
                             @if($i == 0)
                                 <option value="{{ $i }}">Pasirinkti...</option>
@@ -54,7 +54,7 @@
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
             </form>
                 @if ($errors->any())
                     <div class="errors my-3">

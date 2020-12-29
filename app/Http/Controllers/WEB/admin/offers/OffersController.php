@@ -8,6 +8,7 @@ use App\Offer;
 use App\Category;
 use App\Http\Requests\offer\StoreOffer;
 use Illuminate\Support\Str;
+use PDF;
 
 
 class OffersController extends Controller
@@ -19,7 +20,7 @@ class OffersController extends Controller
      */
     public function index()
     {
-        $offers = Offer::all();
+        $offers = Offer::where('hidden', 0)->get();
 
         return view('admin.offers.index', ['offers' => $offers]);
     }
@@ -45,18 +46,13 @@ class OffersController extends Controller
     {
         $validated = $request->validated();
 
-        $this->validate($request, [
-            'images' => 'required',
-            'images.*' => 'image'
-        ]);
-
         $data = [];
-        foreach($request->file('images') as $file)
-        {
-            $name = Str::random(10).time().'.'.$file->extension();
-            $file->move(public_path().'/files/', $name);  
-            $data[] = $name;  
-        }
+        if($request->imgs) {
+            foreach($request->imgs as $file)
+            { 
+                $data[] = $file;  
+            }
+         }
     
         $filenames=json_encode($data);
         $validated['images'] = $filenames;
@@ -108,26 +104,16 @@ class OffersController extends Controller
      
         $data = [];
 
-        if($request->hasfile('images'))
-         {
-            foreach($request->file('images') as $file)
-            {
-                $name = Str::random(10).time().'.'.$file->extension();
-                $file->move(public_path().'/files/', $name);  
-                $data[] = $name;  
-            }
-            
-         }
-
-         if($request->imgs) {
+        if($request->imgs) {
             foreach($request->imgs as $file)
             { 
                 $data[] = $file;  
             }
-         }
+        }
 
         $filenames=json_encode($data);        
         $validated['images'] = $filenames;
+        $validated['hidden'] = 0;
         $offer = Offer::findOrFail($id);
         $offer->update($validated);
 
@@ -146,5 +132,27 @@ class OffersController extends Controller
         $offer->delete();
 
         return redirect()->back();
+    }
+
+    public function generatePdf()
+    {
+        $offers = Offer::all();
+        
+        view()->share('admin.offers.pdf',$offers);
+        $pdf = PDF::loadView('admin.offers.pdf', compact('offers'));
+
+        return $pdf->stream('pdf_file.pdf');
+    }
+
+    public function getImports()
+    {
+        return view('admin.offers.imports');
+    }
+
+    public function getImported()
+    {
+        $offers = Offer::where('hidden', 1)->get();
+
+        return view('admin.offers.index', ['offers' => $offers]);
     }
 }

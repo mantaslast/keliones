@@ -3,15 +3,10 @@ require('froala-editor/js/plugins/align.min.js')
 
 document.addEventListener("DOMContentLoaded", function() {
     if (document.getElementById('description')) {
-        new FroalaEditor('textarea',{
-            width: '800'
-        });
+        new FroalaEditor('textarea',{});
     }
     document.getElementById('closeSidebar').addEventListener('click', closeSidebar)
     document.getElementById('openSidebar').addEventListener('click', openSidebar)
-    document.querySelectorAll('.deleteBtn').forEach((el) => {
-        el.addEventListener('click', deleteUserConfirm)
-    })
     document.addEventListener('click', closeSidebarOnOutsideClick)
   });
 
@@ -23,16 +18,6 @@ function closeSidebar (e) {
 function openSidebar (e) {
     let sidebar = document.querySelector('.sidebar')
     sidebar.style.left = '0'
-}
-
-function deleteUserConfirm (e) {
-    e.preventDefault()
-    let c = confirm(' Ar tikrai norite ištrinti įrašą? ')
-    if (c === true) {
-        e.target.closest('form').submit()
-    } else {
-        return false
-    }
 }
 
 function closeSidebarOnOutsideClick(e) {

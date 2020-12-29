@@ -27,9 +27,8 @@ class MakaliusScrapperStrategy implements ScrapperStrategy
                         $price = floatval($node->children()->first()->children()->last()->text('default'));
                         $info[$i]['price'] = $price;
                         $info[$i]['dateTo'] = $date;
+                        $i++;
                     }
-
-                    $i++;
                 });
             });
             

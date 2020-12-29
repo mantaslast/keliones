@@ -32,7 +32,7 @@ Sidebar
   width: 17em;
   height: 100%;
   top: 0;
-  left: 0;
+  left: -17em;
   overflow:hidden;
   background-color: #19222a;
   -webkit-transform: translateZ(0);
@@ -113,16 +113,7 @@ Sidebar: icons
 /* -------------
 Chev elements
 ----------------*/ 
-  & > ul > li > a:after {
-    content: '\f125';
-    font-family: ionicons;
-    font-size: 0.5em;
-    width: 10px;
-    color: #fff;
-    position: absolute;
-    right: 0.75em;
-    top: 45%;
-  }
+
 /* -------------
 Nav-Flyout
 ----------------*/

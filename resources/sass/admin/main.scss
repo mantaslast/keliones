@@ -15,3 +15,33 @@
     background-position: 50% 50%;
     background-size: cover;
 }
+
+.pdfIcon, .csvIcon{
+    &:hover{
+        opacity: 1;
+    }
+    opacity: .5;
+    font-size: 24px;
+    top: 11px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.pdfIcon{
+    right:3%;
+    color: red;
+}
+
+.csvIcon{
+    right:0%;
+    color: green;
+}
+
+.fr-toolbar{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.fr-wrapper{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

@@ -13,8 +13,32 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $orders = Order::paginate(20);
+        $stripe = new \Stripe\StripeClient(
+            env('STRIPE_SECRET')
+        );
+        $charges = $stripe->charges->all()->data;
+        $transacionKeyArray = [];
+        foreach($charges as $charge) {
+            $splitDescription = explode(' ', $charge->description);
+            $transactionKey = '';
+            if (count($splitDescription) > 3) {
+                $dataArr = array(
+                    'key' => $splitDescription[3],
+                    'risk_score' => $charge->outcome->risk_score,
+                    'risk_level' => $charge->outcome->risk_level,
+                );
+                $transacionKeyArray[$splitDescription[3]] = $dataArr;
+            }
+        }
 
+        $orders = Order::with('offer')->get();
+        foreach ($orders as $key => $order) {
+            if (array_key_exists($order->key, $transacionKeyArray)){
+                $orders[$key]->risk_score = $transacionKeyArray[$order->key]['risk_score'];
+                $orders[$key]->risk_level = $transacionKeyArray[$order->key]['risk_level'];
+            }
+        }
+        
         return view('admin.orders.index', ['orders' => $orders]);
     }
 
@@ -29,22 +53,5 @@ class OrdersController extends Controller
         $order->admin_id = Auth::user()->id;
         $order->update($validated);
         return redirect()->back()->withSuccess('Sėkmingai atnaujintas pasiūlymas!'); 
-    }
-
-    public function filtered(Request $request)
-    {
-        $query = DB::table('orders');
-        
-        if ($request->email) {
-            $query->where('email','like', '%'.$request->email.'%');
-        }
-
-        if ($request->key) {
-            $query->where('key','like', '%'.$request->key.'%');
-        }
-
-        $orders = $query->paginate(20);
-
-        return view('admin.orders.index', ['orders' => $orders]);
     }
 }

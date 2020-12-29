@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Rating;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Offer extends Model
 {
 
-    protected $fillable = ['name', 'leave_at', 'arrive_at', 'price', 'discount', 'description', 'country', 'city', 'images'];
+    use SoftDeletes;
+
+    protected $fillable = ['name', 'leave_at', 'arrive_at', 'price', 'discount', 'description', 'country', 'city', 'images', 'hidden', 'imported'];
 
     public function category()
     {

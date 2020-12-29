@@ -7,7 +7,7 @@
                         <label for="inputAddress">Telefonas</label>
                         <input v-model="phone" name="phone" type="text" class="form-control">
                     </div>
-                    <button @click="submitForm($event)" type="submit" class="btn btn-primary">Išsaugoti</button>
+                    <button @click="submitForm($event)" type="submit" class="btn btn-primary mx-0">Išsaugoti</button>
                 </form>
             </div>
         </div>

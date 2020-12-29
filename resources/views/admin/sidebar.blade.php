@@ -13,7 +13,10 @@
               <a href="{{ route('offers.create') }}"><i class="ion-ios-clock-outline"></i>Kurti naują</a>
             </li>
             <li>
-              <a href="{{ route('offers.index') }}"><i class="ion-android-star-outline"></i>Pasiūlymų rikiavimas</a>
+              <a href="{{ route('offers.imports') }}"><i class="ion-android-star-outline"></i>Pasiūlymų importas</a>
+            </li>
+            <li>
+              <a href="{{ route('offers.imported') }}"><i class="ion-android-star-outline"></i>Importuoti pasiūlymai</a>
             </li>
           </ul>
         </li>
@@ -24,11 +27,11 @@
               <a href="{{ route('categories.create') }}"><i class="ion-ios-camera-outline"></i>Kurti naują kategoriją</a>
             </li>
             <li>
-              <a href="{{ route('categories.create') }}"><i class="ion-ios-camera-outline"></i>Gal dar kas bus</a>
+              <a style="visibility:hidden;" href="{{ route('categories.create') }}"><i class="ion-ios-camera-outline"></i>Gal dar kas bus</a>
             </li>
           </ul>
         </li>
-        @if (Auth::user()->isSuperAdmin())
+       
           <li>
             <a href="{{ route('superAdminUsers') }}"><i class="ion-ios-briefcase-outline"></i> <span class="">Vartotojai</span></a>
             <ul class="nav-flyout">
@@ -40,7 +43,7 @@
               </li>
             </ul>
           </li>
-        @endif
+        
         @if (Auth::user()->isSuperAdmin())
           <li>
             <a href="{{ route('superAdminOrders') }}"><i class="ion-ios-briefcase-outline"></i> <span class="">Užsakymai</span></a>
@@ -48,7 +51,7 @@
         @endif
         @if (Auth::user()->isSuperAdmin())
           <li>
-            <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Analitika</span></a>
+            <a href="/admin"><i class="ion-ios-briefcase-outline"></i> <span class="">Analitika</span></a>
           </li>
         @endif
       </ul>

@@ -4,6 +4,8 @@
 
 @import './shop/footer.scss'; // Footeris
 
+@import './shop/payment.scss'; //Paymentas
+
 
 .image{
     &_wrapper{
@@ -363,3 +365,31 @@
         color: green;
     }
 }
+
+.statusIcon{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    .successfullOrder{
+        color: #80ff80;
+    }
+    .canceledOrder{
+        color:red;
+    }
+    .waitingPaymentOrder{
+        color: #ffbf00;
+    }
+    &_pdf{
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        color: red;
+        opacity: .5;
+        transition: all .2s;
+        cursor: pointer;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}
+

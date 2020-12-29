@@ -16,7 +16,10 @@
             </div>
                 @if(Session::has('order'))
                 <div class="d-flex justify-content-center">
-                Rezervacijos raktas: <span class="success_order_key">{{ Session::get('order')['key']}}</span>
+                    Rezervacijos raktas: <span class="success_order_key">{{ Session::get('order')['key']}}</span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ route('reservation.show', Session::get('order')['key']) }}">Galite atlikti mokėjimą paspaudę čia</a>
                 </div>
                 @endif
             </div>
