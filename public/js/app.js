@@ -3534,11 +3534,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /* harmony import */ var _BarChartComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BarChartComponent */ "./resources/js/components/admin/BarChartComponent.vue");
-/* harmony import */ var _helpers_requests__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/requests */ "./resources/js/helpers/requests.js");
-/* harmony import */ var vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-multiselect-listbox */ "./node_modules/vue-multiselect-listbox/dist/vue-multi-select-listbox.js");
-/* harmony import */ var vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-multiselect-listbox/dist/vue-multi-select-listbox.css */ "./node_modules/vue-multiselect-listbox/dist/vue-multi-select-listbox.css");
-/* harmony import */ var vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _StackedBarChartComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StackedBarChartComponent */ "./resources/js/components/admin/StackedBarChartComponent.vue");
+/* harmony import */ var _helpers_requests__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../helpers/requests */ "./resources/js/helpers/requests.js");
+/* harmony import */ var vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-multiselect-listbox */ "./node_modules/vue-multiselect-listbox/dist/vue-multi-select-listbox.js");
+/* harmony import */ var vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-multiselect-listbox/dist/vue-multi-select-listbox.css */ "./node_modules/vue-multiselect-listbox/dist/vue-multi-select-listbox.css");
+/* harmony import */ var vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_listbox_dist_vue_multi_select_listbox_css__WEBPACK_IMPORTED_MODULE_9__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3661,15 +3684,18 @@ __webpack_require__.r(__webpack_exports__);
 
  // Barchart'as
 
+ // Barchart'as
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
+    StackedBarChartComponent: _StackedBarChartComponent__WEBPACK_IMPORTED_MODULE_6__["default"],
     BarChartComponent: _BarChartComponent__WEBPACK_IMPORTED_MODULE_5__["default"],
     'datepicker': vuejs_datepicker__WEBPACK_IMPORTED_MODULE_4__["default"],
-    'v-multiselect-listbox': vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_7___default.a,
+    'v-multiselect-listbox': vue_multiselect_listbox__WEBPACK_IMPORTED_MODULE_8___default.a,
     vSelect: vselect_component__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: ['analyticsdata'],
@@ -3698,12 +3724,14 @@ __webpack_require__.r(__webpack_exports__);
       limit_from: {},
       datesDisabled: {},
       allData: this.analyticsdata,
-      selectedReports: []
+      selectedReports: [],
+      open: false
     };
   },
-  mounted: function mounted() {},
   methods: {
     exportCsv: function exportCsv() {
+      var _this = this;
+
       var reports = this.selectedReports.map(function (report) {
         return report.value;
       });
@@ -3726,13 +3754,63 @@ __webpack_require__.r(__webpack_exports__);
         to = this.formatDate(Object(_helpers_tablehelpers__WEBPACK_IMPORTED_MODULE_0__["today"])());
       }
 
-      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_6__["post"])('/admin/reports', {
-        from: from,
-        to: to,
-        reports: reports
-      }).then(function (res) {
-        console.log(res);
+      if (reports.length < 1) {
+        this.$notification.warning("Nepasirinkote ataskaitos tipo (-ų)", {
+          timer: 4
+        });
+        return false;
+      }
+
+      this.$notification.dark("Generuojama ataskaita (-os)", {
+        timer: 50
       });
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_7__["post"])('/admin/reports', {
+        data: {
+          from: from,
+          to: to,
+          reports: reports
+        }
+      }).then(function (res) {
+        var data = res.data;
+        reports.forEach(function (report) {
+          if (report == 'users') {
+            _this.exportUsers(data[report]);
+          } else if (report == 'offers') {
+            _this.exportOffers(data[report]);
+          } else if (report == 'orders') {
+            _this.exportOrders(data[report]);
+          }
+        });
+
+        _this.$notification.removeAll();
+
+        _this.$notification.success("Ataskaitos sugeneruotos!", {
+          timer: 4
+        });
+      });
+    },
+    getDropdownStatus: function getDropdownStatus() {
+      if (this.dropdownSelected.value == 'up') {
+        return '_visi';
+      } else if (this.dropdownSelected.value == 'month') {
+        return '_sis_menuo';
+      } else if (this.dropdownSelected.value == 'week') {
+        return '_si_savaite';
+      } else if (this.dropdownSelected.value == 'year') {
+        return '_sie_metai';
+      }
+    },
+    exportUsers: function exportUsers(data) {
+      var csvData = [['visi', 'administratoriai', 'klientai', 'super-administratoriai'], [data.visi, data.administratoriai, data.klientai, data['super_administratoriai']]];
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_7__["getCsv"])('vartotojai_ataskaita' + this.getDropdownStatus() + '.csv', csvData);
+    },
+    exportOrders: function exportOrders(data) {
+      var csvData = [['Visi'], ['Viso', 'Apyvarta', 'Vidurkis'], [data['visi'], data['visu_uzsakymu_suma'], data['visu_uzsakymu_vidurkis']], ['Apmokėti'], ['Viso', 'Apyvarta', 'Vidurkis'], [data['visi_apmoketi_uzsakymai'], data['visu_apmoketu_uzsakymu_suma'], data['visu_apmoketu_uzsakymu_vidurkis']], ['Vartotojai'], ['Neregistruoti', 'Registruoti'], [data['neregistruotu_vartotoju_uzsakymai'], data['registruotu_vartotoju_uzsakymai']], ['Santykis'], ['Apmokėti / Vartotojai', 'Visi / Apmokėti', 'Užsakymai / Vartotojai'], [data['santykis_apmoketi_uzsakymai_vartotojai'], data['santykis_uzsakymai_apmoketi_uzsakymai'], data['santykis_uzsakymai_vartotojai']]];
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_7__["getCsv"])('uzsakymai_ataskaita' + this.getDropdownStatus() + '.csv', csvData);
+    },
+    exportOffers: function exportOffers(data) {
+      var csvData = [['Bendri'], ['Visi', 'Archyvuoti', 'Importuoti', 'Importuotų sąraše'], [data['viso'], data['archyvuoti'], data['importuoti'], data['importuotu_sarase']], ['Užsakymai'], ['Daugiausiai užsakytas', 'Mažiausiai užsakytas'], [data['daugiausiai_uzsakytas'], data['maziausiai_uzsakytas']], ['Kainos'], ['Brangiausias', 'Pigiausias', 'Kainos vidurkis', 'Nuolaidos vidurkis'], [data['brangiausias'], data['pigiausias'], data['kainos_vidurkis'], data['nuolaidos_vidurkis']]];
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_7__["getCsv"])('pasiulymai_ataskaita' + this.getDropdownStatus() + '.csv', csvData);
     },
     limitFrom: function limitFrom() {
       this.limit_from = {
@@ -3753,18 +3831,21 @@ __webpack_require__.r(__webpack_exports__);
       return [year, month, day].join('-');
     },
     refreshData: function refreshData() {
-      var _this = this;
+      var _this2 = this;
 
       this.$refs.refresh.classList.add('rotating');
       var datesQuery = Object(_helpers_querybuilder__WEBPACK_IMPORTED_MODULE_2__["default"])({
         from: this.from !== '' ? this.formatDate(this.from) : '2019-01-01',
         to: this.to !== '' ? this.formatDate(this.to) : '2100-01-01'
       });
-      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_6__["get"])('/admin/analytics?' + datesQuery).then(function (response) {
-        _this.allData = response.data;
+      Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_7__["get"])('/admin/analytics?' + datesQuery).then(function (response) {
+        _this2.allData = response.data;
 
-        _this.$refs.refresh.classList.remove('rotating');
+        _this2.$refs.refresh.classList.remove('rotating');
       });
+    },
+    hideModal: function hideModal() {
+      this.open = false;
     }
   },
   computed: {
@@ -4924,6 +5005,131 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Bar"],
+  props: ['analyticsdata'],
+  watch: {
+    analyticsdata: function analyticsdata(val) {
+      this.renderBarChart();
+    }
+  },
+  data: function data() {
+    return {
+      chartdata: {
+        labels: [],
+        datasets: []
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    };
+  },
+  methods: {
+    renderBarChart: function renderBarChart() {
+      this.renderChart(this.chartData, this.options);
+    }
+  },
+  computed: {
+    chartData: function chartData() {
+      var _this = this;
+
+      var merged = this.analyticsdata.successfull.concat(this.analyticsdata.unsuccessfull);
+      var dates = merged.map(function (data) {
+        return data.date;
+      });
+
+      var labels = _toConsumableArray(new Set(dates)).sort(function (a, b) {
+        return new Date(a) - new Date(b);
+      });
+
+      var successfullData = labels.map(function (labelDate) {
+        var found = {
+          date: labelDate,
+          count: 0
+        };
+
+        _this.analyticsdata.successfull.forEach(function (order) {
+          if (order.date == labelDate) {
+            found = order;
+          }
+        });
+
+        return found;
+      });
+      var unsuccessfullData = labels.map(function (labelDate) {
+        var found = {
+          date: labelDate,
+          count: 0
+        };
+
+        _this.analyticsdata.unsuccessfull.forEach(function (order) {
+          if (order.date == labelDate) {
+            found = order;
+          }
+        });
+
+        return found;
+      });
+      return {
+        labels: labels,
+        datasets: [{
+          label: 'Apmokėtos rezervacijos',
+          backgroundColor: "#8A2BE2",
+          data: successfullData.map(function (order) {
+            return order.count;
+          })
+        }, {
+          label: 'Neapmokėtos rezervacijos',
+          backgroundColor: "#fff",
+          data: unsuccessfullData.map(function (order) {
+            return order.count;
+          })
+        }]
+      };
+    }
+  },
+  mounted: function mounted() {
+    this.renderBarChart();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/UsersTableComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/UsersTableComponent.vue?vue&type=script&lang=js& ***!
@@ -5050,6 +5256,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     exportCsv: function exportCsv() {
       var tableData = this.$refs.table.tableData.activatedRows;
       var formattedData = Object(_helpers_tablehelpers__WEBPACK_IMPORTED_MODULE_0__["formatUsersTableData"])(tableData);
+      console.log(Object(_helpers_tablehelpers__WEBPACK_IMPORTED_MODULE_0__["formatForCsv"])(formattedData));
       Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_2__["getCsv"])('vartotojai_' + Object(_helpers_tablehelpers__WEBPACK_IMPORTED_MODULE_0__["today"])() + '.csv', Object(_helpers_tablehelpers__WEBPACK_IMPORTED_MODULE_0__["formatForCsv"])(formattedData));
     },
     exportPdf: function exportPdf() {
@@ -21823,7 +22030,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".vdp-datepicker__calendar {\n  top: 35px;\n}\n.btn-refresh {\n  background-color: #8A2BE2;\n  opacity: 0.5;\n  transition: all 0.4s;\n}\n.btn-refresh:hover {\n  opacity: 1;\n  background-color: #8A2BE2;\n}\n.wrapper {\n  background: gainsboro;\n  border-radius: 5px;\n  padding: 10px;\n}\n.exportIcon {\n  opacity: 0.5;\n  font-size: 45px;\n  cursor: pointer;\n  transition: all 0.2s;\n  color: green;\n}\n.exportIcon:hover {\n  opacity: 1;\n}\n.msl-multi-select {\n  width: 100%;\n}\n.down.select {\n  height: unset;\n  line-height: unset;\n}\n.down .dropMenu {\n  top: 29px;\n}\n.down .dropMenu li {\n  line-height: 10px;\n}", ""]);
+exports.push([module.i, ".msl-search-list-input {\n  background: gainsboro;\n  border: 1px solid black;\n  border-radius: 3px;\n}\n.vdp-datepicker__calendar {\n  top: 35px;\n}\n.btn-refresh {\n  background-color: #8A2BE2;\n  opacity: 0.5;\n  transition: all 0.4s;\n}\n.btn-refresh:hover {\n  opacity: 1;\n  background-color: #8A2BE2;\n}\n.wrapper {\n  background: gainsboro;\n  border-radius: 5px;\n  padding: 10px;\n}\n.exportIcon {\n  opacity: 0.5;\n  font-size: 45px;\n  cursor: pointer;\n  transition: all 0.2s;\n  color: green;\n}\n.exportIcon:hover {\n  opacity: 1;\n}\n.msl-multi-select {\n  width: 100%;\n}\n.down.select {\n  height: unset;\n  line-height: unset;\n}\n.down .dropMenu {\n  top: 29px;\n}\n.down .dropMenu li {\n  line-height: 10px;\n}\n.explained i {\n  color: #8A2BE2;\n  opacity: 0.6;\n  cursor: pointer;\n  font-size: 25px;\n}\n.explained i:hover {\n  opacity: 1;\n}", ""]);
 
 // exports
 
@@ -54325,231 +54532,304 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "d-flex align-items-center justify-content-end mt-3" },
-      [
-        _c("div", { staticClass: "title mr-auto" }, [
-          _vm._v(_vm._s(_vm.title))
-        ]),
-        _vm._v(" "),
-        _c("datepicker", {
-          attrs: {
-            language: _vm.lt,
-            "disabled-dates": _vm.datesDisabled,
-            placeholder: "Nuo"
-          },
-          on: { input: _vm.limitFrom },
-          model: {
-            value: _vm.from,
-            callback: function($$v) {
-              _vm.from = $$v
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c(
+        "div",
+        { staticClass: "d-flex align-items-center justify-content-end mt-3" },
+        [
+          _c("div", { staticClass: "title mr-auto" }, [
+            _vm._v(_vm._s(_vm.title))
+          ]),
+          _vm._v(" "),
+          _c("datepicker", {
+            attrs: {
+              language: _vm.lt,
+              "disabled-dates": _vm.datesDisabled,
+              placeholder: "Nuo"
             },
-            expression: "from"
-          }
-        }),
-        _vm._v(" "),
-        _c("datepicker", {
-          staticClass: "ml-1",
-          attrs: {
-            language: _vm.lt,
-            "disabled-dates": _vm.limit_from,
-            placeholder: "Iki"
-          },
-          model: {
-            value: _vm.to,
-            callback: function($$v) {
-              _vm.to = $$v
-            },
-            expression: "to"
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "btn btn-primary btn-refresh ml-2",
-            on: {
-              click: function($event) {
-                return _vm.refreshData()
-              }
+            on: { input: _vm.limitFrom },
+            model: {
+              value: _vm.from,
+              callback: function($$v) {
+                _vm.from = $$v
+              },
+              expression: "from"
             }
-          },
-          [_c("i", { ref: "refresh", staticClass: "fas fa-sync-alt" })]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-sm-4" }, [
-        _c("div", { staticClass: "analytics_card" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("div", { staticClass: "analytics_card_title" }, [
-                _vm._v(
-                  "\n                            Apyvarta\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "analytics_card_content" }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(this.allData.orders_counts.total_sales.toFixed(2)) +
-                    "\n                        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-4" }, [
-        _c("div", { staticClass: "analytics_card" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("div", { staticClass: "analytics_card_title" }, [
-                _vm._v(
-                  "\n                             Apmokėtos rezervacijos\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "analytics_card_content" }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(this.allData.orders_counts.sales_count) +
-                    "\n                        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-4" }, [
-        _c("div", { staticClass: "analytics_card" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("div", { staticClass: "analytics_card_title" }, [
-                _vm._v(
-                  "\n                            Vartotojai\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "analytics_card_content" }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(this.allData.users_counts.total_users) +
-                    "\n                        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(2)
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-sm-6" }, [
-        _c(
-          "div",
-          { staticClass: "chartBlock" },
-          [
-            _c("bar-chart-component", {
-              attrs: { title: "Užsakymai", analyticsdata: this.allData.orders }
-            })
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
-        _c(
-          "div",
-          { staticClass: "chartBlock" },
-          [
-            _c("bar-chart-component", {
-              attrs: { title: "Vartotojai", analyticsdata: this.allData.users }
-            })
-          ],
-          1
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-3 ml-1" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-7 wrapper" },
-            [
-              _c("v-multiselect-listbox", {
-                attrs: {
-                  options: _vm.selectOptions,
-                  "search-options-placeholder": "Ataskaitos tipo variantas",
-                  "no-options-text": "Nėra pasirinkimų",
-                  "selected-no-options-text":
-                    "Nepasirinktas joks ataskaitos tipas",
-                  "selected-options-placeholder":
-                    "Pasirinktas ataskaitos tipas",
-                  "reduce-display-property": function(option) {
-                    return option.label
-                  },
-                  "reduce-value-property": function(option) {
-                    return option.value
-                  }
-                },
-                model: {
-                  value: _vm.selectedReports,
-                  callback: function($$v) {
-                    _vm.selectedReports = $$v
-                  },
-                  expression: "selectedReports"
-                }
-              })
-            ],
-            1
-          ),
+          }),
+          _vm._v(" "),
+          _c("datepicker", {
+            staticClass: "ml-1",
+            attrs: {
+              language: _vm.lt,
+              "disabled-dates": _vm.limit_from,
+              placeholder: "Iki"
+            },
+            model: {
+              value: _vm.to,
+              callback: function($$v) {
+                _vm.to = $$v
+              },
+              expression: "to"
+            }
+          }),
           _vm._v(" "),
           _c(
             "div",
             {
-              staticClass:
-                "col-5 d-flex align-items-center justify-content-start"
-            },
-            [
-              _c("v-select", {
-                attrs: { option: _vm.dropdownOptions, placement: "down" },
-                model: {
-                  value: _vm.dropdownSelected,
-                  callback: function($$v) {
-                    _vm.dropdownSelected = $$v
-                  },
-                  expression: "dropdownSelected"
+              staticClass: "btn btn-primary btn-refresh ml-2",
+              on: {
+                click: function($event) {
+                  return _vm.refreshData()
                 }
-              }),
+              }
+            },
+            [_c("i", { ref: "refresh", staticClass: "fas fa-sync-alt" })]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-3" }, [
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "analytics_card" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6" }, [
+                _c("div", { staticClass: "analytics_card_title" }, [
+                  _vm._v(
+                    "\n                            Apyvarta\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "analytics_card_content" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(
+                        this.allData.orders_counts.total_sales.toFixed(2)
+                      ) +
+                      "\n                        "
+                  )
+                ])
+              ]),
               _vm._v(" "),
-              _c("i", {
-                staticClass: "fas fa-file-csv exportIcon ml-2",
-                on: { click: _vm.exportCsv }
+              _vm._m(0)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "analytics_card" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6" }, [
+                _c("div", { staticClass: "analytics_card_title" }, [
+                  _vm._v(
+                    "\n                             Apmokėtos rezervacijos\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "analytics_card_content" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(this.allData.orders_counts.sales_count) +
+                      "\n                        "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "analytics_card" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6" }, [
+                _c("div", { staticClass: "analytics_card_title" }, [
+                  _vm._v(
+                    "\n                            Vartotojai\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "analytics_card_content" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(this.allData.users_counts.total_users) +
+                      "\n                        "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-3" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c(
+            "div",
+            { staticClass: "chartBlock" },
+            [
+              _c("stacked-bar-chart-component", {
+                attrs: { analyticsdata: this.allData.orders }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c(
+            "div",
+            { staticClass: "chartBlock" },
+            [
+              _c("bar-chart-component", {
+                attrs: {
+                  title: "Vartotojai",
+                  analyticsdata: this.allData.users
+                }
               })
             ],
             1
           )
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-3 ml-1" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "div",
+            {
+              staticClass: "row align-items-center my-3",
+              staticStyle: { "line-height": "1" }
+            },
+            [
+              _c("div", { staticClass: "title" }, [
+                _vm._v("Ataskaitų eksportavimas")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "explained ml-2",
+                  on: {
+                    click: function($event) {
+                      _vm.open = true
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-exclamation-circle" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-7 wrapper" },
+              [
+                _c("v-multiselect-listbox", {
+                  attrs: {
+                    options: _vm.selectOptions,
+                    "search-options-placeholder": "Ataskaitos tipas",
+                    "no-options-text": "Nėra pasirinkimų",
+                    "selected-no-options-text":
+                      "Nepasirinktas joks ataskaitos tipas",
+                    "selected-options-placeholder":
+                      "Pasirinktas ataskaitos tipas",
+                    "reduce-display-property": function(option) {
+                      return option.label
+                    },
+                    "reduce-value-property": function(option) {
+                      return option.value
+                    }
+                  },
+                  model: {
+                    value: _vm.selectedReports,
+                    callback: function($$v) {
+                      _vm.selectedReports = $$v
+                    },
+                    expression: "selectedReports"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "col-5 d-flex align-items-center justify-content-start"
+              },
+              [
+                _c("v-select", {
+                  attrs: { option: _vm.dropdownOptions, placement: "down" },
+                  model: {
+                    value: _vm.dropdownSelected,
+                    callback: function($$v) {
+                      _vm.dropdownSelected = $$v
+                    },
+                    expression: "dropdownSelected"
+                  }
+                }),
+                _vm._v(" "),
+                _c("i", {
+                  staticClass: "fas fa-file-csv exportIcon ml-2",
+                  on: { click: _vm.exportCsv }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "vue-modaltor",
+        { attrs: { visible: _vm.open }, on: { hide: _vm.hideModal } },
+        [
+          _c("template", { slot: "close-icon" }, [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  version: "1.1",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 40 40",
+                  width: "20",
+                  height: "20",
+                  "xml:space": "preserve"
+                }
+              },
+              [
+                _c("path", {
+                  staticClass: "st0",
+                  attrs: {
+                    fill: "#41b883",
+                    d:
+                      "M8.7,7.6c-0.4-0.4-1-0.4-1.4,0C6.9,8,6.9,8.6,7.3,9l11,11l-11,11c-0.4,0.4-0.4,1,0,1.4c0.4,0.4,1,0.4,1.4,0 l11-11l11,11c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-11-11L32,9c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-11,11L8.7,7.6z"
+                  }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "wrongUrls" }, [
+            _vm._v(
+              "\n            Pagal pasirinktą datą eksportuojamos pasirinkto tipo ataskaitos\n        "
+            )
+          ])
+        ],
+        2
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -54574,14 +54854,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-6" }, [
       _c("i", { staticClass: "fas fa-users" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "title" }, [_vm._v("Ataskaitos")])
     ])
   }
 ]
@@ -73110,6 +73382,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScrapperComponent_vue_vue_type_template_id_05c77ad6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/StackedBarChartComponent.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/admin/StackedBarChartComponent.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StackedBarChartComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StackedBarChartComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _StackedBarChartComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/StackedBarChartComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackedBarChartComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./StackedBarChartComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/StackedBarChartComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackedBarChartComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

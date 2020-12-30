@@ -87,6 +87,7 @@ export default {
         exportCsv : function () {
             let tableData = this.$refs.table.tableData.activatedRows
             let formattedData = formatUsersTableData(tableData)
+            console.log(formatForCsv(formattedData))
             getCsv('vartotojai_'+today()+'.csv',formatForCsv(formattedData))
         },
 

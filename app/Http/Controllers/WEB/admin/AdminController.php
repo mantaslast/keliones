@@ -12,7 +12,7 @@ class AdminController extends Controller
     {
         $orders_counts = DB::table('orders')
         ->join('offers', 'offers.id', '=', 'orders.offer_id')
-        ->where('orders.status', '=', 2)
+        ->whereIn('orders.status', [2, 3])
         ->select(DB::raw('SUM(offers.price) as total_sales'), DB::raw('COUNT(*) as sales_count'), DB::raw('AVG(offers.price) as sales_average'))->first();
        
         $now = date('Y-m-d H:i:s',strtotime('now'));
@@ -27,16 +27,25 @@ class AdminController extends Controller
         ->groupBy(DB::raw('substring(created_at,1,10)'))
         ->get();
 
-        $orders = DB::table('orders')
+        $successfullOrders = DB::table('orders')
         ->select(DB::raw('COUNT(*) as count'), DB::raw(' substring(created_at,1,10) as date'))
+        ->whereIn('status', [2,3])
         ->groupBy(DB::raw('substring(created_at,1,10)'))
         ->get();
 
+        $unsuccessfullOrders = DB::table('orders')
+        ->select(DB::raw('COUNT(*) as count'), DB::raw(' substring(created_at,1,10) as date'))
+        ->whereIn('status', [0,1])
+        ->groupBy(DB::raw('substring(created_at,1,10)'))
+        ->get();
         $return = array(
             'users_counts' => $users_counts,
             'orders_counts' => $orders_counts,
             'users' => $users,
-            'orders' => $orders,
+            'orders' => [
+                'successfull' => $successfullOrders,
+                'unsuccessfull' => $unsuccessfullOrders,
+            ],
         );
         
         return view('admin.index', ['data' => $return]);
