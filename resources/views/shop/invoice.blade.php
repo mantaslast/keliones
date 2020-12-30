@@ -31,10 +31,9 @@
             <h3>Travel</h3>
             <pre>
                 Travel
-                Kompanijos adresas
-                Tax ID
-                Telefonas
-                Faksas
+                Vašingtono a. 22-66, LT-01115 Vilnius
+                LT127300010075875762
+                861673782
             </pre>
         </td>
     </tr>

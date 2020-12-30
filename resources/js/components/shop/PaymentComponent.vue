@@ -76,7 +76,7 @@
                     this.errors['fullname'] = false
                 }
 
-                if(this.cardcvv.length >= 3) {
+                if(this.cardcvv.length >= 4) {
                     this.$refs.cardcvv.classList.remove('is-invalid')
                     this.errors['cardcvv'] = false
                 } else {

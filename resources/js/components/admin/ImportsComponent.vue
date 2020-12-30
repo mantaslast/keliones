@@ -239,7 +239,6 @@ export default {
                 ...offers
             ],
             header: 'row',
-            sort: [0, 1, 2, 3],
             border: true,
             enableSearch: true,
             pagination: true,

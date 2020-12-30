@@ -26,8 +26,6 @@ class EditUser extends FormRequest
         return [
             'email' => ['email'],
             'phone' => ['string','regex:/(86|\+3706)\d{7,7}$/'],
-            'address' => 'string',
-            'country' => 'string',
             'name' => 'string',
             'role' => 'required'
         ];
@@ -39,8 +37,6 @@ class EditUser extends FormRequest
             'email.email' => 'Neteisingas el. pašto formatas',
             'phone.regex' => 'Neteisingas telefono numeris',
             'phone.string' => 'Neteisingas telefono numerio formatas',
-            'address.string' => 'Neteisingas adreso formatas',
-            'country.string' => 'Neteisingas šalies formatas',
             'name.string' => 'Neteisingas vardo formatas',
             'role.required' => 'Rolė privaloma'
         ];

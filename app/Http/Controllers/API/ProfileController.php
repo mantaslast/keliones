@@ -23,8 +23,6 @@ class ProfileController extends Controller
 
         $user = Auth::user();
         $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->country = $request->country;
         $user->save();
 
         return new UserResource(Auth::user());

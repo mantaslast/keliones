@@ -20,9 +20,7 @@
     export default {
         props: ['userid'],
         data : ()=>({
-            address : '',
             phone : '',
-            country : '',
         }),
         methods: {
             submitForm(event){
@@ -46,9 +44,7 @@
         mounted: function() {
             get('/profile').then(response => {
                 if (response.data) {
-                    this.address = response.data.address
                     this.phone = response.data.phone
-                    this.country = response.data.country
                     this.userId = response.data.id
                 }
             })

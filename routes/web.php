@@ -31,23 +31,30 @@ Route::get('/testas', function () {
 //SuperAdmin routai su prefixu admin
 Route::group(['middleware' => ['auth', 'superAdmin'], 'prefix' => 'admin'], function () {
     // Useriams
-    Route::get('/orders', 'WEB\superAdmin\orders\OrdersController@index')->name('superAdminOrders');
-    Route::get('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@show')->name('superAdminOrder');
-    Route::put('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@update')->name('superAdminOrderUpdate');
+    
 });
 
 //Admino routai su prefixu /admin
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    
+    Route::get('/orders', 'WEB\superAdmin\orders\OrdersController@index')->name('superAdminOrders');
+    Route::get('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@show')->name('superAdminOrder');
+    Route::put('/orders/{order}', 'WEB\superAdmin\orders\OrdersController@update')->name('superAdminOrderUpdate');
+
     Route::get('/users/r/{role?}', 'WEB\superAdmin\users\UserController@index')->name('superAdminUsers');
     Route::get('/users/{user}', 'WEB\superAdmin\users\UserController@show')->name('superAdminUser');
     Route::get('/users/{user}/edit', 'WEB\superAdmin\users\UserController@edit')->name('superAdminUserEditForm');
     Route::delete('/users/{user}', 'WEB\superAdmin\users\UserController@destroy')->name('superAdminUser');
     Route::put('/users/{user}', 'WEB\superAdmin\users\UserController@update')->name('superAdminUserUpdate');
+
     Route::get('/','WEB\admin\AdminController@index')->name('adminIndex');
+
     Route::resource('categories', 'WEB\admin\categories\CategoriesController');
+
     Route::get('/offers/pdf', 'WEB\admin\offers\OffersController@generatePdf')->name('generateOffersPdf');
     Route::get('/offers/imports', 'WEB\admin\offers\OffersController@getImports')->name('offers.imports');
     Route::get('/offers/imported', 'WEB\admin\offers\OffersController@getImported')->name('offers.imported');
+
     Route::get('/reports', 'WEB\admin\reports\ReportsController@get')->name('reports.index');
     Route::resource('offers', 'WEB\admin\offers\OffersController');
 });

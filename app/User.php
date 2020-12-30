@@ -50,8 +50,6 @@ class User extends Authenticatable
     public function createProfile()
     {
         $this->phone = '';
-        $this->address = '';
-        $this->country = '';
         $this->save();
     }
 

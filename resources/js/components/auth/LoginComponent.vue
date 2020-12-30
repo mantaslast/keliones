@@ -43,7 +43,7 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-12">
-                        <button @click.prevent="login" type="submit" class="btn btn-primary login_submit">
+                        <button @click.prevent="login" type="submit" class="btn btn-primary login_submit ml-0 mb-3">
                             Prisijungti
                         </button>
                     </div>

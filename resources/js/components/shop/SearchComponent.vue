@@ -67,6 +67,7 @@
         }),
         methods: {
             search (e) {
+                if(this.searchVal.length > 255) return false
                 let filterQuery = buildQuery({
                         text: this.searchVal, 
                         price : this.price, 

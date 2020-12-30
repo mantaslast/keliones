@@ -52,9 +52,7 @@ class UserController extends Controller
         $user->email = $validated['email'];
         $user->name = $validated['name'];
         $user->role = $validated['role'];
-        $user->address = $validated['address'];
         $user->phone = $validated['phone'];
-        $user->country = $validated['country'];
 
         $user->save();
 

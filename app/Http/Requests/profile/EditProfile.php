@@ -26,8 +26,6 @@ class EditProfile extends FormRequest
     {
         return [
             'phone' => ['string','regex:/(86|\+3706)\d{7,7}$/'],
-            'address' => 'string',
-            'country' => 'string'
         ];
     }
 
@@ -36,8 +34,6 @@ class EditProfile extends FormRequest
         return [
             'phone.regex' => 'Neteisingas telefono numeris',
             'phone.string' => 'Neteisingas telefono numerio formatas',
-            'address.string' => 'Neteisingas adreso formatas',
-            'country.string' => 'Neteisingas šalies formatas'
         ];
     }
 }
