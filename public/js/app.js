@@ -4381,7 +4381,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.params = {
         data: [headerValues].concat(_toConsumableArray(offers)),
         header: 'row',
-        sort: [0, 1, 2, 3],
         border: true,
         enableSearch: true,
         pagination: true,
@@ -5519,7 +5518,7 @@ __webpack_require__.r(__webpack_exports__);
         this.errors['fullname'] = false;
       }
 
-      if (this.cardcvv.length >= 3) {
+      if (this.cardcvv.length >= 4) {
         this.$refs.cardcvv.classList.remove('is-invalid');
         this.errors['cardcvv'] = false;
       } else {
@@ -5664,6 +5663,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     search: function search(e) {
+      if (this.searchVal.length > 255) return false;
       var filterQuery = Object(_helpers_querybuilder__WEBPACK_IMPORTED_MODULE_0__["default"])({
         text: this.searchVal,
         price: this.price,
@@ -5754,9 +5754,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['userid'],
   data: function data() {
     return {
-      address: '',
-      phone: '',
-      country: ''
+      phone: ''
     };
   },
   methods: {
@@ -5783,9 +5781,7 @@ __webpack_require__.r(__webpack_exports__);
 
     Object(_helpers_requests__WEBPACK_IMPORTED_MODULE_0__["get"])('/profile').then(function (response) {
       if (response.data) {
-        _this.address = response.data.address;
         _this.phone = response.data.phone;
-        _this.country = response.data.country;
         _this.userId = response.data.id;
       }
     });
@@ -55911,7 +55907,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary login_submit",
+                staticClass: "btn btn-primary login_submit ml-0 mb-3",
                 attrs: { type: "submit" },
                 on: {
                   click: function($event) {

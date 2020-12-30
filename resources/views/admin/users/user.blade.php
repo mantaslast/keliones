@@ -28,15 +28,11 @@
                 <thead>
                     <tr>
                     <th scope="col">Telefonas</th>
-                    <th scope="col">Šalis</th>
-                    <th scope="col">Adresas</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <td>{{ $user->phone }}</td>
-                    <td>{{ $user->country }}</td>
-                    <td>{{ $user->address }}</td>
+                    <td>{{ $user->phone ?? ' '}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -28,17 +28,6 @@
                     <label for="repeatPassword">Pakartoti slaptažodį</label>
                     <input name="password_confirmation" type="password" class="form-control" id="repeatPassword">
                     </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                    <label for="inputAddress">Adresas</label>
-                    <input name="address" type="text" class="form-control" id="inputAddress" value="{{ $user->address ? $user->address : '' }}" >
-                    </div>
-                    <div class="form-group col-md-6">
-                    <label for="country">Šalis</label>
-                    <input name="country" type="text" class="form-control" id="country" value="{{ $user->country ? $user->country : '' }}" >
-                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-12">
@@ -52,6 +41,7 @@
                             @endif
                         @endfor
                         </select>
+                        @if (Auth::user()->isAdmin()) <input type="hidden" name="role" value="{{$user->role}}"> @endif
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2 ml-0">Išsaugoti</button>
