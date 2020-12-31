@@ -4463,6 +4463,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else if (this.dropdownSelected.value == 'plain') {
         return 'Netinkami pasiūlymai';
       }
+    },
+    calcmax: function calcmax() {
+      if (this.dropdownSelected.value == 'scrapper') {
+        return 3;
+      } else if (this.dropdownSelected.value == 'plain') {
+        return 1;
+      }
     }
   }
 });
@@ -54994,7 +55001,7 @@ var render = function() {
           multiple: true,
           accept: ".csv",
           maxSize: "10MB",
-          maxFiles: 3,
+          maxFiles: _vm.calcmax,
           helpText: "Pasirinkite CSV failą",
           errorText: {
             type:
@@ -55315,7 +55322,7 @@ var render = function() {
           deletable: true,
           multiple: true,
           accept: "image/*",
-          maxSize: "10MB",
+          maxSize: "3MB",
           maxFiles: 3,
           helpText: "Pasirinkite nuotraukos failą",
           errorText: {

@@ -13,7 +13,7 @@
         :multiple="true"
         :accept="'.csv'"
         :maxSize="'10MB'"
-        :maxFiles="3"
+        :maxFiles="calcmax"
         :helpText="'Pasirinkite CSV failą'"
         :errorText="{
             type: 'Neteisingas failo tipas! Prašome pasirinkti CSV failo formatą',
@@ -306,6 +306,13 @@ export default {
               return 'Netinkamas URL'
           } else if (this.dropdownSelected.value == 'plain') {
               return 'Netinkami pasiūlymai'
+          }
+      },
+      calcmax () {
+          if (this.dropdownSelected.value == 'scrapper') {
+              return 3
+          } else if (this.dropdownSelected.value == 'plain') {
+              return 1
           }
       }
   }

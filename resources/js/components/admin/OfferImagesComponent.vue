@@ -7,7 +7,7 @@
         :deletable="true"
         :multiple="true"
         :accept="'image/*'"
-        :maxSize="'10MB'"
+        :maxSize="'3MB'"
         :maxFiles="3"
         :helpText="'Pasirinkite nuotraukos failą'"
         :errorText="{

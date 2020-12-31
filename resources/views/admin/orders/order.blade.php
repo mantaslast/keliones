@@ -51,7 +51,7 @@
                 </table>
             @endif
 
-            @if (Auth::user()->isSuperAdmin())
+            @if (Auth::user()->isSuperAdmin() || Auth::user()->isAdmin())
                 <form method="POST" action="{{ action('WEB\superAdmin\orders\OrdersController@update', ['order'=>$order->id ]) }}" >     
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     {{ method_field('PUT') }}    

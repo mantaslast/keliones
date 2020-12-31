@@ -73,8 +73,8 @@ class ReportsController extends Controller
 
         $orders_counts = DB::table('orders')
         ->join('offers', 'offers.id', '=', 'orders.offer_id')
-        ->where('orders.status', '=', 2)
         ->whereBetween('orders.created_at', [$from, $to])
+        ->whereIn('orders.status',[2,3])
         ->select(DB::raw('IFNULL(SUM(offers.price), 0) as successfull_total_sales'), DB::raw('COUNT(*) as successfull_sales_count'), DB::raw('IFNULL(AVG(offers.price), 0) as successfull_sales_average'))->first();
 
         return [
